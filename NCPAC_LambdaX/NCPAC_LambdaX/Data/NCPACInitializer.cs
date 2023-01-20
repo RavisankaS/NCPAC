@@ -1,4 +1,5 @@
-﻿using NCPAC_LambdaX.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NCPAC_LambdaX.Models;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -14,6 +15,15 @@ namespace NCPAC_LambdaX.Data
 
             try
             {
+                //Delete the database if you need to apply a new Migration
+                context.Database.EnsureDeleted(); //Take time to add this to all other Initializer.Seed() code
+                //Create the database if it does not exist and apply your Migration
+                context.Database.Migrate();
+
+                //This approach to seeding data uses int and string arrays with loops to
+                //create the data using random values
+                Random random = new Random();
+
                 // Seed Commitees if there arent any.
                 if (!context.Commitees.Any())
                 {
