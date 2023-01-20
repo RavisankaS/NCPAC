@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NCPAC_LambdaX.Data;
 
+//LambdaX
+//NCPAC Niagara College Project
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
