@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Members</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -16,19 +16,7 @@
                 @Html.DisplayNameFor(model => model.MemberName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HomeAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkPhone)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.WorkEmail)
@@ -37,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.PrefferedEmail)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsNCGrad)
+                <label>NC Grad?</label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateJoined)
@@ -55,28 +43,7 @@
                 @Html.DisplayFor(modelItem => item.MemberName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HomeAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Province)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkPhone)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WorkEmail)
@@ -86,9 +53,6 @@
             </td>
             <td>
                 @Html.CheckBoxFor(modelItem => item.IsNCGrad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OccupationalSummary)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateJoined)

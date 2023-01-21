@@ -2,7 +2,83 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NCPAC</title>
+    <style>
+        /* Add styles for white and blue color theme */
+        body {
+            background-color: white;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/003/557/257/original/abstract-blue-and-gray-wave-background-free-vector.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #0077be;
+        }
+
+        a {
+            color: #0077be;
+            text-decoration: none;
+        }
+        /* Add CSS for complex components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 25%;
+            background-color: white;
+            border: 1px solid ##006ba1;
+            padding: 20px;
+            margin: 20px;
+        }
+        h1{
+            margin-top: 4%;
+            margin-bottom: 2%;
+        }
+
+            .card img {
+                width: 100%;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to NCPAC Manager</h1>
+        <br />
+        <p>It is critical to Niagara College to have input from all stakeholders, internal and external, to ensure quality and ongoing improvement in our programs. <br /> Both practices and processes ensure standardized and regular quantitative and qualitative data from stakeholder is gathered to inform plans and actions with <br /> regards to continuous improvement.</p>
+        <div class="card">
+            <h2>Join Us</h2>
+            <p>Fill up the following form and email it to us by clicking on the contact us card.</p>
+            <a href="">Download</a>
+        </div>
+        <div class="card">
+            <h2>Our Cause</h2>
+            <p>Visit the following link to see our educational achivements.</p>
+            <a href="https://www.niagaracollege.ca/cae/eddev/" target="_blank">Learn More</a>
+        </div>
+        <div class="card">
+            <h2>Our Policies</h2>
+            <p>Review this document to understand our policies and guidelines.</p>
+            <a href="https://www.niagaracollege.ca/policies/wp-content/uploads/sites/123/2019/10/Program-Advisory-Committees-Policy.pdf" target="_blank">Learn More</a>
+        </div>
+        <div class="card">
+            <h2>About PAC</h2>
+            <p>Learn more about our mission, history, and leadership at NCPAC.</p>
+            <a href="https://www.niagaracollege.ca/cae/academic-quality/assessment/" target="_blank">Learn More</a>
+        </div>
+        <div class="card">
+            <h2>Contact Us</h2>
+            <p>Contact us to obtain more information about NCPAC and its community.</p>
+            <a href="mailto: ncpacinfo@niagaracollege.ca">Email</a>
+        </div>
+    </div>
+</body>
+</html>
