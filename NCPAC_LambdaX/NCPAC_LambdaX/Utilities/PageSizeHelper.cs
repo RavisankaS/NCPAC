@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
+<<<<<<< HEAD
 namespace MVC_Music.Utilities
+=======
+namespace NCPAC_LambdaX.Utilities
+>>>>>>> 0ca81c02b436ae351968fa01d3811f31f2045163
 {
     public static class PageSizeHelper
     {
@@ -16,7 +20,11 @@ namespace MVC_Music.Utilities
         /// <param name="pageSizeID">the pageSizeID value from the Request</param>
         /// <param name="ControllerName">the name of the Controller</param>
         /// <returns></returns>
+<<<<<<< HEAD
         public static int SetPageSize(HttpContext httpContext, int? pageSizeID, string? ControllerName)
+=======
+        public static int SetPageSize(HttpContext httpContext, int? pageSizeID, string ControllerName)
+>>>>>>> 0ca81c02b436ae351968fa01d3811f31f2045163
         {
             //
             int pageSize = 0;
@@ -50,4 +58,8 @@ namespace MVC_Music.Utilities
             return new SelectList(new[] { "3", "5", "10", "20", "30", "40", "50", "100", "500" }, pageSize.ToString());
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0ca81c02b436ae351968fa01d3811f31f2045163
 }

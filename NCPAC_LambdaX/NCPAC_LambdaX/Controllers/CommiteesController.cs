@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
+using NCPAC_LambdaX.Utilities;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -20,9 +23,80 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Commitees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchCommitee, string SearchDivision,int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Commitee")
         {
-              return View(await _context.Commitees.ToListAsync());
+            ViewData["Filtering"] = "";
+
+            //List of sort options.
+            //NOTE: make sure this array has matching values to the column headings
+            string[] sortOptions = new[] { "Commitee","Division" };
+
+            var commitees = _context.Commitees
+              .AsNoTracking();
+
+            if (!String.IsNullOrEmpty(SearchCommitee))
+            {
+                commitees = commitees.Where(p => p.CommiteeName.ToUpper().Contains(SearchCommitee.ToUpper()));
+                ViewData["Filtering"] = "show";
+            }
+            if (!String.IsNullOrEmpty(SearchDivision))
+            {
+                commitees = commitees.Where(p => p.Division.ToUpper().Contains(SearchDivision.ToUpper()));
+                ViewData["Filtering"] = "show";
+            }
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;//Reset page to start
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by
+            if (sortField == "Commitee")
+            {
+                if (sortDirection == "asc")
+                {
+                    commitees = commitees
+                        .OrderByDescending(p => p.CommiteeName);
+                }
+                else
+                {
+                    commitees = commitees
+                        .OrderBy(p => p.CommiteeName);
+                }
+            }
+            else if (sortField == "Division")
+            {
+                if (sortDirection == "asc")
+                {
+                    commitees = commitees
+                        .OrderByDescending(p => p.Division);
+                }
+                else
+                {
+                    commitees = commitees
+                        .OrderBy(p => p.Division);
+                }
+            }
+
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            ViewBag.sortFieldID = new SelectList(sortOptions, sortField.ToString());
+
+            //Handle Paging
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "musicians");
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Commitee>.CreateAsync(commitees.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Commitees/Details/5
