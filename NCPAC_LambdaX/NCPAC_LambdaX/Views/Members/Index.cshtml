@@ -9,105 +9,156 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MemberName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrefferedEmail)
-            </th>
-            <th>
-                <label>NC Grad?</label>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateJoined)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MemberCommitees)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberName)
-            </td>
-            <td>
-                    @{
-                        if ((item.Email != null) && (item.WorkEmail != null))
-                        {
-                            if((item.PrefferedEmail == "Work") || (item.PrefferedEmail == "work"))
+<form asp-action="Index" method="get">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Filter/Search
+        </button>
+        <div class="collapse @(ViewData["Filtering"])" id="collapseFilter">
+            <div class="card card-body bg-light">
+                <div class="row">
+                    <div class="form-group col-md-5">
+                        <label class="control-label">Search By Name:</label>
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label class="control-label">Search By Commitee:</label>
+                        @Html.TextBox("SearchString4", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Filter NC Grads:</label><br />
+                        @Html.CheckBox("IsNCGrad", false, htmlAttributes: new { @class="checkbox" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Search Email:</label>
+                            @Html.TextBox("SearchString2", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Search By Address:</label>
+                        @Html.TextBox("SearchString3", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4 align-self-end">
+                        <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
+                        <a asp-action="Index" class="btn btn-outline-dark">Clear</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="submit" name="actionButton" value="Member" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Preffered Email" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Is NC Grad?" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Date Joined" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Committees" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Home Address" class="btn btn-link" />
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberName)
+                </td>
+                <td>
+                        @{
+                            if ((item.Email != null) && (item.WorkEmail != null))
                             {
-                                @Html.DisplayFor(modelItem => item.WorkEmail)
+                                if((item.PrefferedEmail == "Work") || (item.PrefferedEmail == "work"))
+                                {
+                                    @Html.DisplayFor(modelItem => item.WorkEmail)
+                                }
+                                else if((item.PrefferedEmail == "Personal") || (item.PrefferedEmail == "personal"))
+                                {
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.WorkEmail)
+                                }
+                            
                             }
-                            else if((item.PrefferedEmail == "Personal") || (item.PrefferedEmail == "personal"))
+                            else{
+                        
+                                if ((item.Email == null) && (item.WorkEmail != null))
+                                {
+                                    @Html.DisplayFor(modelItem => item.WorkEmail)
+                                }
+                                else if ((item.Email != null) && (item.WorkEmail == null))
+                                {
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                }
+                            }
+                         }
+                </td>
+                <td>
+                        @Html.CheckBoxFor(modelItem => item.IsNCGrad, new { @disabled = "disabled"})
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateJoined)
+                </td>
+                <td>
+                    @{
+                        int playCount = item.MemberCommitees.Count;
+                        if (playCount > 0)
+                        {
+                            string firstPlay = item.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
+                            if (playCount > 1)
                             {
-                                @Html.DisplayFor(modelItem => item.Email)
+                                string playList = "";
+                                var c = item.MemberCommitees.ToList();
+                                for (int i = 1; i < playCount; i++)//Skip the first because we have it already
+                                {
+                                    playList += c[i].Commitee.CommiteeName + " <br />";
+                                }
+                                <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                        aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                    @firstPlay <span class="badge bg-info">@playCount</span>
+                                </a>
+                                <div class="collapse" id="collapseHistory@(item.ID)">
+                                    @Html.Raw(playList)
+                                </div>
                             }
                             else
                             {
-                                @Html.DisplayFor(modelItem => item.WorkEmail)
+                                @firstPlay
                             }
-                            
-                        }
-                        else{
-                        
-                            if ((item.Email == null) && (item.WorkEmail != null))
-                            {
-                                @Html.DisplayFor(modelItem => item.WorkEmail)
-                            }
-                            else if ((item.Email != null) && (item.WorkEmail == null))
-                            {
-                                @Html.DisplayFor(modelItem => item.Email)
-                            }
-                        }
-                     }
-            </td>
-            <td>
-                @Html.CheckBoxFor(modelItem => item.IsNCGrad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateJoined)
-            </td>
-            <td>
-                @{
-                    int playCount = item.MemberCommitees.Count;
-                    if (playCount > 0)
-                    {
-                        string firstPlay = item.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
-                        if (playCount > 1)
-                        {
-                            string playList = "";
-                            var c = item.MemberCommitees.ToList();
-                            for (int i = 1; i < playCount; i++)//Skip the first because we have it already
-                            {
-                                playList += c[i].Commitee.CommiteeName + " <br />";
-                            }
-                            <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
-                    aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
-                                @firstPlay <span class="badge bg-info">@playCount</span>
-                            </a>
-                            <div class="collapse" id="collapseHistory@(item.ID)">
-                                @Html.Raw(playList)
-                            </div>
-                        }
-                        else
-                        {
-                            @firstPlay
                         }
                     }
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.HomeAddress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    <partial name="_PagingNavBar" />
+</form>

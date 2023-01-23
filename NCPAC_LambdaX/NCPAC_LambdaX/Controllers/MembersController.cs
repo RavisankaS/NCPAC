@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using MVC_Music.Utilities;
 using MVC_Music.ViewModels;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
@@ -22,12 +24,107 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, string SearchString4, string SearchString2, string SearchString3, bool IsNcGrad, int? CommiteeIDVal,
+            int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Members")
         {
+            CookieHelper.CookieSet(HttpContext, "MembersController" + "URL", "", -1);
+
+            ViewData["Filtering"] = "";
+
+            string[] sortOptions = new[] { "Member", "Date Joined", "Home Address" };
+
             var members = _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee)
                 .AsNoTracking();
-            return View(await members.ToListAsync());
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                members = members.Where(p => p.Salutation.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.LastName.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.FirstName.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.MiddleName.ToUpper().Contains(SearchString.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchString2))
+            {
+                members = members.Where(p => p.Email.Contains(SearchString2) || p.WorkEmail.Contains(SearchString2));
+            }
+            if (!String.IsNullOrEmpty(SearchString3))
+            {
+                members = members.Where(p => p.HomeAddress.Contains(SearchString3));
+            }
+            if (IsNcGrad == true)
+            {
+                members = members.Where(p => p.IsNCGrad == true);
+            }
+            if (CommiteeIDVal.HasValue)
+            {
+                members = members.Where(p => p.MemberCommitees.Any(p => p.CommiteeID == CommiteeIDVal));
+                ViewData["Filtering"] = " show";
+            }
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;//Reset page start
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Date Joined")
+            {
+                if (sortDirection == "asc")
+                {
+                    members = members
+                        .OrderBy(p => p.DateJoined);
+                }
+                else
+                {
+                    members = members
+                       .OrderByDescending(p => p.DateJoined);
+                }
+            }
+            else if (sortField == "Home Address")
+            {
+                if (sortDirection == "asc")
+                {
+                    members = members
+                        .OrderBy(p => p.StreetAddress).ThenBy(p => p.City).ThenBy(p => p.PostalCode).ThenBy(p => p.Province);
+                }
+                else
+                {
+                    members = members
+                       .OrderByDescending(p => p.StreetAddress).ThenBy(p => p.City).ThenBy(p => p.PostalCode).ThenBy(p => p.Province);
+                }
+            }
+            else //Sorting by Patient Name
+            {
+                if (sortDirection == "asc")
+                {
+                    members = members
+                        .OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ThenBy(p => p.MiddleName);
+                }
+                else
+                {
+                    members = members
+                       .OrderByDescending(p => p.LastName).ThenBy(p => p.FirstName).ThenBy(p => p.MiddleName); 
+                }
+            }
+
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "Musicians");
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+
+            var pagedData = await PaginatedList<Member>.CreateAsync(members.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Members/Details/5
@@ -134,7 +231,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,Province,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvince,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] string[] selectedOptions)
         {
             var memberToUpdate = await _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(p => p.Commitee)
@@ -144,13 +241,13 @@ namespace NCPAC_LambdaX.Controllers
             UpdateMemberCommitees(selectedOptions, memberToUpdate);
 
             //Try updating it with the values posted
-            //if (await TryUpdateModelAsync<Member>(memberToUpdate, "",
-             //   p => p.FirstName, p => p.MiddleName, p => p.LastName, p => p.DateJoined, p => p.StreetAddress, p => p.WorkStreetAddress, p => p.City, p => p.WorkCity,
-            //    p => p.PostalCode, p => p.WorkPostalCode, p => p.Province, p => p.WorkProvince, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.PrefferedEmail,
-            //    p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation))
-            //{
+            if (await TryUpdateModelAsync<Member>(memberToUpdate, "",
+                p => p.FirstName, p => p.MiddleName, p => p.LastName, p => p.DateJoined, p => p.StreetAddress, p => p.WorkStreetAddress, p => p.City, p => p.WorkCity,
+                p => p.PostalCode, p => p.WorkPostalCode, p => p.Province, p => p.WorkProvince, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.PrefferedEmail,
+                p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation))
+            {
                 
-            //}
+            }
             try
             {
                 await _context.SaveChangesAsync();
@@ -281,5 +378,6 @@ namespace NCPAC_LambdaX.Controllers
                 }
             }
         }
+
     }
 }
