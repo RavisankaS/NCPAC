@@ -131,11 +131,7 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Date Joined")]
         public DateTime? DateJoined { get; set; }
 
-        [Display(Name = "Commitee")]
-        [Required(ErrorMessage = "You must select a Commitee for every member.")]
-        public int CommiteeID { get; set; }
-
-        [Display(Name = "Commitee")]
-        public Commitee? Commitee { get; set; }
+        [Display(Name = "Commitees")]
+        public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
     }
 }

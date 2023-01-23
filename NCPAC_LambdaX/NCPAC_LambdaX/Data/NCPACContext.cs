@@ -15,18 +15,18 @@ namespace NCPAC_LambdaX.Data
 
         public DbSet<Commitee> Commitees { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<MemberCommitee> MemberCommitees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MemberCommitee>()
+            .HasKey(p => new { p.MemberID, p.CommiteeID });
 
-
-            modelBuilder.Entity<Commitee>()
-                .HasMany<Member>(d => d.Members)
-                .WithOne(p => p.Commitee)
-                .HasForeignKey(p => p.CommiteeID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<MemberCommitee>()
+            .HasOne(mc => mc.Member)
+            .WithMany(m => m.MemberCommitees)
+            .HasForeignKey(mc => mc.MemberID)
+            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

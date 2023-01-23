@@ -16,12 +16,6 @@
                 @Html.DisplayNameFor(model => model.MemberName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkEmail)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PrefferedEmail)
             </th>
             <th>
@@ -31,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.DateJoined)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Commitee)
+                @Html.DisplayNameFor(model => model.MemberCommitees)
             </th>
             <th></th>
         </tr>
@@ -43,13 +37,35 @@
                 @Html.DisplayFor(modelItem => item.MemberName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrefferedEmail)
+                    @{
+                        if ((item.Email != null) && (item.WorkEmail != null))
+                        {
+                            if((item.PrefferedEmail == "Work") || (item.PrefferedEmail == "work"))
+                            {
+                                @Html.DisplayFor(modelItem => item.WorkEmail)
+                            }
+                            else if((item.PrefferedEmail == "Personal") || (item.PrefferedEmail == "personal"))
+                            {
+                                @Html.DisplayFor(modelItem => item.Email)
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.WorkEmail)
+                            }
+                            
+                        }
+                        else{
+                        
+                            if ((item.Email == null) && (item.WorkEmail != null))
+                            {
+                                @Html.DisplayFor(modelItem => item.WorkEmail)
+                            }
+                            else if ((item.Email != null) && (item.WorkEmail == null))
+                            {
+                                @Html.DisplayFor(modelItem => item.Email)
+                            }
+                        }
+                     }
             </td>
             <td>
                 @Html.CheckBoxFor(modelItem => item.IsNCGrad)
@@ -58,7 +74,33 @@
                 @Html.DisplayFor(modelItem => item.DateJoined)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Commitee.CommiteeName)
+                @{
+                    int playCount = item.MemberCommitees.Count;
+                    if (playCount > 0)
+                    {
+                        string firstPlay = item.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
+                        if (playCount > 1)
+                        {
+                            string playList = "";
+                            var c = item.MemberCommitees.ToList();
+                            for (int i = 1; i < playCount; i++)//Skip the first because we have it already
+                            {
+                                playList += c[i].Commitee.CommiteeName + " <br />";
+                            }
+                            <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                    aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                @firstPlay <span class="badge bg-info">@playCount</span>
+                            </a>
+                            <div class="collapse" id="collapseHistory@(item.ID)">
+                                @Html.Raw(playList)
+                            </div>
+                        }
+                        else
+                        {
+                            @firstPlay
+                        }
+                    }
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

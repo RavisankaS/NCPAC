@@ -53,8 +53,7 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "Medlina",
                         LastName = "Grande",
                         Phone = "2435436547",
-                        DateJoined = DateTime.Parse("1991-02-09"),
-                        CommiteeID = 1
+                        DateJoined = DateTime.Parse("1991-02-09")
                     },
                     new Member
                     {
@@ -62,8 +61,7 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "Sebestian",
                         LastName = "John",
                         Phone = "243534243",
-                        DateJoined = DateTime.Parse("1943-09-12"),
-                        CommiteeID = 2
+                        DateJoined = DateTime.Parse("1943-09-12")
                     },
                     new Member
                     {
@@ -71,8 +69,7 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "Nas",
                         LastName = "X",
                         Phone = "6543455678",
-                        DateJoined = DateTime.Parse("1987-08-10"),
-                        CommiteeID = 2
+                        DateJoined = DateTime.Parse("1987-08-10")
                     },
                     new Member
                     {
@@ -80,8 +77,7 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "A",
                         LastName = "Malik",
                         Phone = "3455466544",
-                        DateJoined = DateTime.Parse("1999-01-10"),
-                        CommiteeID = 3
+                        DateJoined = DateTime.Parse("1999-01-10")
                     },
                     new Member
                     {
@@ -89,13 +85,69 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "Lidiya",
                         LastName = "Clearkson",
                         Phone = "2343455436",
-                        DateJoined = DateTime.Parse("1984-12-08"),
-                        CommiteeID = 4
+                        DateJoined = DateTime.Parse("1984-12-08")
                     });
                     context.SaveChanges();
                 }
 
-                
+                // If no Members seed some.
+                if (!context.MemberCommitees.Any())
+                {
+                    context.MemberCommitees.AddRange(
+                    new MemberCommitee
+                    {
+                        MemberID = 3,
+                        CommiteeID = 2                        
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 3,
+                        CommiteeID = 1
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 3,
+                        CommiteeID = 3
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 1,
+                        CommiteeID = 4
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 2,
+                        CommiteeID = 1
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 2,
+                        CommiteeID = 2
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 1,
+                        CommiteeID = 3
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 4,
+                        CommiteeID = 3
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 4,
+                        CommiteeID = 4
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 5,
+                        CommiteeID = 2
+                    });
+                    context.SaveChanges();
+                }
+
+
 
             }
             catch (Exception ex)

@@ -34,6 +34,8 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             var commitee = await _context.Commitees
+                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Member)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (commitee == null)
             {

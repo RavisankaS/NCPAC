@@ -21,7 +21,7 @@ namespace NCPAC_LambdaX.Models
         public string Division { get; set; }
 
         [Display(Name = "Members")]
-        public ICollection<Member> Members { get; set; } = new HashSet<Member>();
+        public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
 
     }
 }

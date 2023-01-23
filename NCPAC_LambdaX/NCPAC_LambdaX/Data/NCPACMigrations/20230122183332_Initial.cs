@@ -49,33 +49,53 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     EducationalSummary = table.Column<string>(type: "TEXT", nullable: true),
                     IsNCGrad = table.Column<bool>(type: "INTEGER", nullable: false),
                     OccupationalSummary = table.Column<string>(type: "TEXT", nullable: true),
-                    DateJoined = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false)
+                    DateJoined = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Members", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MemberCommitees",
+                columns: table => new
+                {
+                    MemberID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MemberCommitees", x => new { x.MemberID, x.CommiteeID });
                     table.ForeignKey(
-                        name: "FK_Members_Commitees_CommiteeID",
+                        name: "FK_MemberCommitees_Commitees_CommiteeID",
                         column: x => x.CommiteeID,
                         principalTable: "Commitees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MemberCommitees_Members_MemberID",
+                        column: x => x.MemberID,
+                        principalTable: "Members",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Members_CommiteeID",
-                table: "Members",
+                name: "IX_MemberCommitees_CommiteeID",
+                table: "MemberCommitees",
                 column: "CommiteeID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "MemberCommitees");
 
             migrationBuilder.DropTable(
                 name: "Commitees");
+
+            migrationBuilder.DropTable(
+                name: "Members");
         }
     }
 }

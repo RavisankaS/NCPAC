@@ -136,11 +136,37 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateJoined)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Commitee)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MemberCommitees)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Commitee.CommiteeName)
+        <dd class="col-sm-10">
+            @{
+                int playCount = Model.MemberCommitees.Count;
+                if (playCount > 0)
+                {
+                    string firstPlay = Model.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
+                    if (playCount > 1)
+                    {
+                        string playList = "";
+                        var c = Model.MemberCommitees.ToList();
+                        for (int i = 1; i < playCount; i++)//Skip the first because we have it already
+                        {
+                            playList += c[i].Commitee.CommiteeName + " <br />";
+                        }
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                            @firstPlay <span class="badge bg-info">@playCount</span>
+                        </a>
+                        <div class="collapse" id="collapseHistory@(Model.ID)">
+                            @Html.Raw(playList)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstPlay
+                    }
+                }
+            }
         </dd>
     </dl>
 </div>

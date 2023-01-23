@@ -48,9 +48,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CommiteeID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime?>("DateJoined")
                         .HasColumnType("TEXT");
 
@@ -127,25 +124,51 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CommiteeID");
-
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
+            modelBuilder.Entity("NCPAC_LambdaX.Models.MemberCommitee", b =>
+                {
+                    b.Property<int>("MemberID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CommiteeID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MemberID", "CommiteeID");
+
+                    b.HasIndex("CommiteeID");
+
+                    b.ToTable("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.MemberCommitee", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.Commitee", "Commitee")
-                        .WithMany("Members")
+                        .WithMany("MemberCommitees")
                         .HasForeignKey("CommiteeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NCPAC_LambdaX.Models.Member", "Member")
+                        .WithMany("MemberCommitees")
+                        .HasForeignKey("MemberID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Commitee");
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
                 {
-                    b.Navigation("Members");
+                    b.Navigation("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
+                {
+                    b.Navigation("MemberCommitees");
                 });
 #pragma warning restore 612, 618
         }
