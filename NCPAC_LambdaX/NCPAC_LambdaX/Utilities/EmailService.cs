@@ -30,8 +30,6 @@ namespace NCPAC_LambdaX.Utilities
         /// <returns></returns>
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            if(email.Contains("niagaracollege.ca"))
-            {
                 var message = new MimeMessage();
                 message.To.Add(new MailboxAddress(email, email));
                 message.From.Add(new MailboxAddress(_emailConfiguration.SmtpFromName, _emailConfiguration.SmtpUsername));
@@ -63,7 +61,6 @@ namespace NCPAC_LambdaX.Utilities
                     _logger.LogError(ex.GetBaseException().Message);
                 }
             }
-        }
     }
 
 }
