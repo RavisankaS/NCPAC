@@ -33,17 +33,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label class="control-label">Search Email:</label>
                             @Html.TextBox("SearchString2", null, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-5">
                         <label class="control-label">Search By Address:</label>
                         @Html.TextBox("SearchString3", null, new { @class = "form-control" })
                     </div>
-                    <div class="form-group col-md-4 align-self-end">
+                    <div class="form-group col-md-2 align-self-end">
                         <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
                         <a asp-action="Index" class="btn btn-outline-dark">Clear</a>
                     </div>
