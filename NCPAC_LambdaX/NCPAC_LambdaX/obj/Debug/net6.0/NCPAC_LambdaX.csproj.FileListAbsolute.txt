@@ -7,6 +7,7 @@ C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bi
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NCPAC_LambdaX.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NCPAC_LambdaX.pdb
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Humanizer.dll
+C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\MailKit.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\MessagePack.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\MessagePack.Annotations.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -43,6 +44,7 @@ C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bi
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Sqlite.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
@@ -63,6 +65,7 @@ C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bi
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\MimeKit.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NuGet.Common.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NuGet.Configuration.dll
@@ -73,6 +76,7 @@ C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bi
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NuGet.ProjectModel.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NuGet.Protocol.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\NuGet.Versioning.dll
+C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\SQLitePCLRaw.batteries_v2.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\SQLitePCLRaw.core.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\SQLitePCLRaw.provider.e_sqlite3.dll
@@ -84,6 +88,7 @@ C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bi
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Drawing.Common.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Runtime.Caching.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Security.Permissions.dll
@@ -291,5 +296,3 @@ C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\ob
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\NCPAC_LambdaX.pdb
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\NCPAC_LambdaX.genruntimeconfig.cache
 C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\ref\NCPAC_LambdaX.dll
-C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\Banuka Ambegoda\Desktop\New folder\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
