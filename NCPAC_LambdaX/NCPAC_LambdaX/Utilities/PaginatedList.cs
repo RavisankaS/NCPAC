@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-<<<<<<< HEAD
-namespace MVC_Music.Utilities
-=======
 namespace NCPAC_LambdaX.Utilities
->>>>>>> 0ca81c02b436ae351968fa01d3811f31f2045163
 {
     public class PaginatedList<T> : List<T>
     {
@@ -39,16 +35,6 @@ namespace NCPAC_LambdaX.Utilities
         {
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-<<<<<<< HEAD
-=======
-            if(items.Count()==0 && count>0 && pageIndex>1)
-            {
-                //If there are no items to show on a page, but there is data and you are not already 
-                //on the first page, then move back a page and get the data again.
-                pageIndex--;
-                items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            }
->>>>>>> 0ca81c02b436ae351968fa01d3811f31f2045163
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }

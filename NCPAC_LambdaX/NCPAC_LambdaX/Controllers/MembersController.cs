@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using MVC_Music.Utilities;
-using MVC_Music.ViewModels;
+using NCPAC_LambdaX.Utilities;
+using NCPAC_LambdaX.ViewModels;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
 

@@ -1,4 +1,4 @@
-﻿namespace MVC_Music.ViewModels
+﻿namespace NCPAC_LambdaX.ViewModels
 {
     public class CheckOptionVM
     {

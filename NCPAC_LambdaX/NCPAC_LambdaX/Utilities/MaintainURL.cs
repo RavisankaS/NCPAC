@@ -1,4 +1,4 @@
-﻿namespace MVC_Music.Utilities
+﻿namespace NCPAC_LambdaX.Utilities
 {
     public static class MaintainURL
     {
