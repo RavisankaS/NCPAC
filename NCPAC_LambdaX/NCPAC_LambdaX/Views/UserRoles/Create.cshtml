@@ -1,4 +1,4 @@
-﻿@model NCPAC_LambdaX.Models.Commitee
+﻿@model NCPAC_LambdaX.ViewModels.UserVM
 
 @{
     ViewData["Title"] = "Create";
@@ -13,14 +13,14 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CommiteeName" class="control-label"></label>
-                <input asp-for="CommiteeName" class="form-control" />
-                <span asp-validation-for="CommiteeName" class="text-danger"></span>
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Division" class="control-label"></label>
-                <input asp-for="Division" class="form-control" />
-                <span asp-validation-for="Division" class="text-danger"></span>
+                <label asp-for="UserRoles" class="control-label"></label>
+                <input asp-for="UserRoles" class="form-control" />
+                <span asp-validation-for="UserRoles" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -28,10 +28,13 @@
         </form>
     </div>
 </div>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
