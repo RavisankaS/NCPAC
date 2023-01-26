@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.ViewModels;
+using NCPAC_LambdaX.Models;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -38,6 +39,7 @@ namespace NCPAC_LambdaX.Controllers
             return View(users);
         }
 
+
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -63,6 +65,28 @@ namespace NCPAC_LambdaX.Controllers
                 ViewData["NoSubmit"] = "disabled=disabled";
             }
             return View(user);
+        }
+
+        // GET: Roles/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Roles/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,UserName,Roles")] UserVM userVM)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(userVM);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(userVM);
         }
 
         // POST: Users/Edit/5
@@ -161,6 +185,42 @@ namespace NCPAC_LambdaX.Controllers
             }
         }
 
+        // GET: Commitees/Delete/5
+        /*public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.UserRoles == null)
+            {
+                return NotFound();
+            }
+
+            var userRoles = await _context.UserRoles
+                .FirstOrDefaultAsync(m => m.UserId == id);
+            if (userRoles == null)
+            {
+                return NotFound();
+            }
+
+            return View(userRoles);
+        }*/
+
+        // POST: Commitees/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.UserRoles == null)
+            {
+                return Problem("Entity set 'NCPACContext.Commitees'  is null.");
+            }
+            var userRoles = await _context.UserRoles.FindAsync(id);
+            if (userRoles != null)
+            {
+                _context.UserRoles.Remove(userRoles);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
