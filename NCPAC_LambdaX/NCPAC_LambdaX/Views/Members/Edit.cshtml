@@ -9,10 +9,12 @@
 <h4>Member</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-20">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
+            <div class="row">
+            <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -62,12 +64,17 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>            
             </div>
+            <div class="col-md-4">            
+            <label><b>Work Information</b></label>
+            <br />
+            <div class="border border-dark" style="padding:2%">
             <div class="form-group">
                 <label asp-for="WorkStreetAddress" class="control-label"></label>
                 <input asp-for="WorkStreetAddress" class="form-control" />
                 <span asp-validation-for="WorkStreetAddress" class="text-danger"></span>
-            </div>
+            </div>          
             <div class="form-group">
                 <label asp-for="WorkCity" class="control-label"></label>
                 <input asp-for="WorkCity" class="form-control" />
@@ -93,6 +100,8 @@
                 <input asp-for="WorkEmail" class="form-control" />
                 <span asp-validation-for="WorkEmail" class="text-danger"></span>
             </div>
+            </div>
+            <br />
             <div class="form-group">
                 <label asp-for="PrefferedEmail" class="control-label"></label>
                 <input asp-for="PrefferedEmail" class="form-control" />
@@ -100,25 +109,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="EducationalSummary" class="control-label"></label>
-                <input asp-for="EducationalSummary" class="form-control" />
+                @Html.TextAreaFor(model => model.EducationalSummary, new { @class = "form-control", @rows = 4 })
                 <span asp-validation-for="EducationalSummary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsNCGrad" class="control-label"></label>
-                <input asp-for="IsNCGrad" />
-                <span asp-validation-for="IsNCGrad" class="text-danger"></span>
-            </div>
+            </div>           
+            </div> 
+            <div class="col-md-4">                             
             <div class="form-group">
                 <label asp-for="OccupationalSummary" class="control-label"></label>
-                <input asp-for="OccupationalSummary" class="form-control" />
+                @Html.TextAreaFor(model => model.OccupationalSummary, new { @class = "form-control", @rows = 4 })
                 <span asp-validation-for="OccupationalSummary" class="text-danger"></span>
-            </div>
+            </div> 
             <div class="form-group">
                 <label asp-for="DateJoined" class="control-label"></label>
                 <input asp-for="DateJoined" class="form-control" />
                 <span asp-validation-for="DateJoined" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top:2%">
                 <label class="control-label"><b>@Html.DisplayNameFor(model => model.MemberCommitees)</b></label>
                 <div class="col-md-offset-1">
                     <table>
@@ -145,15 +151,25 @@
                         </table>
                     </div>
                 </div>
+                
+            <div class="form-group">
+                <label class="control-label" style="margin-top:3%"><b>@Html.DisplayNameFor(model => model.IsNCGrad)</b> : &nbsp;</label>
+                <input asp-for="IsNCGrad" />
+                <span asp-validation-for="IsNCGrad" class="text-danger"></span>
+            </div>            
+            </div>
+            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary" style="margin-top:1%">Back to List</a>
 </div>
 
 @section Scripts {
