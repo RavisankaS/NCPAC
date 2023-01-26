@@ -7,7 +7,7 @@
 <h1>Members</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
@@ -55,22 +55,22 @@
         <thead>
             <tr>
                 <th>
-                    <input type="submit" name="actionButton" value="Member" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Member" class="btn btn-secondary" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Preffered Email" class="btn btn-link" />
+                    <input type="submit" disabled="disabled" value="Preffered Email" class="btn btn-light" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Is NC Grad?" class="btn btn-link" />
+                    <input type="submit" disabled="disabled" value="Is NC Grad?" class="btn btn-light" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Date Joined" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Date Joined" class="btn btn-secondary" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Committees" class="btn btn-link" />
+                    <input type="submit" disabled="disabled" value="Committees" class="btn btn-light" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Home Address" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Home Address" class="btn btn-secondary" />
                 </th>
                 <th></th>
             </tr>

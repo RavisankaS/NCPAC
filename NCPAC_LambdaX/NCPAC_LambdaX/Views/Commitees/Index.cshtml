@@ -7,7 +7,7 @@
 <h1>Committees</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
@@ -40,16 +40,10 @@
         <thead>
             <tr>
                 <th>
-                    <input type="submit" name="actionButton" value="Commitee" class="btn btn-link"/>
+                    <input type="submit" name="actionButton" value="Commitee" class="btn btn-secondary" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Division" class="btn btn-link" />
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CommiteeName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Division)
+                    <input type="submit" name="actionButton" value="Division" class="btn btn-secondary" />
                 </th>
                 <th></th>
             </tr>
