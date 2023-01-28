@@ -11,6 +11,7 @@ using NCPAC_LambdaX.Utilities;
 using NCPAC_LambdaX.ViewModels;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
+using OfficeOpenXml;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -322,6 +323,69 @@ namespace NCPAC_LambdaX.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
+        {
+            //Note: This is a very basic example and has 
+            //no ERROR HANDLING.  It also assumes that
+            //duplicate values are allowed, both in the 
+            //uploaded data and the DbSet.
+            ExcelPackage excel;
+            using (var memoryStream = new MemoryStream())
+            {
+                await theExcel.CopyToAsync(memoryStream);
+                excel = new ExcelPackage(memoryStream);
+            }
+            var workSheet = excel.Workbook.Worksheets[0];
+            var start = workSheet.Dimension.Start;
+            var end = workSheet.Dimension.End;
+
+            //Start a new list to hold imported objects
+            List<Member> members = new List<Member>();
+
+            string middleName = "";
+            bool ncgrad = false;
+
+            for (int row = start.Row; row <= end.Row; row++)
+            {
+                if (workSheet.Cells[row, 2].Text.Split(' ').Count() > 2)
+                {
+                    middleName = workSheet.Cells[row, 2].Text.Split(' ')[1];
+                }
+                if ((workSheet.Cells[row, 6].Text.Contains("Yes")) || (workSheet.Cells[row, 6].Text.Contains("yes")))
+                {
+                    ncgrad = true;
+                }
+                else if ((workSheet.Cells[row, 6].Text.Contains("No")) || (workSheet.Cells[row, 6].Text.Contains("no")))
+                {
+                    ncgrad = false;
+                }
+                // Row by row...
+                Member a = new Member
+                {
+                    Salutation = workSheet.Cells[row, 1].Text,
+                    FirstName = workSheet.Cells[row, 2].Text.Split(' ')[0],
+                    LastName = workSheet.Cells[row, 2].Text.Split(' ')[^1],
+                    MiddleName = middleName,
+                    Email = workSheet.Cells[row, 3].Text,
+                    WorkEmail = workSheet.Cells[row, 4].Text,
+                    PrefferedEmail = workSheet.Cells[row, 5].Text,
+                    IsNCGrad = ncgrad,
+                    DateJoined = DateTime.Parse(workSheet.Cells[row, 7].Text),
+                    StreetAddress = workSheet.Cells[row, 8].Text,
+                    City = workSheet.Cells[row, 9].Text,
+                    Province = workSheet.Cells[row, 10].Text,
+                    PostalCode = workSheet.Cells[row, 11].Text,
+
+                };
+                members.Add(a);
+            }
+            _context.Members.AddRange(members);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
         }
 
         private bool MemberExists(int id)
