@@ -47,6 +47,61 @@ namespace NCPAC_LambdaX.Data
                     {
                         CommiteeName = "Computer, Electrical & Electronics Engineering",
                         Division = "Technology"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Computer Programming",
+                        Division = "Media"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Game Developement",
+                        Division = "Media"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Graphic Design",
+                        Division = "Media"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Public Relations",
+                        Division = "Media"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Social Media Management",
+                        Division = "Media"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Hair Styling",
+                        Division = "Trades"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Motive Power",
+                        Division = "Trades"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Carpentry and Rennovation",
+                        Division = "Trades"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Mechanical Techniques",
+                        Division = "Trades"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Welding Skills",
+                        Division = "Trades"
+                    },
+                    new Commitee
+                    {
+                        CommiteeName = "Electrical Technician",
+                        Division = "Trades"
                     }
 
                     );
@@ -59,27 +114,36 @@ namespace NCPAC_LambdaX.Data
                     context.Members.AddRange(
                     new Member
                     {
+                        Salutation = "Mrs.",
                         FirstName = "Ariana",
                         MiddleName = "Medlina",
                         LastName = "Grande",
                         Phone = "2435436547",
-                        DateJoined = DateTime.Parse("1991-02-09")
+                        DateJoined = DateTime.Parse("1991-02-09"),
+                        Province = "AB",
+                        Email = "agrande@outlook.com"
                     },
                     new Member
                     {
+                        Salutation = "Mrs.",
                         FirstName = "Elton",
                         MiddleName = "Sebestian",
                         LastName = "John",
                         Phone = "243534243",
-                        DateJoined = DateTime.Parse("1943-09-12")
+                        DateJoined = DateTime.Parse("1943-09-12"),
+                        Province = "AB",
+                        Email = "ejohn@outlook.com"
                     },
                     new Member
                     {
+                        Salutation = "Mr.",
                         FirstName = "Lil",
                         MiddleName = "Nas",
                         LastName = "X",
                         Phone = "6543455678",
-                        DateJoined = DateTime.Parse("1987-08-10")
+                        DateJoined = DateTime.Parse("1987-08-10"),
+                        Province = "AB",
+                        Email = "lx@outlook.com"
                     },
                     new Member
                     {
@@ -87,7 +151,9 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "A",
                         LastName = "Malik",
                         Phone = "3455466544",
-                        DateJoined = DateTime.Parse("1999-01-10")
+                        DateJoined = DateTime.Parse("1999-01-10"),
+                        Province = "AB",
+                        Email = "zmalik@outlook.com"
                     },
                     new Member
                     {
@@ -95,7 +161,116 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "Lidiya",
                         LastName = "Clearkson",
                         Phone = "2343455436",
-                        DateJoined = DateTime.Parse("1984-12-08")
+                        DateJoined = DateTime.Parse("1984-12-08"),
+                        Province = "AB",
+                        Email = "lclearkson@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Princess",
+                        FirstName = "Lhea",
+                        MiddleName = "",
+                        LastName = "Skywalker",
+                        Phone = "2435424547",
+                        DateJoined = DateTime.Parse("1991-03-09"),
+                        Province = "AB",
+                        Email = "lskywalker@outlook.com"
+                    },
+                    new Member
+                    {
+                        FirstName = "Christine",
+                        MiddleName = "Ela",
+                        LastName = "Catherin",
+                        Phone = "243ew34243",
+                        DateJoined = DateTime.Parse("1978-09-12"),
+                        Province = "AB",
+                        Email = "ccatherin@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Mr.",
+                        FirstName = "Denarys",
+                        MiddleName = "Valerian",
+                        LastName = "Targarian",
+                        Phone = "6541255678",
+                        DateJoined = DateTime.Parse("1957-08-10"),
+                        Province = "AB",
+                        Email = "dtargarian@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Mr.",
+                        FirstName = "Jenny",
+                        MiddleName = "T",
+                        LastName = "Babbenburg",
+                        Phone = "3455461244",
+                        DateJoined = DateTime.Parse("1999-01-10"),
+                        Province = "AB",
+                        Email = "jbabbenberg@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Mrs.",
+                        FirstName = "Samuel",
+                        MiddleName = "R",
+                        LastName = "Johnson",
+                        Phone = "2342355436",
+                        DateJoined = DateTime.Parse("1984-12-08"),
+                        Province = "AB",
+                        Email = "sjohnson@outlook.com"
+                    },
+                    new Member
+                    {
+                        FirstName = "Johnney",
+                        MiddleName = "",
+                        LastName = "Khalifa",
+                        Phone = "2435836547",
+                        DateJoined = DateTime.Parse("1991-02-09"),
+                        Province = "AB",
+                        Email = "jkhalifa@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Mrs.",
+                        FirstName = "Christopher",
+                        MiddleName = "",
+                        LastName = "Nolan",
+                        Phone = "243534243",
+                        DateJoined = DateTime.Parse("1943-09-12"),
+                        Province = "ON",
+                        Email = "cnolan@outlook.com"
+                    },
+                    new Member
+                    {
+                        FirstName = "Randal",
+                        MiddleName = "",
+                        LastName = "Tarley",
+                        Phone = "6543421678",
+                        DateJoined = DateTime.Parse("1987-08-10"),
+                        Province = "ON",
+                        Email = "rtarley@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Mrs.",
+                        FirstName = "Anakin",
+                        MiddleName = "A",
+                        LastName = "Skywalker",
+                        Phone = "3455466544",
+                        DateJoined = DateTime.Parse("1999-01-10"),
+                        Province = "ON",
+                        Email = "askywalker@outlook.com"
+                    },
+                    new Member
+                    {
+                        Salutation = "Mrs.",
+                        FirstName = "Bruce",
+                        MiddleName = "",
+                        LastName = "Waine",
+                        Phone = "2343452436",
+                        DateJoined = DateTime.Parse("1999-12-08"),
+                        Province = "ON",
+                        Email = "bwaine@outlook.com"
                     });
                     context.SaveChanges();
                 }
@@ -153,6 +328,56 @@ namespace NCPAC_LambdaX.Data
                     {
                         MemberID = 5,
                         CommiteeID = 2
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 7,
+                        CommiteeID = 10
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 2,
+                        CommiteeID = 8
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 9,
+                        CommiteeID = 12
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 6,
+                        CommiteeID = 15
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 10,
+                        CommiteeID = 14
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 7,
+                        CommiteeID = 11
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 12,
+                        CommiteeID = 7
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 13,
+                        CommiteeID = 15
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 13,
+                        CommiteeID = 14
+                    },
+                    new MemberCommitee
+                    {
+                        MemberID = 12,
+                        CommiteeID = 11
                     });
                     context.SaveChanges();
                 }
