@@ -29,7 +29,7 @@ namespace NCPAC_LambdaX.Models
             get
             {
                 return StreetAddress
-                    + " " + City + " " + PostalCode + " " + Province;
+                    + " " + City + " " + PostalCode;
             }
         }
 
@@ -39,7 +39,7 @@ namespace NCPAC_LambdaX.Models
             get
             {
                 return WorkStreetAddress
-                    + " " + WorkCity + " " + WorkPostalCode + " " + WorkProvince;
+                    + " " + WorkCity + " " + WorkPostalCode;
             }
         }
 
@@ -69,8 +69,8 @@ namespace NCPAC_LambdaX.Models
         public string? City { get; set; }
 
         [Display(Name = "Province")]
-        [StringLength(20, ErrorMessage = "Province cannot be more than 20 characters long.")]
-        public string? Province { get; set; }
+        public string? ProvinceID { get; set; }
+        public Province? Province { get; set; }
 
         [StringLength(6, ErrorMessage = "Please enter a valid 6 character Postal code with no spaces.")]
         [DataType(DataType.PostalCode)]
@@ -96,8 +96,8 @@ namespace NCPAC_LambdaX.Models
         public string? WorkCity { get; set; }
 
         [Display(Name = "Work Province")]
-        [StringLength(20, ErrorMessage = "Province cannot be more than 20 characters long.")]
-        public string? WorkProvince { get; set; }
+        public string? WorkProvinceID { get; set; }
+        public Province? WorkProvince { get; set; }
 
         [StringLength(6, ErrorMessage = "Please enter a valid 6 character Postal code with no spaces.")]
         [DataType(DataType.PostalCode)]
@@ -131,7 +131,11 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Date Joined")]
         public DateTime? DateJoined { get; set; }
 
+        [Display(Name = "Is Active")]
+        public bool IsActive { get; set; }
+
         [Display(Name = "Commitees")]
         public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
+
     }
 }

@@ -56,13 +56,13 @@
                             @Html.TextBox("SearchString2", null, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="form-group col-md-5">
-                        <label class="control-label">Search By Address:</label>
-                        @Html.TextBox("SearchString3", null, new { @class = "form-control" })
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Show Archived Members:</label><br />
+                        @Html.CheckBox("ShowInactive", false, htmlAttributes: new { @class="checkbox" })
                     </div>
                     <div class="form-group col-md-2 align-self-end">
                         <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
-                        <a asp-action="Index" class="btn btn-outline-dark">Clear</a>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
                     </div>
                 </div>
             </div>
@@ -72,22 +72,16 @@
         <thead>
             <tr>
                 <th>
-                    <input type="submit" name="actionButton" value="Member" class="btn btn-secondary" />
+                    <input type="submit" name="actionButton" value="Member" class="btn btn-outline-dark" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Preffered Email" class="btn btn-light" />
+                    <input type="submit" disabled="disabled" value="Email" class="btn btn-outline-dark" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Is NC Grad?" class="btn btn-light" />
+                    <input type="submit" disabled="disabled" value="Is NC Grad?" class="btn btn-outline-dark" />
                 </th>
                 <th>
-                    <input type="submit" name="actionButton" value="Date Joined" class="btn btn-secondary" />
-                </th>
-                <th>
-                    <input type="submit" disabled="disabled" value="Committees" class="btn btn-light" />
-                </th>
-                <th>
-                    <input type="submit" name="actionButton" value="Home Address" class="btn btn-secondary" />
+                    <input type="submit" disabled="disabled" value="Committees" class="btn btn-outline-dark" />
                 </th>
                 <th></th>
             </tr>
@@ -133,9 +127,6 @@
                         @Html.CheckBoxFor(modelItem => item.IsNCGrad, new { @disabled = "disabled"})
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateJoined)
-                </td>
-                <td>
                     @{
                         int playCount = item.MemberCommitees.Count;
                         if (playCount > 0)
@@ -166,12 +157,8 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.HomeAddress)
-                </td>
-                <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
                 </td>
             </tr>
     }

@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.btn-outline-dark {
+    border: none;
+    background: none;
+    outline: none;
+    color: black;
+    font-style:oblique;
+}

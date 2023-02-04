@@ -108,6 +108,29 @@ namespace NCPAC_LambdaX.Data
                     context.SaveChanges();
                 }
 
+
+                if (!context.Provinces.Any())
+                {
+                    var provinces = new List<Province>
+                    {
+                        new Province { ID = "ON", Name = "Ontario"},
+                        new Province { ID = "PE", Name = "Prince Edward Island"},
+                        new Province { ID = "NB", Name = "New Brunswick"},
+                        new Province { ID = "BC", Name = "British Columbia"},
+                        new Province { ID = "NL", Name = "Newfoundland and Labrador"},
+                        new Province { ID = "SK", Name = "Saskatchewan"},
+                        new Province { ID = "NS", Name = "Nova Scotia"},
+                        new Province { ID = "MB", Name = "Manitoba"},
+                        new Province { ID = "QC", Name = "Quebec"},
+                        new Province { ID = "YT", Name = "Yukon"},
+                        new Province { ID = "NU", Name = "Nunavut"},
+                        new Province { ID = "NT", Name = "Northwest Territories"},
+                        new Province { ID = "AB", Name = "Alberta"}
+                    };
+                    context.Provinces.AddRange(provinces);
+                    context.SaveChanges();
+                }
+
                 // If no Members seed some.
                 if (!context.Members.Any())
                 {
@@ -120,8 +143,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Grande",
                         Phone = "2435436547",
                         DateJoined = DateTime.Parse("1991-02-09"),
-                        Province = "AB",
-                        Email = "agrande@outlook.com"
+                        ProvinceID = "AB",
+                        Email = "agrande@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -131,8 +155,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "John",
                         Phone = "243534243",
                         DateJoined = DateTime.Parse("1943-09-12"),
-                        Province = "AB",
-                        Email = "ejohn@outlook.com"
+                        ProvinceID = "ON",
+                        Email = "ejohn@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -142,8 +167,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "X",
                         Phone = "6543455678",
                         DateJoined = DateTime.Parse("1987-08-10"),
-                        Province = "AB",
-                        Email = "lx@outlook.com"
+                        ProvinceID = "BC",
+                        Email = "lx@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -152,8 +178,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Malik",
                         Phone = "3455466544",
                         DateJoined = DateTime.Parse("1999-01-10"),
-                        Province = "AB",
-                        Email = "zmalik@outlook.com"
+                        ProvinceID = "BC",
+                        Email = "zmalik@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -162,8 +189,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Clearkson",
                         Phone = "2343455436",
                         DateJoined = DateTime.Parse("1984-12-08"),
-                        Province = "AB",
-                        Email = "lclearkson@outlook.com"
+                        ProvinceID = "ON",
+                        Email = "lclearkson@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -173,7 +201,7 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Skywalker",
                         Phone = "2435424547",
                         DateJoined = DateTime.Parse("1991-03-09"),
-                        Province = "AB",
+                        ProvinceID = "YT",
                         Email = "lskywalker@outlook.com"
                     },
                     new Member
@@ -183,8 +211,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Catherin",
                         Phone = "243ew34243",
                         DateJoined = DateTime.Parse("1978-09-12"),
-                        Province = "AB",
-                        Email = "ccatherin@outlook.com"
+                        ProvinceID = "MB",
+                        Email = "ccatherin@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -194,8 +223,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Targarian",
                         Phone = "6541255678",
                         DateJoined = DateTime.Parse("1957-08-10"),
-                        Province = "AB",
-                        Email = "dtargarian@outlook.com"
+                        ProvinceID = "QC",
+                        Email = "dtargarian@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -205,8 +235,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Babbenburg",
                         Phone = "3455461244",
                         DateJoined = DateTime.Parse("1999-01-10"),
-                        Province = "AB",
-                        Email = "jbabbenberg@outlook.com"
+                        ProvinceID = "AB",
+                        Email = "jbabbenberg@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -216,8 +247,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Johnson",
                         Phone = "2342355436",
                         DateJoined = DateTime.Parse("1984-12-08"),
-                        Province = "AB",
-                        Email = "sjohnson@outlook.com"
+                        ProvinceID = "MB",
+                        Email = "sjohnson@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -226,8 +258,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Khalifa",
                         Phone = "2435836547",
                         DateJoined = DateTime.Parse("1991-02-09"),
-                        Province = "AB",
-                        Email = "jkhalifa@outlook.com"
+                        ProvinceID = "QC",
+                        Email = "jkhalifa@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -237,8 +270,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Nolan",
                         Phone = "243534243",
                         DateJoined = DateTime.Parse("1943-09-12"),
-                        Province = "ON",
-                        Email = "cnolan@outlook.com"
+                        ProvinceID = "NT",
+                        Email = "cnolan@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -247,7 +281,7 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Tarley",
                         Phone = "6543421678",
                         DateJoined = DateTime.Parse("1987-08-10"),
-                        Province = "ON",
+                        ProvinceID = "PE",
                         Email = "rtarley@outlook.com"
                     },
                     new Member
@@ -258,8 +292,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Skywalker",
                         Phone = "3455466544",
                         DateJoined = DateTime.Parse("1999-01-10"),
-                        Province = "ON",
-                        Email = "askywalker@outlook.com"
+                        ProvinceID = "NB",
+                        Email = "askywalker@outlook.com",
+                        IsActive = true
                     },
                     new Member
                     {
@@ -269,8 +304,9 @@ namespace NCPAC_LambdaX.Data
                         LastName = "Waine",
                         Phone = "2343452436",
                         DateJoined = DateTime.Parse("1999-12-08"),
-                        Province = "ON",
-                        Email = "bwaine@outlook.com"
+                        ProvinceID = "SK",
+                        Email = "bwaine@outlook.com",
+                        IsActive = true
                     });
                     context.SaveChanges();
                 }
@@ -381,7 +417,6 @@ namespace NCPAC_LambdaX.Data
                     });
                     context.SaveChanges();
                 }
-
 
 
             }

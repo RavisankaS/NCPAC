@@ -62,6 +62,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsNCGrad")
                         .HasColumnType("INTEGER");
 
@@ -88,8 +91,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Property<string>("PrefferedEmail")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Province")
-                        .HasMaxLength(20)
+                    b.Property<string>("ProvinceID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Salutation")
@@ -114,8 +116,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasMaxLength(6)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("WorkProvince")
-                        .HasMaxLength(20)
+                    b.Property<string>("WorkProvinceID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkStreetAddress")
@@ -123,6 +124,10 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ProvinceID");
+
+                    b.HasIndex("WorkProvinceID");
 
                     b.ToTable("Members");
                 });
@@ -140,6 +145,37 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.HasIndex("CommiteeID");
 
                     b.ToTable("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Province", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasMaxLength(2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Provinces");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceID");
+
+                    b.HasOne("NCPAC_LambdaX.Models.Province", "WorkProvince")
+                        .WithMany()
+                        .HasForeignKey("WorkProvinceID");
+
+                    b.Navigation("Province");
+
+                    b.Navigation("WorkProvince");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.MemberCommitee", b =>

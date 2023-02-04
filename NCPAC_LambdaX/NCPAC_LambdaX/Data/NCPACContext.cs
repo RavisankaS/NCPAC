@@ -16,6 +16,7 @@ namespace NCPAC_LambdaX.Data
         public DbSet<Commitee> Commitees { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<MemberCommitee> MemberCommitees { get; set; }
+        public DbSet<Province> Provinces { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

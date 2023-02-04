@@ -12,6 +12,7 @@ using NCPAC_LambdaX.ViewModels;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
 using OfficeOpenXml;
+using System.Numerics;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -25,17 +26,18 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index(string SearchString, string SearchString4, string SearchString2, string SearchString3, bool IsNcGrad, int? CommiteeIDVal,
+        public async Task<IActionResult> Index(string SearchString, string SearchString4, string SearchString2, bool IsNcGrad, bool ShowInactive, int? CommiteeIDVal,
             int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Members")
         {
             CookieHelper.CookieSet(HttpContext, "MembersController" + "URL", "", -1);
 
             ViewData["Filtering"] = "";
 
-            string[] sortOptions = new[] { "Member", "Date Joined", "Home Address" };
+            string[] sortOptions = new[] { "Member" };
 
             var members = _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee)
+                .Include(d => d.Province)
                 .AsNoTracking();
 
             if (!String.IsNullOrEmpty(SearchString))
@@ -49,17 +51,21 @@ namespace NCPAC_LambdaX.Controllers
             {
                 members = members.Where(p => p.Email.Contains(SearchString2) || p.WorkEmail.Contains(SearchString2));
             }
-            if (!String.IsNullOrEmpty(SearchString3))
-            {
-                members = members.Where(p => p.HomeAddress.Contains(SearchString3));
-            }
             if (IsNcGrad == true)
             {
                 members = members.Where(p => p.IsNCGrad == true);
             }
-            if (CommiteeIDVal.HasValue)
+            if (ShowInactive== true)
             {
-                members = members.Where(p => p.MemberCommitees.Any(p => p.CommiteeID == CommiteeIDVal));
+                members = members.Where(p => p.IsActive == false);
+            }
+            else
+            {
+                members = members.Where(p => p.IsActive == true);
+            }
+            if (!String.IsNullOrEmpty(SearchString4))
+            {
+                members = members.Where(p => p.MemberCommitees.Any(p => p.Commitee.CommiteeName.ToUpper().Contains(SearchString4.ToUpper())));
                 ViewData["Filtering"] = " show";
             }
 
@@ -77,33 +83,7 @@ namespace NCPAC_LambdaX.Controllers
                 }
             }
 
-            if (sortField == "Date Joined")
-            {
-                if (sortDirection == "asc")
-                {
-                    members = members
-                        .OrderBy(p => p.DateJoined);
-                }
-                else
-                {
-                    members = members
-                       .OrderByDescending(p => p.DateJoined);
-                }
-            }
-            else if (sortField == "Home Address")
-            {
-                if (sortDirection == "asc")
-                {
-                    members = members
-                        .OrderBy(p => p.StreetAddress).ThenBy(p => p.City).ThenBy(p => p.PostalCode).ThenBy(p => p.Province);
-                }
-                else
-                {
-                    members = members
-                       .OrderByDescending(p => p.StreetAddress).ThenBy(p => p.City).ThenBy(p => p.PostalCode).ThenBy(p => p.Province);
-                }
-            }
-            else //Sorting by Patient Name
+            if (sortField == "Member")
             {
                 if (sortDirection == "asc")
                 {
@@ -113,7 +93,7 @@ namespace NCPAC_LambdaX.Controllers
                 else
                 {
                     members = members
-                       .OrderByDescending(p => p.LastName).ThenBy(p => p.FirstName).ThenBy(p => p.MiddleName); 
+                       .OrderByDescending(p => p.LastName).ThenBy(p => p.FirstName).ThenBy(p => p.MiddleName);
                 }
             }
 
@@ -138,6 +118,7 @@ namespace NCPAC_LambdaX.Controllers
 
             var member = await _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee)
+                .Include(d => d.Province)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (member == null)
@@ -153,6 +134,7 @@ namespace NCPAC_LambdaX.Controllers
         {
             var member = new Member();
             PopulateAssignedMemberCommiteesData(member);
+            PopulateDropDownLists();
             return View();
         }
 
@@ -161,8 +143,9 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,Province,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvince,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] Member member, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] Member member, string[] selectedOptions)
         {
+
             //Add the selected memberCommitees
             try
             {
@@ -205,6 +188,7 @@ namespace NCPAC_LambdaX.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            PopulateDropDownLists(member);
             return View(member);
         }
 
@@ -224,6 +208,8 @@ namespace NCPAC_LambdaX.Controllers
                 return NotFound();
             }
             PopulateAssignedMemberCommiteesData(member);
+            PopulateDropDownLists(member);
+
             return View(member);
         }
 
@@ -232,10 +218,11 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,Province,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvince,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] string[] selectedOptions)
         {
             var memberToUpdate = await _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(p => p.Commitee)
+                .Include(d => d.Province)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             //Update the plays
@@ -244,8 +231,8 @@ namespace NCPAC_LambdaX.Controllers
             //Try updating it with the values posted
             if (await TryUpdateModelAsync<Member>(memberToUpdate, "",
                 p => p.FirstName, p => p.MiddleName, p => p.LastName, p => p.DateJoined, p => p.StreetAddress, p => p.WorkStreetAddress, p => p.City, p => p.WorkCity,
-                p => p.PostalCode, p => p.WorkPostalCode, p => p.Province, p => p.WorkProvince, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.PrefferedEmail,
-                p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation))
+                p => p.PostalCode, p => p.WorkPostalCode, p => p.ProvinceID, p => p.WorkProvinceID, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.PrefferedEmail,
+                p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation, p=> p.IsActive))
             {
                 
             }
@@ -281,6 +268,8 @@ namespace NCPAC_LambdaX.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 }
             }
+
+            PopulateDropDownLists(memberToUpdate);
             PopulateAssignedMemberCommiteesData(memberToUpdate);
             return View(memberToUpdate);
         }
@@ -376,7 +365,6 @@ namespace NCPAC_LambdaX.Controllers
                     DateJoined = DateTime.Parse(workSheet.Cells[row, 7].Text),
                     StreetAddress = workSheet.Cells[row, 8].Text,
                     City = workSheet.Cells[row, 9].Text,
-                    Province = workSheet.Cells[row, 10].Text,
                     PostalCode = workSheet.Cells[row, 11].Text,
 
                 };
@@ -443,5 +431,37 @@ namespace NCPAC_LambdaX.Controllers
             }
         }
 
+        private SelectList ProvinceSelectList(string selectedId)
+        {
+            return new SelectList(_context.Provinces
+                .OrderBy(d => d.Name), "ID", "Name", selectedId);
+        }
+
+        private SelectList WorkProvinceSelectList(string selectedId)
+        {
+            return new SelectList(_context.Provinces
+                .OrderBy(d => d.Name), "ID", "Name", selectedId);
+        }
+
+        private void PopulateDropDownLists(Member member = null)
+        {
+            if ((member?.ProvinceID) != null)
+            {
+                ViewData["ProvinceID"] = ProvinceSelectList(member.ProvinceID);
+            }
+            else
+            {
+                ViewData["ProvinceID"] = ProvinceSelectList(null);
+            }
+
+            if ((member?.WorkProvinceID) != null)
+            {
+                ViewData["WorkProvinceID"] = WorkProvinceSelectList(member.WorkProvinceID);
+            }
+            else
+            {
+                ViewData["WorkProvinceID"] = WorkProvinceSelectList(null);
+            }
+        }
     }
 }
