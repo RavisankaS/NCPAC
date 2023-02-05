@@ -57,6 +57,9 @@
           }
         }
       },
+      "MappingGenerator/1.22.3": {
+        "type": "package"
+      },
       "MessagePack/2.1.152": {
         "type": "package",
         "dependencies": {
@@ -4313,6 +4316,22 @@
         "lib/netstandard2.1/MailKit.xml",
         "mailkit.3.4.3.nupkg.sha512",
         "mailkit.nuspec"
+      ]
+    },
+    "MappingGenerator/1.22.3": {
+      "sha512": "g/4eeDMYEGtxYmDtH6TGk+bH1TQtM0Aip7Eh80X2ilczFdyGo9e+oDq5c5GjDyVjlrmr53A5Z2gbGcE1U+kAqw==",
+      "type": "package",
+      "path": "mappinggenerator/1.22.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/cs/MappingGenerator.dll",
+        "analyzers/dotnet/cs/Pluralize.NET.dll",
+        "mappinggenerator.1.22.3.nupkg.sha512",
+        "mappinggenerator.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "MessagePack/2.1.152": {
@@ -11788,6 +11807,7 @@
     "net6.0": [
       "EPPlus >= 4.5.3.3",
       "MailKit >= 3.4.3",
+      "MappingGenerator >= 1.22.3",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.9",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.13",
       "Microsoft.AspNetCore.Identity.UI >= 6.0.13",
@@ -11848,6 +11868,10 @@
           "MailKit": {
             "target": "Package",
             "version": "[3.4.3, )"
+          },
+          "MappingGenerator": {
+            "target": "Package",
+            "version": "[1.22.3, )"
           },
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
             "target": "Package",

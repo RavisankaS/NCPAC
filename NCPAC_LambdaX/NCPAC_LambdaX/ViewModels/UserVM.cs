@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using NCPAC_LambdaX.Models;
 
 namespace NCPAC_LambdaX.ViewModels
 {

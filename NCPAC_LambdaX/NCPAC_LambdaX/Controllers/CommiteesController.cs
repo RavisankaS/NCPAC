@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using NCPAC_LambdaX.Utilities;
 
 namespace NCPAC_LambdaX.Controllers
 {
+    [Authorize]
     public class CommiteesController : Controller
     {
         private readonly NCPACContext _context;
@@ -23,6 +25,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Commitees
+        
         public async Task<IActionResult> Index(string SearchCommitee, string SearchDivision,int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Commitee")
         {
             ViewData["Filtering"] = "";
@@ -100,6 +103,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Commitees/Details/5
+        [Authorize(Roles = "Admin,Supervisor")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Commitees == null)
@@ -130,6 +134,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Supervisor")]
         public async Task<IActionResult> Create([Bind("ID,CommiteeName,Division")] Commitee commitee)
         {
             if (ModelState.IsValid)
@@ -142,6 +147,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Commitees/Edit/5
+        [Authorize(Roles = "Admin,Supervisor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Commitees == null)
@@ -162,6 +168,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Supervisor")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,CommiteeName,Division")] Commitee commitee)
         {
             if (id != commitee.ID)
@@ -193,6 +200,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Commitees/Delete/5
+        [Authorize(Roles = "Admin,Supervisor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Commitees == null)
@@ -213,6 +221,7 @@ namespace NCPAC_LambdaX.Controllers
         // POST: Commitees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Supervisor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Commitees == null)

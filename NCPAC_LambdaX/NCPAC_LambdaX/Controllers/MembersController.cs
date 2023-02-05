@@ -13,9 +13,13 @@ using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
 using OfficeOpenXml;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace NCPAC_LambdaX.Controllers
 {
+    [Authorize]
     public class MembersController : Controller
     {
         private readonly NCPACContext _context;
@@ -26,6 +30,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Members
+        [Authorize(Roles ="Admin,Supervisor")]
         public async Task<IActionResult> Index(string SearchString, string SearchString4, string SearchString2, bool IsNcGrad, bool ShowInactive, int? CommiteeIDVal,
             int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Members")
         {
@@ -259,14 +264,7 @@ namespace NCPAC_LambdaX.Controllers
             }
             catch (DbUpdateException dex)
             {
-                if (dex.GetBaseException().Message.Contains("UNIQUE constraint failed"))
-                {
-                    ModelState.AddModelError("SIN", "Unable to save changes. Remember, you cannot have duplicate SIN numbers.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
-                }
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
             PopulateDropDownLists(memberToUpdate);
@@ -321,58 +319,69 @@ namespace NCPAC_LambdaX.Controllers
             //no ERROR HANDLING.  It also assumes that
             //duplicate values are allowed, both in the 
             //uploaded data and the DbSet.
-            ExcelPackage excel;
-            using (var memoryStream = new MemoryStream())
+            if(theExcel != null)
             {
-                await theExcel.CopyToAsync(memoryStream);
-                excel = new ExcelPackage(memoryStream);
+                ExcelPackage excel;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await theExcel.CopyToAsync(memoryStream);
+                    excel = new ExcelPackage(memoryStream);
+                }
+                var workSheet = excel.Workbook.Worksheets[0];
+                var start = workSheet.Dimension.Start;
+                var end = workSheet.Dimension.End;
+
+                //Start a new list to hold imported objects
+                List<Member> members = new List<Member>();
+
+                string middleName = "";
+                bool ncgrad = false;
+
+                for (int row = start.Row; row <= end.Row; row++)
+                {
+                    if (workSheet.Cells[row, 2].Text.Split(' ').Count() > 2)
+                    {
+                        middleName = workSheet.Cells[row, 2].Text.Split(' ')[1];
+                    }
+                    if ((workSheet.Cells[row, 6].Text.Contains("Yes")) || (workSheet.Cells[row, 6].Text.Contains("yes")))
+                    {
+                        ncgrad = true;
+                    }
+                    else if ((workSheet.Cells[row, 6].Text.Contains("No")) || (workSheet.Cells[row, 6].Text.Contains("no")))
+                    {
+                        ncgrad = false;
+                    }
+                    // Row by row...
+                    Member a = new Member
+                    {
+                        Salutation = workSheet.Cells[row, 1].Text,
+                        FirstName = workSheet.Cells[row, 2].Text.Split(' ')[0],
+                        LastName = workSheet.Cells[row, 2].Text.Split(' ')[^1],
+                        MiddleName = middleName,
+                        Email = workSheet.Cells[row, 3].Text,
+                        WorkEmail = workSheet.Cells[row, 4].Text,
+                        PrefferedEmail = workSheet.Cells[row, 5].Text,
+                        IsNCGrad = ncgrad,
+                        DateJoined = DateTime.Parse(workSheet.Cells[row, 7].Text),
+                        StreetAddress = workSheet.Cells[row, 8].Text,
+                        City = workSheet.Cells[row, 9].Text,
+                        PostalCode = workSheet.Cells[row, 11].Text,
+                        IsActive = true
+
+                    };
+                    members.Add(a);
+                }
+                _context.Members.AddRange(members);
+                _context.SaveChanges();
+                TempData["Message"] = "Excel data was succesfully uploaded!";
+                return RedirectToAction("Index");
             }
-            var workSheet = excel.Workbook.Worksheets[0];
-            var start = workSheet.Dimension.Start;
-            var end = workSheet.Dimension.End;
-
-            //Start a new list to hold imported objects
-            List<Member> members = new List<Member>();
-
-            string middleName = "";
-            bool ncgrad = false;
-
-            for (int row = start.Row; row <= end.Row; row++)
+            else
             {
-                if (workSheet.Cells[row, 2].Text.Split(' ').Count() > 2)
-                {
-                    middleName = workSheet.Cells[row, 2].Text.Split(' ')[1];
-                }
-                if ((workSheet.Cells[row, 6].Text.Contains("Yes")) || (workSheet.Cells[row, 6].Text.Contains("yes")))
-                {
-                    ncgrad = true;
-                }
-                else if ((workSheet.Cells[row, 6].Text.Contains("No")) || (workSheet.Cells[row, 6].Text.Contains("no")))
-                {
-                    ncgrad = false;
-                }
-                // Row by row...
-                Member a = new Member
-                {
-                    Salutation = workSheet.Cells[row, 1].Text,
-                    FirstName = workSheet.Cells[row, 2].Text.Split(' ')[0],
-                    LastName = workSheet.Cells[row, 2].Text.Split(' ')[^1],
-                    MiddleName = middleName,
-                    Email = workSheet.Cells[row, 3].Text,
-                    WorkEmail = workSheet.Cells[row, 4].Text,
-                    PrefferedEmail = workSheet.Cells[row, 5].Text,
-                    IsNCGrad = ncgrad,
-                    DateJoined = DateTime.Parse(workSheet.Cells[row, 7].Text),
-                    StreetAddress = workSheet.Cells[row, 8].Text,
-                    City = workSheet.Cells[row, 9].Text,
-                    PostalCode = workSheet.Cells[row, 11].Text,
-
-                };
-                members.Add(a);
+                TempData["Message"] = "Cannot upload an empty excel file.";
+                return RedirectToAction("Index");
             }
-            _context.Members.AddRange(members);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            
 
         }
 
