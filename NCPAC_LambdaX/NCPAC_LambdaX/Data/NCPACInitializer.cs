@@ -31,77 +31,77 @@ namespace NCPAC_LambdaX.Data
                     new Commitee
                     {
                         CommiteeName = "Technology and Industrial Automation",
-                        Division = "Technology"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Mechanical Engineering",
-                        Division = "Technology"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Renewable Energies",
-                        Division = "Technology"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Computer, Electrical & Electronics Engineering",
-                        Division = "Technology"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Computer Programming",
-                        Division = "Media"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Game Developement",
-                        Division = "Media"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Graphic Design",
-                        Division = "Media"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Public Relations",
-                        Division = "Media"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Social Media Management",
-                        Division = "Media"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Hair Styling",
-                        Division = "Trades"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Motive Power",
-                        Division = "Trades"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Carpentry and Rennovation",
-                        Division = "Trades"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Mechanical Techniques",
-                        Division = "Trades"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Welding Skills",
-                        Division = "Trades"
+                        Division = "Trades, Media & Technology"
                     },
                     new Commitee
                     {
                         CommiteeName = "Electrical Technician",
-                        Division = "Trades"
+                        Division = "Trades, Media & Technology"
                     }
 
                     );
@@ -128,6 +128,18 @@ namespace NCPAC_LambdaX.Data
                         new Province { ID = "AB", Name = "Alberta"}
                     };
                     context.Provinces.AddRange(provinces);
+                    context.SaveChanges();
+                }
+
+                if (!context.MailPrefferences.Any())
+                {
+                    var mailPrefferences = new List<MailPrefference>
+                    {
+                        new MailPrefference { ID = "Any", Name = "No Prefference"},
+                        new MailPrefference { ID = "Work", Name = "Work Email"},
+                        new MailPrefference { ID = "Personnal", Name = "Personnal Email"}
+                    };
+                    context.MailPrefferences.AddRange(mailPrefferences);
                     context.SaveChanges();
                 }
 
@@ -173,6 +185,7 @@ namespace NCPAC_LambdaX.Data
                     },
                     new Member
                     {
+                        Salutation = "Mr.",
                         FirstName = "Zayn",
                         MiddleName = "A",
                         LastName = "Malik",
@@ -184,6 +197,7 @@ namespace NCPAC_LambdaX.Data
                     },
                     new Member
                     {
+                        Salutation = "Mrs.",
                         FirstName = "Kelly",
                         MiddleName = "Lidiya",
                         LastName = "Clearkson",
@@ -206,8 +220,10 @@ namespace NCPAC_LambdaX.Data
                     },
                     new Member
                     {
+                        Salutation = "Mrs.",
                         FirstName = "Christine",
                         MiddleName = "Ela",
+                        IsNCGrad = true,
                         LastName = "Catherin",
                         Phone = "243ew34243",
                         DateJoined = DateTime.Parse("1978-09-12"),
@@ -220,6 +236,7 @@ namespace NCPAC_LambdaX.Data
                         Salutation = "Mr.",
                         FirstName = "Denarys",
                         MiddleName = "Valerian",
+                        IsNCGrad = true,
                         LastName = "Targarian",
                         Phone = "6541255678",
                         DateJoined = DateTime.Parse("1957-08-10"),
@@ -244,6 +261,7 @@ namespace NCPAC_LambdaX.Data
                         Salutation = "Mrs.",
                         FirstName = "Samuel",
                         MiddleName = "R",
+                        IsNCGrad = true,
                         LastName = "Johnson",
                         Phone = "2342355436",
                         DateJoined = DateTime.Parse("1984-12-08"),
@@ -253,8 +271,10 @@ namespace NCPAC_LambdaX.Data
                     },
                     new Member
                     {
+                        Salutation = "Mr.",
                         FirstName = "Johnney",
                         MiddleName = "",
+                        IsNCGrad = true,
                         LastName = "Khalifa",
                         Phone = "2435836547",
                         DateJoined = DateTime.Parse("1991-02-09"),
@@ -264,7 +284,7 @@ namespace NCPAC_LambdaX.Data
                     },
                     new Member
                     {
-                        Salutation = "Mrs.",
+                        Salutation = "Mr.",
                         FirstName = "Christopher",
                         MiddleName = "",
                         LastName = "Nolan",
@@ -276,8 +296,10 @@ namespace NCPAC_LambdaX.Data
                     },
                     new Member
                     {
+                        Salutation = "Mr.",
                         FirstName = "Randal",
                         MiddleName = "",
+                        IsNCGrad = true,
                         LastName = "Tarley",
                         Phone = "6543421678",
                         DateJoined = DateTime.Parse("1987-08-10"),
@@ -291,6 +313,7 @@ namespace NCPAC_LambdaX.Data
                         MiddleName = "A",
                         LastName = "Skywalker",
                         Phone = "3455466544",
+                        IsNCGrad = true,
                         DateJoined = DateTime.Parse("1999-01-10"),
                         ProvinceID = "NB",
                         Email = "askywalker@outlook.com",

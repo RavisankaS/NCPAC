@@ -47,13 +47,13 @@
             <div class="form-group">
                 <label asp-for="ProvinceID" class="control-label"></label>
                 <select class="form-control" id="ProvinceID" name="ProvinceID" asp-items="ViewBag.ProvinceID">
-                    <option>None</option>
+                    <option id= null>None</option>
                 </select>
                 <span asp-validation-for="ProvinceID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PostalCode" class="control-label"></label>
-                <input asp-for="PostalCode" class="form-control" />
+                <input asp-for="PostalCode" class="form-control" placeholder="eg: A1A1B1"/>
                 <span asp-validation-for="PostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -63,7 +63,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" placeholder="eg: example@example.com"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>            
             </div>
@@ -83,14 +83,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="WorkProvinceID" class="control-label"></label>
-                <select class="form-control" id="ProvinceID" name="WorkProvinceID" asp-items="ViewBag.WorkProvinceID">
+                <select class="form-control" id="WorkProvinceID" name="WorkProvinceID" asp-items="ViewBag.WorkProvinceID">
                     <option>None</option>
                 </select>
                 <span asp-validation-for="WorkProvinceID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WorkPostalCode" class="control-label"></label>
-                <input asp-for="WorkPostalCode" class="form-control" />
+                <input asp-for="WorkPostalCode" class="form-control" placeholder="eg: A1A1B1"/>
                 <span asp-validation-for="WorkPostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -100,15 +100,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="WorkEmail" class="control-label"></label>
-                <input asp-for="WorkEmail" class="form-control" />
+                <input asp-for="WorkEmail" class="form-control" placeholder="eg: example@example.com"/>
                 <span asp-validation-for="WorkEmail" class="text-danger"></span>
             </div>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="PrefferedEmail" class="control-label"></label>
-                <input asp-for="PrefferedEmail" class="form-control" />
-                <span asp-validation-for="PrefferedEmail" class="text-danger"></span>
+                <label asp-for="MailPrefferenceID" class="control-label"></label>
+                <select class="form-control" id="MailPrefferenceID" name="MailPrefferenceID" asp-items="ViewBag.MailPrefferenceID">
+                </select>
+                <span asp-validation-for="MailPrefferenceID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EducationalSummary" class="control-label"></label>

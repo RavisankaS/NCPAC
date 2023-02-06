@@ -23,7 +23,6 @@ namespace NCPAC_LambdaX.Controllers
     public class MembersController : Controller
     {
         private readonly NCPACContext _context;
-
         public MembersController(NCPACContext context)
         {
             _context = context;
@@ -148,7 +147,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] Member member, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] Member member, string[] selectedOptions)
         {
 
             //Add the selected memberCommitees
@@ -223,7 +222,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,PrefferedEmail,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] string[] selectedOptions)
         {
             var memberToUpdate = await _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(p => p.Commitee)
@@ -236,7 +235,7 @@ namespace NCPAC_LambdaX.Controllers
             //Try updating it with the values posted
             if (await TryUpdateModelAsync<Member>(memberToUpdate, "",
                 p => p.FirstName, p => p.MiddleName, p => p.LastName, p => p.DateJoined, p => p.StreetAddress, p => p.WorkStreetAddress, p => p.City, p => p.WorkCity,
-                p => p.PostalCode, p => p.WorkPostalCode, p => p.ProvinceID, p => p.WorkProvinceID, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.PrefferedEmail,
+                p => p.PostalCode, p => p.WorkPostalCode, p => p.ProvinceID, p => p.WorkProvinceID, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.MailPrefferenceID,
                 p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation, p=> p.IsActive))
             {
                 
@@ -360,7 +359,7 @@ namespace NCPAC_LambdaX.Controllers
                         MiddleName = middleName,
                         Email = workSheet.Cells[row, 3].Text,
                         WorkEmail = workSheet.Cells[row, 4].Text,
-                        PrefferedEmail = workSheet.Cells[row, 5].Text,
+                        MailPrefferenceID = workSheet.Cells[row, 5].Text,
                         IsNCGrad = ncgrad,
                         DateJoined = DateTime.Parse(workSheet.Cells[row, 7].Text),
                         StreetAddress = workSheet.Cells[row, 8].Text,
@@ -452,6 +451,12 @@ namespace NCPAC_LambdaX.Controllers
                 .OrderBy(d => d.Name), "ID", "Name", selectedId);
         }
 
+        private SelectList MailPrefferenceSelectList(string selectedId)
+        {
+            return new SelectList(_context.MailPrefferences
+                .OrderBy(d => d.Name), "ID", "Name", selectedId);
+        }
+
         private void PopulateDropDownLists(Member member = null)
         {
             if ((member?.ProvinceID) != null)
@@ -470,6 +475,15 @@ namespace NCPAC_LambdaX.Controllers
             else
             {
                 ViewData["WorkProvinceID"] = WorkProvinceSelectList(null);
+            }
+
+            if ((member?.MailPrefferenceID) != null)
+            {
+                ViewData["MailPrefferenceID"] = MailPrefferenceSelectList(member.MailPrefferenceID);
+            }
+            else
+            {
+                ViewData["MailPrefferenceID"] = MailPrefferenceSelectList(null);
             }
         }
     }

@@ -97,11 +97,11 @@
                         @{
                             if ((item.Email != null) && (item.WorkEmail != null))
                             {
-                                if((item.PrefferedEmail == "Work") || (item.PrefferedEmail == "work"))
+                                if((item.MailPrefferenceID == "Work") || (item.MailPrefferenceID == "work"))
                                 {
                                     @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
-                                else if((item.PrefferedEmail == "Personal") || (item.PrefferedEmail == "personal"))
+                                else if ((item.MailPrefferenceID == "Personnal") || (item.MailPrefferenceID == "personnal"))
                                 {
                                     @Html.DisplayFor(modelItem => item.Email)
                                 }

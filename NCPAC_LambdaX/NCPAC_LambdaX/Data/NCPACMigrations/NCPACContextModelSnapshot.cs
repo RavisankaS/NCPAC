@@ -38,6 +38,20 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.ToTable("Commitees");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.MailPrefference", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("MailPrefferences");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
                 {
                     b.Property<int>("ID")
@@ -73,6 +87,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("MailPrefferenceID")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("MiddleName")
                         .HasMaxLength(30)
                         .HasColumnType("TEXT");
@@ -81,17 +98,15 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostalCode")
-                        .HasMaxLength(6)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PrefferedEmail")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProvinceID")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Salutation")
@@ -124,6 +139,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("MailPrefferenceID");
 
                     b.HasIndex("ProvinceID");
 
@@ -165,13 +182,21 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
                 {
+                    b.HasOne("NCPAC_LambdaX.Models.MailPrefference", "MailPrefference")
+                        .WithMany()
+                        .HasForeignKey("MailPrefferenceID");
+
                     b.HasOne("NCPAC_LambdaX.Models.Province", "Province")
                         .WithMany()
-                        .HasForeignKey("ProvinceID");
+                        .HasForeignKey("ProvinceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NCPAC_LambdaX.Models.Province", "WorkProvince")
                         .WithMany()
                         .HasForeignKey("WorkProvinceID");
+
+                    b.Navigation("MailPrefference");
 
                     b.Navigation("Province");
 
