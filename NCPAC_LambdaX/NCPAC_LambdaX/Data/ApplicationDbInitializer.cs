@@ -22,7 +22,7 @@ namespace NCPAC_LambdaX.Data
                 //Create Roles
                 var RoleManager = applicationBuilder.ApplicationServices.CreateScope()
                     .ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                string[] roleNames = { "Admin","Supervisor"};
+                string[] roleNames = { "Admin","Supervisor","Staff"};
                 IdentityResult roleResult;
                 foreach (var roleName in roleNames)
                 {
@@ -63,6 +63,21 @@ namespace NCPAC_LambdaX.Data
                     if (result.Succeeded)
                     {
                         userManager.AddToRoleAsync(user, "Supervisor").Wait();
+                    }
+                }
+                if (userManager.FindByEmailAsync("staff@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "staff@outlook.com",
+                        Email = "staff@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+
+                    if (result.Succeeded)
+                    {
+                        userManager.AddToRoleAsync(user, "Staff").Wait();
                     }
                 }
                 if (userManager.FindByEmailAsync("user@outlook.com").Result == null)

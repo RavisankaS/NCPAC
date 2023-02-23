@@ -6,21 +6,21 @@ namespace NCPAC_LambdaX.Models
     {
         [ScaffoldColumn(false)]
         [StringLength(256)]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime? CreatedOn { get; set; }
 
         [ScaffoldColumn(false)]
         [StringLength(256)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime? UpdatedOn { get; set; }
 
         [ScaffoldColumn(false)]
         [Timestamp]
-        public Byte[] RowVersion { get; set; }//Added for concurrency
+        public Byte[]? RowVersion { get; set; }//Added for concurrency
 
     }
 }

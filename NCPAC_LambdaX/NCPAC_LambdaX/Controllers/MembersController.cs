@@ -104,7 +104,7 @@ namespace NCPAC_LambdaX.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "Musicians");
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "Members");
             ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
 
             var pagedData = await PaginatedList<Member>.CreateAsync(members.AsNoTracking(), page ?? 1, pageSize);
@@ -313,6 +313,7 @@ namespace NCPAC_LambdaX.Controllers
 
         [HttpPost]
         public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
+
         {
             //Note: This is a very basic example and has 
             //no ERROR HANDLING.  It also assumes that
@@ -365,7 +366,8 @@ namespace NCPAC_LambdaX.Controllers
                         StreetAddress = workSheet.Cells[row, 8].Text,
                         City = workSheet.Cells[row, 9].Text,
                         PostalCode = workSheet.Cells[row, 11].Text,
-                        IsActive = true
+                        IsActive = true,
+                        ProvinceID = workSheet.Cells[row, 10].Text
 
                     };
                     members.Add(a);

@@ -1,0 +1,39 @@
+﻿@model NCPAC_LambdaX.ViewModels.EmployeeVM
+
+@{
+    ViewData["Title"] = "Account";
+}
+
+<h2>Account for: @Model.FullName</h2>
+
+
+<div>
+    <hr />
+    <div class="alert alert-danger" style="display: none;">
+        <strong>Note:</strong>
+        <ul id="errorMessage"></ul>
+    </div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit Account Details</a>
+</div>

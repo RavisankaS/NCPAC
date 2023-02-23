@@ -24,6 +24,36 @@ namespace NCPAC_LambdaX.Data
                 //create the data using random values
                 Random random = new Random();
 
+                // Look for any Employees.  Seed ones to match the seeded Identity accounts.
+                if (!context.Employees.Any())
+                {
+                    context.Employees.AddRange(
+                     new Employee
+                     {
+                         FirstName = "Kait",
+                         LastName = "Ulisse",
+                         Email = "admin@outlook.com",
+                         Phone="6478574343"
+                     },
+                     new Employee
+                     {
+                         FirstName = "Patricia",
+                         LastName = "Beu",
+                         Email = "supervisor@outlook.com",
+                         Phone = "6478574344"
+                     },
+                     new Employee
+                     {
+                         FirstName = "Banuka",
+                         LastName = "Ambegoda",
+                         Email = "staff@outlook.com",
+                         Phone = "6478574345"
+                     });
+
+                    context.SaveChanges();
+                }
+
+
                 // Seed Commitees if there arent any.
                 if (!context.Commitees.Any())
                 {
