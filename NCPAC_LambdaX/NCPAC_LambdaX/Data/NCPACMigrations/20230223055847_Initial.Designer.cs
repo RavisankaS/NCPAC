@@ -11,7 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230221203029_Initial")]
+    [Migration("20230223055847_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DateJoined")
@@ -124,7 +123,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
@@ -135,58 +133,48 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MailPrefferenceID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MiddleName")
-                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OccupationalSummary")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProvinceID")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Salutation")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StreetAddress")
-                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkCity")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkEmail")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkPhone")
-                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkPostalCode")
-                        .HasMaxLength(6)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkProvinceID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("WorkStreetAddress")
-                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
@@ -239,9 +227,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
                     b.HasOne("NCPAC_LambdaX.Models.Province", "Province")
                         .WithMany()
-                        .HasForeignKey("ProvinceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProvinceID");
 
                     b.HasOne("NCPAC_LambdaX.Models.Province", "WorkProvince")
                         .WithMany()

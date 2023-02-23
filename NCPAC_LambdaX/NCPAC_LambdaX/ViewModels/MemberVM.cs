@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NCPAC_LambdaX.Models;
-using System;
-using System.Collections.Generic;
+﻿using NCPAC_LambdaX.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace NCPAC_LambdaX.Models
+namespace NCPAC_LambdaX.ViewModels
 {
-
+    /// <summary>
+    /// Leave out propeties that the Employee should not have access to change.
+    /// </summary>
     [ModelMetadataType(typeof(MemberMetaData))]
-    public class Member : IValidatableObject
+    public class MemberVM
     {
         public int ID { get; set; }
 
@@ -188,18 +185,7 @@ namespace NCPAC_LambdaX.Models
 
         public string? OccupationalSummary { get; set; }
 
-        public DateTime? DateJoined { get; set; }
-
-        public bool IsActive { get; set; }
-
         public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (DateJoined > DateTime.Today)
-            {
-                yield return new ValidationResult("Date Joined cannot be in the future.", new[] { "DateJoined" });
-            }
-        }
     }
+
 }
