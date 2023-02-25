@@ -223,12 +223,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Members/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyc1xDcmVhdGUuY3NodG1s
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/MemberAccount/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyQWNjb3VudFxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Members/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyc1xEZWxldGUuY3NodG1s
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/MemberAccount/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyQWNjb3VudFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Members/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Members/Details.cshtml]

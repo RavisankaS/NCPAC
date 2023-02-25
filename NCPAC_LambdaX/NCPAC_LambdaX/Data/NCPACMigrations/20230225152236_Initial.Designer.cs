@@ -11,13 +11,13 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230223055847_Initial")]
+    [Migration("20230225152236_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.14");
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
                 {
@@ -196,9 +196,14 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Property<int>("CommiteeID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("MemberVMID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("MemberID", "CommiteeID");
 
                     b.HasIndex("CommiteeID");
+
+                    b.HasIndex("MemberVMID");
 
                     b.ToTable("MemberCommitees");
                 });
@@ -217,6 +222,85 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.HasKey("ID");
 
                     b.ToTable("Provinces");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EducationalSummary")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsNCGrad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MailPrefferenceID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OccupationalSummary")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProvinceID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Salutation")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkCity")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkEmail")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkPhone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkPostalCode")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkProvinceID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("WorkStreetAddress")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MailPrefferenceID");
+
+                    b.HasIndex("ProvinceID");
+
+                    b.HasIndex("WorkProvinceID");
+
+                    b.ToTable("MemberVM");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
@@ -254,9 +338,34 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("NCPAC_LambdaX.ViewModels.MemberVM", null)
+                        .WithMany("MemberCommitees")
+                        .HasForeignKey("MemberVMID");
+
                     b.Navigation("Commitee");
 
                     b.Navigation("Member");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.MailPrefference", "MailPrefference")
+                        .WithMany()
+                        .HasForeignKey("MailPrefferenceID");
+
+                    b.HasOne("NCPAC_LambdaX.Models.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceID");
+
+                    b.HasOne("NCPAC_LambdaX.Models.Province", "WorkProvince")
+                        .WithMany()
+                        .HasForeignKey("WorkProvinceID");
+
+                    b.Navigation("MailPrefference");
+
+                    b.Navigation("Province");
+
+                    b.Navigation("WorkProvince");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
@@ -265,6 +374,11 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
+                {
+                    b.Navigation("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
                 {
                     b.Navigation("MemberCommitees");
                 });

@@ -80,12 +80,166 @@ namespace NCPAC_LambdaX.Data
                         userManager.AddToRoleAsync(user, "Staff").Wait();
                     }
                 }
-                if (userManager.FindByEmailAsync("user@outlook.com").Result == null)
+                if (userManager.FindByEmailAsync("agrande@outlook.com").Result == null)
                 {
                     IdentityUser user = new IdentityUser
                     {
-                        UserName = "user@outlook.com",
-                        Email = "user@outlook.com"
+                        UserName = "agrande@outlook.com",
+                        Email = "agrande@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("ejohn@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "ejohn@outlook.com",
+                        Email = "ejohn@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("lx@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "lx@outlook.com",
+                        Email = "lx@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("zmalik@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "zmalik@outlook.com",
+                        Email = "zmalik@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("iclearkson@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "iclearkson@outlook.com",
+                        Email = "iclearkson@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("iskywalker@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "iskywalker@outlook.com",
+                        Email = "iskywalker@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("ccathrin@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "ccatherin@outlook.com",
+                        Email = "ccatherin@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("dtargarian@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "dtargarian@outlook.com",
+                        Email = "dtargarian@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("jbabbenberg@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "jbabbenberg@outlook.com",
+                        Email = "jbabbenberg@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("sjohnson@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "sjohnson@outlook.com",
+                        Email = "sjohnson@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("jkhalifa@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "jkhalifa@outlook.com",
+                        Email = "jkhalifa@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("cnolan@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "cnolan@outlook.com",
+                        Email = "cnolan@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("rtarley@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "rtarley@outlook.com",
+                        Email = "rtarley@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("askywalker@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "askywalker@outlook.com",
+                        Email = "askywalker@outlook.com"
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    //Not in any role
+                }
+                if (userManager.FindByEmailAsync("bwaine@outlook.com").Result == null)
+                {
+                    IdentityUser user = new IdentityUser
+                    {
+                        UserName = "bwaine@outlook.com",
+                        Email = "bwaine@outlook.com"
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;

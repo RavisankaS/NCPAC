@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
+using NCPAC_LambdaX.ViewModels;
 
 namespace NCPAC_LambdaX.Data
 {
@@ -31,5 +32,7 @@ namespace NCPAC_LambdaX.Data
             .HasForeignKey(mc => mc.MemberID)
             .OnDelete(DeleteBehavior.Restrict);
         }
+
+        public DbSet<NCPAC_LambdaX.ViewModels.MemberVM> MemberVM { get; set; }
     }
 }

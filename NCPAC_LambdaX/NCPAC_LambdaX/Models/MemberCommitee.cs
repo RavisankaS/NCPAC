@@ -7,6 +7,7 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using NCPAC_LambdaX.ViewModels;
 
 namespace NCPAC_LambdaX.Models
 {

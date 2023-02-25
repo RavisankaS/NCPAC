@@ -119,11 +119,59 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MemberVM",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    MiddleName = table.Column<string>(type: "TEXT", nullable: true),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Salutation = table.Column<string>(type: "TEXT", nullable: true),
+                    StreetAddress = table.Column<string>(type: "TEXT", nullable: true),
+                    City = table.Column<string>(type: "TEXT", nullable: true),
+                    ProvinceID = table.Column<string>(type: "TEXT", nullable: true),
+                    PostalCode = table.Column<string>(type: "TEXT", nullable: true),
+                    Phone = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkStreetAddress = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkCity = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkProvinceID = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkPostalCode = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkPhone = table.Column<string>(type: "TEXT", nullable: true),
+                    WorkEmail = table.Column<string>(type: "TEXT", nullable: true),
+                    MailPrefferenceID = table.Column<string>(type: "TEXT", nullable: true),
+                    EducationalSummary = table.Column<string>(type: "TEXT", nullable: true),
+                    IsNCGrad = table.Column<bool>(type: "INTEGER", nullable: false),
+                    OccupationalSummary = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MemberVM", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MemberVM_MailPrefferences_MailPrefferenceID",
+                        column: x => x.MailPrefferenceID,
+                        principalTable: "MailPrefferences",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_MemberVM_Provinces_ProvinceID",
+                        column: x => x.ProvinceID,
+                        principalTable: "Provinces",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_MemberVM_Provinces_WorkProvinceID",
+                        column: x => x.WorkProvinceID,
+                        principalTable: "Provinces",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MemberCommitees",
                 columns: table => new
                 {
                     MemberID = table.Column<int>(type: "INTEGER", nullable: false),
-                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false)
+                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    MemberVMID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,12 +188,22 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         principalTable: "Members",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MemberCommitees_MemberVM_MemberVMID",
+                        column: x => x.MemberVMID,
+                        principalTable: "MemberVM",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_MemberCommitees_CommiteeID",
                 table: "MemberCommitees",
                 column: "CommiteeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberCommitees_MemberVMID",
+                table: "MemberCommitees",
+                column: "MemberVMID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Members_MailPrefferenceID",
@@ -160,6 +218,21 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
             migrationBuilder.CreateIndex(
                 name: "IX_Members_WorkProvinceID",
                 table: "Members",
+                column: "WorkProvinceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberVM_MailPrefferenceID",
+                table: "MemberVM",
+                column: "MailPrefferenceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberVM_ProvinceID",
+                table: "MemberVM",
+                column: "ProvinceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MemberVM_WorkProvinceID",
+                table: "MemberVM",
                 column: "WorkProvinceID");
         }
 
@@ -176,6 +249,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             migrationBuilder.DropTable(
                 name: "Members");
+
+            migrationBuilder.DropTable(
+                name: "MemberVM");
 
             migrationBuilder.DropTable(
                 name: "MailPrefferences");
