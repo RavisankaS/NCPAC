@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
+using NCPAC_LambdaX.Utilities;
+using NCPAC_LambdaX.ViewModels;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -22,8 +25,14 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Meetings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, bool ShowCompleted, bool ShowCanceled, int? CommiteeID,
+            int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Meeting")
         {
+            ViewData["Filtering"] = "";
+            PopulateDropDownLists();
+
+            string[] sortOptions = new[] { "Meeting", "TimeFrom" };
+
             var meetings = _context.Meetings
             .Include(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
@@ -41,7 +50,84 @@ namespace NCPAC_LambdaX.Controllers
                 meetings = meetings.Where(m => (m.Commitee.MemberCommitees.Any(c => c.MemberID == member.ID)) || (m.CommiteeID == null));
             }
 
-            return View(meetings);
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                meetings = meetings.Where(p => p.MeetingTitle.ToUpper().Contains(SearchString.ToUpper()));
+            }
+            if (CommiteeID.HasValue)
+            {
+                meetings = meetings.Where(p => p.CommiteeID == CommiteeID);
+                ViewData["Filtering"] = "";
+            }
+            if (ShowCompleted == true)
+            {
+                meetings = meetings.Where(p => p.IsArchived == true);
+            }
+            else
+            {
+                meetings = meetings.Where(p => p.IsArchived == false);
+            }
+
+            if (ShowCanceled == true)
+            {
+                meetings = meetings.Where(p => p.IsCancelled == true);
+            }
+            else
+            {
+                meetings = meetings.Where(p => p.IsCancelled == false);
+            }
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;//Reset page start
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Meeting")
+            {
+                if (sortDirection == "asc")
+                {
+                    meetings = meetings
+                        .OrderBy(p => p.MeetingTitle);
+                }
+                else
+                {
+                    meetings = meetings
+                       .OrderByDescending(p => p.MeetingTitle);
+                }
+            }
+
+            if (sortField == "TimeFrom")
+            {
+                if (sortDirection == "asc")
+                {
+                    meetings = meetings
+                        .OrderByDescending(p => p.TimeFrom);
+                }
+                else
+                {
+                    meetings = meetings
+                       .OrderBy(p => p.TimeFrom);
+                }
+            }
+
+
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "Meeting");
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+
+            var pagedData = await PaginatedList<Meeting>.CreateAsync(meetings.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Meetings/Details/5
