@@ -1,0 +1,68 @@
+﻿@model NCPAC_LambdaX.Models.Meeting
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Meeting</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="MeetingTitle" class="control-label"></label>
+                <input asp-for="MeetingTitle" class="form-control" />
+                <span asp-validation-for="MeetingTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MeetingLink" class="control-label"></label>
+                <input asp-for="MeetingLink" class="form-control" />
+                <span asp-validation-for="MeetingLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeFrom" class="control-label"></label>
+                <input asp-for="TimeFrom" class="form-control" />
+                <span asp-validation-for="TimeFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeTo" class="control-label"></label>
+                <input asp-for="TimeTo" class="form-control" />
+                <span asp-validation-for="TimeTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CommiteeID" class="control-label"></label>
+                <select asp-for="CommiteeID" class="form-control" asp-items="ViewBag.CommiteeID">
+                    <option value="0">All Commitees</option>
+                </select>
+                <span asp-validation-for="CommiteeID" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsArchived" /> @Html.DisplayNameFor(model => model.IsArchived)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsArchived" /> @Html.DisplayNameFor(model => model.IsCancelled)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

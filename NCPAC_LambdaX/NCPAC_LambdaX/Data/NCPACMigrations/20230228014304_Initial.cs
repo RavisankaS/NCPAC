@@ -70,6 +70,31 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Meetings",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    MeetingLink = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
+                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    TimeTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsArchived = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meetings", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Meetings_Commitees_CommiteeID",
+                        column: x => x.CommiteeID,
+                        principalTable: "Commitees",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Members",
                 columns: table => new
                 {
@@ -196,6 +221,11 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Meetings_CommiteeID",
+                table: "Meetings",
+                column: "CommiteeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MemberCommitees_CommiteeID",
                 table: "MemberCommitees",
                 column: "CommiteeID");
@@ -240,6 +270,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
         {
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Meetings");
 
             migrationBuilder.DropTable(
                 name: "MemberCommitees");

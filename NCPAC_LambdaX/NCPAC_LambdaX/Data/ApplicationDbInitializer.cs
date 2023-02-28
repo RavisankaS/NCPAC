@@ -65,12 +65,12 @@ namespace NCPAC_LambdaX.Data
                         userManager.AddToRoleAsync(user, "Supervisor").Wait();
                     }
                 }
-                if (userManager.FindByEmailAsync("staff@outlook.com").Result == null)
+                if (userManager.FindByEmailAsync("bambegoda@niagaracollege.ca").Result == null)
                 {
                     IdentityUser user = new IdentityUser
                     {
-                        UserName = "staff@outlook.com",
-                        Email = "staff@outlook.com"
+                        UserName = "bambegoda@niagaracollege.ca",
+                        Email = "bambegoda@niagaracollege.ca"
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;

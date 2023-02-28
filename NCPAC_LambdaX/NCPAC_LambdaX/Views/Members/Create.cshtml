@@ -3,183 +3,387 @@
 @{
     ViewData["Title"] = "Create";
 }
+<style>
+    
+    .form-container {
+        background-color: rgba(220, 220, 220, 0.1);
+        padding: 1.5rem 1.5rem;
+        border-radius: 10px;
+    }
 
+    form {
+        background-color: rgba(220, 220, 220, 0.4);
+        padding: 0.5rem 0;
+        border-radius: 10px;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .page {
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding-top: 2rem;
+    }
+
+    input {
+        width: 5rem;
+        margin-bottom: 1rem;
+        background-color: rgb(220, 220, 220);
+        padding: 0.5em;
+        border: none;
+        border-radius: 0px;
+    }
+
+        input[type="radio"] {
+            margin-bottom: 0;
+            padding: 0;
+        }
+
+    .progress-box {
+        margin-top: 3rem;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+    }
+
+        .progress-box::before,
+        .progress-bar {
+            height: 4px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+
+        .progress-box::before {
+            content: "";
+            width: 100%;
+            background-color: rgb(170, 170, 170);
+        }
+
+    .progress-bar {
+        width: 0%;
+        background-color: #0096FF;
+        transition: width 0.3s;
+    }
+
+    .step {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: 40px;
+        /* 	border: rgb(220, 220, 220) solid 1px; */
+        background-color: rgb(190, 190, 190);
+        border-radius: 50%;
+        color: black;
+        transition: all 0.3s;
+    }
+
+    .buttons-box {
+        margin-top: 2rem;
+    }
+
+    .active-page {
+        display: flex;
+    }
+
+    .active-step {
+        background-color: #0096FF;
+        color: white;
+    }
+
+    .btns {
+	padding: 0.2em 1em;
+	font-size: 18px;
+	cursor: pointer;
+	background-color: #0096FF;
+	color: white;
+	border: none;
+	border-radius: 5px;
+    }
+
+    .btns[disabled] {
+	    cursor: not-allowed;
+	    background-color: lightgrey;
+	    color: grey;
+    }
+
+</style>
 <h1>Create</h1>
 
 <h4>Member</h4>
 <hr />
 <div class="row">
-    <div class="col-md-20">
+    <div class="col-md-20">        
+        <div class="form-container">	
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row">
-            <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MiddleName" class="control-label"></label>
-                <input asp-for="MiddleName" class="form-control" />
-                <span asp-validation-for="MiddleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Salutation" class="control-label"></label>
-                <input asp-for="Salutation" class="form-control" />
-                <span asp-validation-for="Salutation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetAddress" class="control-label"></label>
-                <input asp-for="StreetAddress" class="form-control" />
-                <span asp-validation-for="StreetAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProvinceID" class="control-label"></label>
-                <select class="form-control" id="ProvinceID" name="ProvinceID" asp-items="ViewBag.ProvinceID">
-                    <option id= null>None</option>
-                </select>
-                <span asp-validation-for="ProvinceID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostalCode" class="control-label"></label>
-                <input asp-for="PostalCode" class="form-control" placeholder="eg: A1A1B1"/>
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" placeholder="eg: example@example.com"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>            
-            </div>
-            <div class="col-md-4">            
-            <label><b>Work Information</b></label>
-            <br />
-            <div class="border border-dark" style="padding:2%">
-            <div class="form-group">
-                <label asp-for="WorkStreetAddress" class="control-label"></label>
-                <input asp-for="WorkStreetAddress" class="form-control" />
-                <span asp-validation-for="WorkStreetAddress" class="text-danger"></span>
-            </div>          
-            <div class="form-group">
-                <label asp-for="WorkCity" class="control-label"></label>
-                <input asp-for="WorkCity" class="form-control" />
-                <span asp-validation-for="WorkCity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkProvinceID" class="control-label"></label>
-                <select class="form-control" id="WorkProvinceID" name="WorkProvinceID" asp-items="ViewBag.WorkProvinceID">
-                    <option>None</option>
-                </select>
-                <span asp-validation-for="WorkProvinceID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkPostalCode" class="control-label"></label>
-                <input asp-for="WorkPostalCode" class="form-control" placeholder="eg: A1A1B1"/>
-                <span asp-validation-for="WorkPostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkPhone" class="control-label"></label>
-                <input asp-for="WorkPhone" class="form-control" />
-                <span asp-validation-for="WorkPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkEmail" class="control-label"></label>
-                <input asp-for="WorkEmail" class="form-control" placeholder="eg: example@example.com"/>
-                <span asp-validation-for="WorkEmail" class="text-danger"></span>
-            </div>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="MailPrefferenceID" class="control-label"></label>
-                <select class="form-control" id="MailPrefferenceID" name="MailPrefferenceID" asp-items="ViewBag.MailPrefferenceID">
-                </select>
-                <span asp-validation-for="MailPrefferenceID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EducationalSummary" class="control-label"></label>
-                @Html.TextAreaFor(model => model.EducationalSummary, new { @class = "form-control", @rows = 4 })
-                <span asp-validation-for="EducationalSummary" class="text-danger"></span>
-            </div>           
-            </div> 
-            <div class="col-md-4">                             
-            <div class="form-group">
-                <label asp-for="OccupationalSummary" class="control-label"></label>
-                @Html.TextAreaFor(model => model.OccupationalSummary, new { @class = "form-control", @rows = 4 })
-                <span asp-validation-for="OccupationalSummary" class="text-danger"></span>
-            </div> 
-            <div class="form-group">
-                <label asp-for="DateJoined" class="control-label"></label>
-                <input asp-for="DateJoined" class="form-control" />
-                <span asp-validation-for="DateJoined" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label"><b>@Html.DisplayNameFor(model => model.MemberCommitees)</b></label>
-                <div class="col-md-offset-1">
-                    <table>
-                        <tr>
-                            @{
-                                int cnt = 0;
-                                List<NCPAC_LambdaX.ViewModels.CheckOptionVM> checkboxes = ViewBag.MemberCommiteeOptions;
-                                foreach (var checkbox in checkboxes)
-                                {
-                                    if (cnt++ % 2 == 0)
-                                    {
-                                    @:</tr><tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                               name="selectedOptions"
-                                               value="@checkbox.ID"
-                                               @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
-                                        @checkbox.DisplayText @:&nbsp;&nbsp;
-                                    @:</td>
-                                }
-                            @:</tr>
-                            }
-                        </table>
+            <div class="page active-page" data-number="1">
+			    <div class="page-container">
+				    <h3>Required info</h3>
+				    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="MiddleName" class="control-label"></label>
+                        <input asp-for="MiddleName" class="form-control" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>                
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" placeholder="eg: example@example.com"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>                  
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>  
+			    </div>
+		    </div>
+
+		    <div class="page" data-number="2">
+			    <div class="page-container">
+				    <h3>Commitees and Basic Info</h3>
+				    <div class="form-group">
+                    <label class="control-label"><b>@Html.DisplayNameFor(model => model.MemberCommitees)</b></label>
+                    <div class="col-md-offset-1">
+                        <table>
+                            <tr>
+                                @{
+                                    int cnt = 0;
+                                    List<NCPAC_LambdaX.ViewModels.CheckOptionVM> checkboxes = ViewBag.MemberCommiteeOptions;
+                                    foreach (var checkbox in checkboxes)
+                                    {
+                                        if (cnt++ % 2 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                            @:<td>
+                                                <input type="checkbox"
+                                                       name="selectedOptions"
+                                                       value="@checkbox.ID"
+                                                       @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
+                                                @checkbox.DisplayText @:&nbsp;&nbsp;
+                                            @:</td>
+                                    }
+                                    @:</tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
                 
-            <div class="form-group">
-                <label class="control-label" style="margin-top:3%"><b>@Html.DisplayNameFor(model => model.IsNCGrad)</b> : &nbsp;</label>
-                <input asp-for="IsNCGrad" />
-                <span asp-validation-for="IsNCGrad" class="text-danger"></span>
-            </div> 
-            <div class="form-group">
-                <label class="control-label" style="margin-top:3%"><b>@Html.DisplayNameFor(model => model.IsActive)</b> : &nbsp;</label>
-                <input asp-for="IsActive" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
-            </div> 
-            </div>
-            </div>
+                <div class="form-group">
+                    <label class="control-label" style="margin-top:3%"><b>@Html.DisplayNameFor(model => model.IsNCGrad)</b> : &nbsp;</label>
+                    <input asp-for="IsNCGrad" />
+                    <span asp-validation-for="IsNCGrad" class="text-danger"></span>
+                </div> 
+                <div class="form-group">
+                    <label class="control-label" style="margin-top:3%"><b>@Html.DisplayNameFor(model => model.IsActive)</b> : &nbsp;</label>
+                    <input asp-for="IsActive" checked/>
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div> 
+			    </div>
+
+		    </div>
+
+		    <div class="page" data-number="3">
+			    <div class="page-container">
+				    <h3>Other Personal Info</h3>
+				    <div class="form-group">
+                        <label asp-for="Salutation" class="control-label"></label>
+                        <input asp-for="Salutation" class="form-control" />
+                        <span asp-validation-for="Salutation" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StreetAddress" class="control-label"></label>
+                        <input asp-for="StreetAddress" class="form-control" />
+                        <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProvinceID" class="control-label"></label>
+                        <select class="form-control" id="ProvinceID" name="ProvinceID" asp-items="ViewBag.ProvinceID">
+                            <option value="0">None</option>
+                        </select>
+                        <span asp-validation-for="ProvinceID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PostalCode" class="control-label"></label>
+                        <input asp-for="PostalCode" class="form-control" placeholder="eg: A1A1B1"/>
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>    
+                    <div class="form-group">
+                        <label asp-for="EducationalSummary" class="control-label"></label>
+                        @Html.TextAreaFor(model => model.EducationalSummary, new { @class = "form-control", @rows = 4 })
+                        <span asp-validation-for="EducationalSummary" class="text-danger"></span>
+                    </div>         
+                    <div class="form-group">
+                        <label asp-for="DateJoined" class="control-label"></label>
+                        <input asp-for="DateJoined" class="form-control" />
+                        <span asp-validation-for="DateJoined" class="text-danger"></span>
+                    </div>
+			    </div>
+		    </div>
+
+		    <div class="page" data-number="4">
+			    <div class="page-container">
+				    <h3>Work Info</h3>
+				    <div class="form-group">
+                        <label asp-for="WorkStreetAddress" class="control-label"></label>
+                        <input asp-for="WorkStreetAddress" class="form-control" />
+                        <span asp-validation-for="WorkStreetAddress" class="text-danger"></span>
+                    </div>          
+                    <div class="form-group">
+                        <label asp-for="WorkCity" class="control-label"></label>
+                        <input asp-for="WorkCity" class="form-control" />
+                        <span asp-validation-for="WorkCity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkProvinceID" class="control-label"></label>
+                        <select class="form-control" id="WorkProvinceID" name="WorkProvinceID" asp-items="ViewBag.WorkProvinceID">
+                            <option>None</option>
+                        </select>
+                        <span asp-validation-for="WorkProvinceID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkPostalCode" class="control-label"></label>
+                        <input asp-for="WorkPostalCode" class="form-control" placeholder="eg: A1A1B1"/>
+                        <span asp-validation-for="WorkPostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkPhone" class="control-label"></label>
+                        <input asp-for="WorkPhone" class="form-control" />
+                        <span asp-validation-for="WorkPhone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WorkEmail" class="control-label"></label>
+                        <input asp-for="WorkEmail" class="form-control" placeholder="eg: example@example.com"/>
+                        <span asp-validation-for="WorkEmail" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="MailPrefferenceID" class="control-label"></label>
+                        <select class="form-control" id="MailPrefferenceID" name="MailPrefferenceID" asp-items="ViewBag.MailPrefferenceID">
+                        </select>
+                        <span asp-validation-for="MailPrefferenceID" class="text-danger"></span>
+                    </div>  
+			    </div>
+		    </div>
             <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
             
-        </form>
+        </form>   
+        <div class="d-flex justify-content-center">
+            <div class="progress-box">
+	            <div class="progress-bar"></div>
+	            <div class="step active-step">1</div>
+	            <div class="step">2</div>
+	            <div class="step">3</div>
+	            <div class="step">4</div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="buttons-box">
+	            <button class="btns btn-prev" disabled>&#171</button>
+	            <button class="btns btn-next">&#187;</button>
+            </div>
+        </div>
+        </div>
     </div>
 </div>
+
+
 
 <div>
     <a asp-action="Index" class="btn btn-secondary" style="margin-top:1%">Back to List</a>
 </div>
+
+<script>
+    const formPages = document.querySelectorAll(".page");
+    const steps = document.querySelectorAll(".step");
+    const progressBar = document.querySelector(".progress-bar");
+    const prevBtn = document.querySelector(".btn-prev");
+    const nextBtn = document.querySelector(".btn-next");
+
+    let currentStep = 1;
+
+    const handlePrevBtn = () => {
+	    if (currentStep !== 1) {
+		    currentStep--;
+		    changeProgressBar();
+		    handleCurrentPage();
+	    }
+	    //after potential change
+	    if (currentStep === 1) {
+		    prevBtn.disabled = true;
+	    } else if (currentStep === steps.length - 1) {
+		    nextBtn.disabled = false;
+	    }
+    };
+
+    const handleNextBtn = () => {
+	    if (currentStep !== steps.length) {
+		    currentStep++;
+		    changeProgressBar();
+		    handleCurrentPage();
+	    }
+	    //after potential change
+	    if (currentStep === steps.length) {
+		    nextBtn.disabled = true;
+	    } else if (currentStep === 2) {
+		    prevBtn.disabled = false;
+	    }
+    };
+
+    const changeProgressBar = () => {
+	    // 	color steps
+	    steps.forEach((step, index) => {
+		    if (index < currentStep) {
+			    step.classList.add("active-step");
+		    } else {
+			    step.classList.remove("active-step");
+		    }
+	    });
+	    // 	color progress bar
+	    const activeSteps = document.querySelectorAll(".active-step");
+	    let progressPercent = ((activeSteps.length - 1) / (steps.length - 1)) * 100;
+	    progressBar.style.width = progressPercent + "%";
+    };
+
+    const handleCurrentPage = () => {
+	    formPages.forEach((page) => {
+		    if (currentStep == page.dataset.number) {
+			    page.classList.add("active-page");
+		    } else {
+			    page.classList.remove("active-page");
+		    }
+	    });
+    };
+
+    prevBtn.addEventListener("click", handlePrevBtn);
+    nextBtn.addEventListener("click", handleNextBtn);
+
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

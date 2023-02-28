@@ -54,7 +54,6 @@ namespace NCPAC_LambdaX.Controllers
                     e.UserRoles = (List<string>)await _userManager.GetRolesAsync(user);
                 }
             };
-
             return View(employees);
         }
 

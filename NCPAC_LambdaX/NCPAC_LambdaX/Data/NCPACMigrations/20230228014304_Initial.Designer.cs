@@ -11,7 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230225152236_Initial")]
+    [Migration("20230228014304_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,48 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.HasKey("ID");
 
                     b.ToTable("MailPrefferences");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Meeting", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CommiteeID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MeetingLink")
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MeetingTitle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimeFrom")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimeTo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CommiteeID");
+
+                    b.ToTable("Meetings");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
@@ -303,6 +345,15 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.ToTable("MemberVM");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Meeting", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Commitee", "Commitee")
+                        .WithMany("Meetings")
+                        .HasForeignKey("CommiteeID");
+
+                    b.Navigation("Commitee");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.MailPrefference", "MailPrefference")
@@ -370,6 +421,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
                 {
+                    b.Navigation("Meetings");
+
                     b.Navigation("MemberCommitees");
                 });
 
