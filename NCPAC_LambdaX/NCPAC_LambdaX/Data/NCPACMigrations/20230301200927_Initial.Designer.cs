@@ -11,11 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-<<<<<<< HEAD:NCPAC_LambdaX/NCPAC_LambdaX/Data/NCPACMigrations/20230301163945_Initial.Designer.cs
-    [Migration("20230301163945_Initial")]
-=======
-    [Migration("20230301175920_Initial")]
->>>>>>> refs/remotes/origin/master:NCPAC_LambdaX/NCPAC_LambdaX/Data/NCPACMigrations/20230301175920_Initial.Designer.cs
+    [Migration("20230301200927_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

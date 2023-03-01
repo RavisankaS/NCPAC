@@ -159,7 +159,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             var member = await _context.Members
-                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee)
+                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.Meetings)
                 .Include(d => d.Province)
                 .Select(e => new MemberAdminVM
                 {
