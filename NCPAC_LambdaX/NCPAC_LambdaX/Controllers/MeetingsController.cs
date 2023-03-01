@@ -140,6 +140,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             var meeting = await _context.Meetings
+            .Include(d => d.MeetingDocuments)
             .Include(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
             .FirstOrDefaultAsync(m => m.ID == id);
@@ -165,12 +166,12 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meeting)
+        public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meeting, List<IFormFile> theFiles)
         {
 
             if (ModelState.IsValid)
             {
-
+                await AddDocumentsAsync(meeting, theFiles);
                 _context.Add(meeting);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -189,7 +190,10 @@ namespace NCPAC_LambdaX.Controllers
                 return NotFound();
             }
 
-            var meeting = await _context.Meetings.FindAsync(id);
+            var meeting = await _context.Meetings
+                .Include(d => d.MeetingDocuments)
+                .FirstOrDefaultAsync(d => d.ID == id);
+            
             if (meeting == null)
             {
                 return NotFound();
@@ -204,9 +208,9 @@ namespace NCPAC_LambdaX.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Supervisor,Staff")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meeting)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meetingToUpdate, List<IFormFile> theFiles)
         {
-            if (id != meeting.ID)
+            if (id != meetingToUpdate.ID)
             {
                 return NotFound();
             }
@@ -217,13 +221,13 @@ namespace NCPAC_LambdaX.Controllers
             {
                 try
                 {
-
-                    _context.Update(meeting);
+                    await AddDocumentsAsync(meetingToUpdate, theFiles);
+                    _context.Update(meetingToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MeetingExists(meeting.ID))
+                    if (!MeetingExists(meetingToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -234,8 +238,8 @@ namespace NCPAC_LambdaX.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateDropDownLists(meeting);
-            return View(meeting);
+            PopulateDropDownLists(meetingToUpdate);
+            return View(meetingToUpdate);
         }
 
         // GET: Meetings/Delete/5
@@ -274,6 +278,42 @@ namespace NCPAC_LambdaX.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<FileContentResult> Download(int id)
+        {
+            var theFile = await _context.UploadedFiles
+                .Include(d => d.FileContent)
+                .Where(f => f.ID == id)
+                .FirstOrDefaultAsync();
+            return File(theFile.FileContent.Content, theFile.MimeType, theFile.FileName);
+        }
+
+        private async Task AddDocumentsAsync(Meeting meeting, List<IFormFile> theFiles)
+        {
+            foreach (var f in theFiles)
+            {
+                if (f != null)
+                {
+                    string mimeType = f.ContentType;
+                    string fileName = Path.GetFileName(f.FileName);
+                    long fileLength = f.Length;
+                    //Note: you could filter for mime types if you only want to allow
+                    //certain types of files.  I am allowing everything.
+                    if (!(fileName == "" || fileLength == 0))//Looks like we have a file!!!
+                    {
+                        MeetingDocument d = new();
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await f.CopyToAsync(memoryStream);
+                            d.FileContent.Content = memoryStream.ToArray();
+                        }
+                        d.MimeType = mimeType;
+                        d.FileName = fileName;
+                        meeting.MeetingDocuments.Add(d);
+                    };
+                }
+            }
         }
 
         private SelectList CommiteeList(int? selectedId)

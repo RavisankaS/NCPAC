@@ -11,7 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230301064637_Initial")]
+    [Migration("20230301175920_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,6 +87,20 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.HasKey("ID");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.FileContent", b =>
+                {
+                    b.Property<int>("FileContentID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Content")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("FileContentID");
+
+                    b.ToTable("FileContent");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.MailPrefference", b =>
@@ -266,6 +280,37 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.ToTable("Provinces");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.UploadedFile", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MimeType")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UploadedFiles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("UploadedFile");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
                 {
                     b.Property<int>("ID")
@@ -345,6 +390,29 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.ToTable("MemberVM");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.MeetingDocument", b =>
+                {
+                    b.HasBaseType("NCPAC_LambdaX.Models.UploadedFile");
+
+                    b.Property<int>("MeetingID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("MeetingID");
+
+                    b.HasDiscriminator().HasValue("MeetingDocument");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.FileContent", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.UploadedFile", "UploadedFile")
+                        .WithOne("FileContent")
+                        .HasForeignKey("NCPAC_LambdaX.Models.FileContent", "FileContentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UploadedFile");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Meeting", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.Commitee", "Commitee")
@@ -419,6 +487,17 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("WorkProvince");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.MeetingDocument", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Meeting", "Meeting")
+                        .WithMany("MeetingDocuments")
+                        .HasForeignKey("MeetingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Meeting");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
                 {
                     b.Navigation("Meetings");
@@ -426,9 +505,20 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("MemberCommitees");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Meeting", b =>
+                {
+                    b.Navigation("MeetingDocuments");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
                 {
                     b.Navigation("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.UploadedFile", b =>
+                {
+                    b.Navigation("FileContent")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
