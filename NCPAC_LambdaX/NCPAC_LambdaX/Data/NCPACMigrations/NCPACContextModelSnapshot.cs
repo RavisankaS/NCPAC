@@ -17,6 +17,30 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.14");
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Announcement", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AnnouncementDescription")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimePosted")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Announcements");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
                 {
                     b.Property<int>("ID")

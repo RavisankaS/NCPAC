@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using NCPAC_LambdaX.ViewModels;
 
 namespace NCPAC_LambdaX.Controllers
 {
+    [Authorize]
     public class MemberAccountController : Controller
     {
         private readonly NCPACContext _context;

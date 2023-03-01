@@ -33,7 +33,8 @@
         }
 
         .card {
-            width: 25%;
+            width: 85%;
+            height:82%;
             background-color: white;
             border: 1px solid ##006ba1;
             padding: 20px;
@@ -52,34 +53,80 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to NCPAC Manager</h1>
-        <br />
-        <p>It is critical to Niagara College to have input from all stakeholders, internal and external, to ensure quality and ongoing improvement in our programs. <br /> Both practices and processes ensure standardized and regular quantitative and qualitative data from stakeholder is gathered to inform plans and actions with <br /> regards to continuous improvement.</p>
-        <div class="card">
-            <h2>My Account</h2>
-            <p>View your member account. Edit your personal details</p>
-            <a href="./MemberAccount/Details">Click Here</a>
+  <h1>Welcome to NCPAC Manager</h1>
+  <br />
+  <p>It is critical to Niagara College to have input from all stakeholders, internal and external, to ensure quality and ongoing improvement in our programs. <br /> Both practices and processes ensure standardized and regular quantitative and qualitative data from stakeholder is gathered to inform plans and actions with <br /> regards to continuous improvement.</p>
+  
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 ">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">My Account</h2>
+          <p class="card-text">View your member/ staff account. Edit your personal details</p>
+          <a href="./MemberAccount/Details" >Members Account</a>
+          <br />
+          <a href="./EmployeeAccount/Details" >Staff Account</a>
         </div>
-        <div class="card">
-            <h2>Login</h2>
-            <p>Click here to login to your profile. Login is required for most of the tasks in the application</p>
-            <a href="./Identity/Account/Manage" target="_blank">Click Here</a>
-        </div>
-        <div class="card">
-            <h2>Meetings</h2>
-            <p>Check if you have any meetings (Login Required)</p>
-            <a href="./Meetings" target="_blank">Learn More</a>
-        </div>
-        <div class="card">
-            <h2>Polls</h2>
-            <p>Review existing polls of the NCPAC. (Login Required)</p>
-            <a href="" target="_blank">Learn More</a>
-        </div>
-        <div class="card">
-            <h2>Contact Admin</h2>
-            <p>Users, If you are having any trouble with the application contact the admin.</p>
-            <a href="mailto: ncpacinfo@niagaracollege.ca">Email</a>
-        </div>
+      </div>
     </div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Announcements</h2>
+          <p class="card-text">Click here to view the latest announcements</p>
+          <a href="./Announcements" target="_blank">Click Here</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Meetings</h2>
+          <p class="card-text">Check if you have any meetings (Login Required)</p>
+          <a href="./Meetings" target="_blank">Learn More</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Polls</h2>
+          <p class="card-text">Review existing polls of the NCPAC. (Login Required)</p>
+          <a href="" target="_blank">Learn More</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Contact Admin</h2>
+          <p class="card-text">Users, If you are having any trouble with the application contact the admin.</p>
+          <a href="mailto:ncpacinfo@niagaracollege.ca">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
+
+@section Scripts {
+    <script>
+        //Register the service worker.
+        //Note it is still not "installable" without the manifest
+        if (navigator.serviceWorker.controller) {
+            console.log('Active service worker found, no need to register');
+        } else {
+            navigator.serviceWorker.register('sw.js', {
+                scope: './'
+            }).then(function (reg) {
+                console.log('Service worker has been registered for scope:' + reg.scope);
+            });
+        }
+    </script>
+}
+

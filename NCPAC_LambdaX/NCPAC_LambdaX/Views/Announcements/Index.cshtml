@@ -1,0 +1,36 @@
+﻿@model IEnumerable<NCPAC_LambdaX.Models.Announcement>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Announcements</h1>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Supervisor"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+}
+
+
+@foreach (var item in Model) {
+        <br />
+            <h2>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </h2>
+            <p>
+                <label>Posted At: </label> @Html.DisplayFor(modelItem => item.TimePosted)
+            </p>
+            <div>
+                @Html.DisplayFor(modelItem => item.AnnouncementDescription)
+            </div>
+            <br />
+            @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Supervisor"))
+            {
+                <td>
+            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID">Delete</a>
+                </td>
+            }            
+        <hr>
+}

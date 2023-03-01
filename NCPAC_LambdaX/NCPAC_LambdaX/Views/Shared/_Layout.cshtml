@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - NCPAC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="manifest" href="~/manifest.json" />
     <link rel="stylesheet" href="~/NCPAC_LambdaX.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -41,6 +42,9 @@
 
                                 }
                             }
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Announcements" asp-action="Index">Announcements</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Meetings" asp-action="Index">Meetings</a>
                             </li>

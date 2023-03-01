@@ -52,7 +52,27 @@ namespace NCPAC_LambdaX.Data
 
                     context.SaveChanges();
                 }
-                
+
+                if (!context.Announcements.Any())
+                {
+                    context.Announcements.AddRange(
+                    new Announcement
+                    {
+                        Subject = "Two factor authentication",
+                        AnnouncementDescription = "All the members who have not yet enrolled with 2 factor authentication please do that now. Follow this link https://its.niagaracollege.ca/studentmfa/ for futher steps in enrolling in mfa. Please follow these instructions and setup 2 factor authentication ASAP to ensure the safety of your account.",
+                        TimePosted = DateTime.Now
+                    },
+                    new Announcement
+                    {
+                        Subject = "Welcome to the NCPAC management system",
+                        AnnouncementDescription = "This is the new application that our organization use to maintain your information as well as meetings, action items and etc. Make your selves comfortable and please do not forget to complete all your information in your profiles.",
+                        TimePosted = DateTime.Now
+                    }
+
+                    ); 
+                    context.SaveChanges();
+                }
+
 
                 // Seed Commitees if there arent any.
                 if (!context.Commitees.Any())

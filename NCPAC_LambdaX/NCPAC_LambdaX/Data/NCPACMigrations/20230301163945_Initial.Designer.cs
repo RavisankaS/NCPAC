@@ -11,13 +11,37 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230301064637_Initial")]
+    [Migration("20230301163945_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.14");
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Announcement", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AnnouncementDescription")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimePosted")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Announcements");
+                });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>
                 {

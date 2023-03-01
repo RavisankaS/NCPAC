@@ -21,6 +21,7 @@ namespace NCPAC_LambdaX.Data
         public DbSet<Province> Provinces { get; set; }
         public DbSet<MailPrefference> MailPrefferences { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
