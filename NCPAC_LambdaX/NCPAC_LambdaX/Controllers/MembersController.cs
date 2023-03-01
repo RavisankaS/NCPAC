@@ -204,8 +204,10 @@ namespace NCPAC_LambdaX.Controllers
         public IActionResult Create()
         {
             MemberAdminVM member = new MemberAdminVM();
+            member.ProvinceID = "ON";
+            member.WorkProvinceID = "ON";
             PopulateAssignedMemberCommiteesData(member);
-            PopulateDropDownLists();
+            PopulateDropDownLists(member);
             return View(member);
         }
 
