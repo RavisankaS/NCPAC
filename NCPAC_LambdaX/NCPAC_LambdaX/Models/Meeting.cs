@@ -40,5 +40,9 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Cancelled")]
         public bool IsCancelled { get; set; }
 
+
+        [Display(Name = "Documents")]
+        public ICollection<MeetingDocument> MeetingDocuments { get; set; } = new HashSet<MeetingDocument>();
+
     }
 }
