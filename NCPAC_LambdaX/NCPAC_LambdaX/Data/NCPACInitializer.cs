@@ -143,6 +143,7 @@ namespace NCPAC_LambdaX.Data
                 {
                     var provinces = new List<Province>
                     {
+                        new Province { ID = "NA", Name = "None"},
                         new Province { ID = "ON", Name = "Ontario"},
                         new Province { ID = "PE", Name = "Prince Edward Island"},
                         new Province { ID = "NB", Name = "New Brunswick"},

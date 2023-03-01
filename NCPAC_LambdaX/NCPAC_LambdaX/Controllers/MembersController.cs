@@ -223,14 +223,7 @@ namespace NCPAC_LambdaX.Controllers
             try
             {
                 //Add the selected memberCommitees
-                if (selectedOptions != null)
-                {
-                    foreach (var memberCommitee in selectedOptions)
-                    {
-                        var memberCommiteeToAdd = new MemberCommitee { MemberID = member.ID, CommiteeID = int.Parse(memberCommitee) };
-                        member.MemberCommitees.Add(memberCommiteeToAdd);
-                    }
-                }
+                UpdateMemberCommitees(selectedOptions, member);
                 if (ModelState.IsValid)
                 {
                     _context.Add(member);
@@ -659,54 +652,37 @@ namespace NCPAC_LambdaX.Controllers
           return _context.Members.Any(e => e.ID == id);
         }
 
+
         private void PopulateAssignedMemberCommiteesData(MemberAdminVM member)
         {
-            //For this to work, you must have Included the MemberCommitees 
-            //in the Member
+            //For this to work, you must have Included the child collection in the parent object
             var allOptions = _context.Commitees;
-            var currentOptionIDs = new HashSet<int>(member.MemberCommitees.Select(b => b.CommiteeID));
-            var checkBoxes = new List<CheckOptionVM>();
-            foreach (var option in allOptions)
+            var currentOptionsHS = new HashSet<int>(member.MemberCommitees.Select(b => b.CommiteeID));
+            //Instead of one list with a boolean, we will make two lists
+            var selected = new List<ListOptionVM>();
+            var available = new List<ListOptionVM>();
+            foreach (var s in allOptions)
             {
-                checkBoxes.Add(new CheckOptionVM
+                if (currentOptionsHS.Contains(s.ID))
                 {
-                    ID = option.ID,
-                    DisplayText = option.CommiteeName,
-                    Assigned = currentOptionIDs.Contains(option.ID)
-                });
-            }
-            ViewData["MemberCommiteeOptions"] = checkBoxes;
-        }
-        private void UpdateMemberCommitees(string[] selectedOptions, Member memberToUpdate)
-        {
-            if (selectedOptions == null)
-            {
-                memberToUpdate.MemberCommitees = new List<MemberCommitee>();
-                return;
-            }
-
-            var selectedOptionsHS = new HashSet<string>(selectedOptions);
-            var memberOptionsHS = new HashSet<int>
-                (memberToUpdate.MemberCommitees.Select(c => c.CommiteeID));//IDs of the currently selected MemberCommitees
-            foreach (var option in _context.Commitees)
-            {
-                if (selectedOptionsHS.Contains(option.ID.ToString())) //It is checked
-                {
-                    if (!memberOptionsHS.Contains(option.ID))  //but not currently included
+                    selected.Add(new ListOptionVM
                     {
-                        memberToUpdate.MemberCommitees.Add(new MemberCommitee { MemberID = memberToUpdate.ID, CommiteeID = option.ID });
-                    }
+                        ID = s.ID,
+                        DisplayText = s.CommiteeName
+                    });
                 }
                 else
                 {
-                    //Checkbox Not checked
-                    if (memberOptionsHS.Contains(option.ID)) //but it is currently in the history - so remove it
+                    available.Add(new ListOptionVM
                     {
-                        MemberCommitee memberCommiteeToRemove = memberToUpdate.MemberCommitees.SingleOrDefault(c => c.CommiteeID == option.ID);
-                        _context.Remove(memberCommiteeToRemove);
-                    }
+                        ID = s.ID,
+                        DisplayText = s.CommiteeName
+                    });
                 }
             }
+
+            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
         }
 
 
@@ -784,17 +760,50 @@ namespace NCPAC_LambdaX.Controllers
 
         }
 
+        private void UpdateMemberCommitees(string[] selectedOptions, Member memberToUpdate)
+        {
+            if (selectedOptions == null)
+            {
+                memberToUpdate.MemberCommitees = new List<MemberCommitee>();
+                return;
+            }
+
+            var selectedOptionsHS = new HashSet<string>(selectedOptions);
+            var currentOptionsHS = new HashSet<int>(memberToUpdate.MemberCommitees.Select(b => b.CommiteeID));
+            foreach (var s in _context.Commitees)
+            {
+                if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
+                {
+                    if (!currentOptionsHS.Contains(s.ID))//but not currently in the Member's collection - Add it!
+                    {
+                        memberToUpdate.MemberCommitees.Add(new MemberCommitee
+                        {
+                            CommiteeID = s.ID,
+                            MemberID = memberToUpdate.ID
+                        });
+                    }
+                }
+                else //not selected
+                {
+                    if (currentOptionsHS.Contains(s.ID))//but is currently in the Member's collection - Remove it!
+                    {
+                        MemberCommitee specToRemove = memberToUpdate.MemberCommitees.FirstOrDefault(d => d.CommiteeID == s.ID);
+                        _context.Remove(specToRemove);
+                    }
+                }
+            }
+        }
 
         private SelectList ProvinceSelectList(string selectedId)
         {
             return new SelectList(_context.Provinces
-                .OrderBy(d => d.Name), "ID", "Name", selectedId);
+                .OrderByDescending(i => i.ID == "NA").ThenBy(p => p.Name), "ID", "Name", selectedId);
         }
 
         private SelectList WorkProvinceSelectList(string selectedId)
         {
             return new SelectList(_context.Provinces
-                .OrderBy(d => d.Name), "ID", "Name", selectedId);
+                .OrderByDescending(i => i.ID == "NA").ThenBy(p => p.Name), "ID", "Name", selectedId);
         }
 
         private SelectList MailPrefferenceSelectList(string selectedId)

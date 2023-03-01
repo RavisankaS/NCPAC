@@ -148,6 +148,7 @@ namespace NCPAC_LambdaX.Controllers
             {
                 _context.Update(memberToUpdate);
                 await _context.SaveChangesAsync();
+                UpdateUserNameCookie(memberToUpdate.FirstName + " " + memberToUpdate.LastName);
                 //return RedirectToAction(nameof(Index));
                 return RedirectToAction("Details", new { memberToUpdate.ID });
             }

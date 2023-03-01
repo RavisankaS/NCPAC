@@ -160,32 +160,24 @@
 				    <h3>Commitees and Basic Info</h3>
 				    <div class="form-group">
                     <label class="control-label"><b>@Html.DisplayNameFor(model => model.MemberCommitees)</b></label>
-                    <div class="col-md-offset-1">
-                        <table>
-                            <tr>
-                                @{
-                                    int cnt = 0;
-                                    List<NCPAC_LambdaX.ViewModels.CheckOptionVM> checkboxes = ViewBag.MemberCommiteeOptions;
-                                    foreach (var checkbox in checkboxes)
-                                    {
-                                        if (cnt++ % 2 == 0)
-                                        {
-                                            @:</tr><tr>
-                                        }
-                                            @:<td>
-                                                <input type="checkbox"
-                                                       name="selectedOptions"
-                                                       value="@checkbox.ID"
-                                                       @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
-                                                @checkbox.DisplayText @:&nbsp;&nbsp;
-                                            @:</td>
-                                    }
-                                    @:</tr>
-                                }
-                            </table>
+                    <div class="col-md-16">
+                        <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Commitees Selected</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                                <strong>-</strong>
+                            </button>
+                            @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control" })
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Choose Commitees</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                                <strong>+</strong>
+                            </button>
+                            @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
+                        </div>
                         </div>
                     </div>
-                
+                   </div>
                 <div class="form-group">
                     <label class="control-label" style="margin-top:3%"><b>@Html.DisplayNameFor(model => model.IsNCGrad)</b> : &nbsp;</label>
                     <input asp-for="IsNCGrad" />
@@ -221,7 +213,6 @@
                     <div class="form-group">
                         <label asp-for="ProvinceID" class="control-label"></label>
                         <select class="form-control" id="ProvinceID" name="ProvinceID" asp-items="ViewBag.ProvinceID">
-                            <option value="0">None</option>
                         </select>
                         <span asp-validation-for="ProvinceID" class="text-danger"></span>
                     </div>
@@ -259,7 +250,6 @@
                     <div class="form-group">
                         <label asp-for="WorkProvinceID" class="control-label"></label>
                         <select class="form-control" id="WorkProvinceID" name="WorkProvinceID" asp-items="ViewBag.WorkProvinceID">
-                            <option>None</option>
                         </select>
                         <span asp-validation-for="WorkProvinceID" class="text-danger"></span>
                     </div>
@@ -387,4 +377,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/multiselect.js"></script>
+    <script src="~/js/refreshDDL.js"></script>
 }
+
