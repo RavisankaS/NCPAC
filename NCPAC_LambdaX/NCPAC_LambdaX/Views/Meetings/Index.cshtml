@@ -9,17 +9,55 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Filter/Search
+        </button>
+        <div class="collapse" @(ViewData["Filtering"]) id="collapseFilter">
+            <div class="card card-body bg-light">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Search Committees:</label>
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Select by Commitee:</label>
+                        @Html.DropDownList("CommiteeID", null, "All Commitees", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label class="control-label">Show Completed Meetings:</label><br />
+                            @Html.CheckBox("ShowCompleted", false, htmlAttributes: new { @class="checkbox" })
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="control-label">Show Canceled Meetings:</label><br />
+                            @Html.CheckBox("ShowCanceled", false, htmlAttributes: new { @class="checkbox" })
+                        </div>
+                        <div class="form-group col-md-2 align-self-end">
+                            <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
+                            <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MeetingTitle)
+                <input type="submit" name="actionButton" value="Meeting" class="btn btn-outline-dark" />
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MeetingLink)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TimeFrom)
+                <input type="submit" name="actionButton" value="TimeFrom" class="btn btn-outline-dark" />
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TimeTo)
@@ -29,6 +67,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsArchived)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCancelled)
             </th>
             <th></th>
         </tr>
@@ -63,3 +104,5 @@
 }
     </tbody>
 </table>
+    <partial name="_PagingNavBar" />
+</form>
