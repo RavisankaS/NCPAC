@@ -30,9 +30,8 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "To")]
         public DateTime? TimeTo { get; set; }
 
-        [Display(Name = "Commitee (Optional)")]
-        public int? CommiteeID { get; set; }
-        public Commitee? Commitee { get; set; }
+        [Display(Name = "Commitees")]
+        public ICollection<MeetingCommitee> MeetingCommitees { get; set; } = new HashSet<MeetingCommitee>();
 
         [Display(Name = "Is Complete")]
         public bool IsArchived { get; set; }

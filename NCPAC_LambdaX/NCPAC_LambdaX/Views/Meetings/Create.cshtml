@@ -28,6 +28,27 @@
                 <span asp-validation-for="MeetingLink" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label"><b>@Html.DisplayNameFor(model => model.MeetingCommitees)</b></label>
+                <div class="col-md-16">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Commitees Selected</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                                <strong>-</strong>
+                            </button>
+                            @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control" })
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Choose Commitees</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                                <strong>+</strong>
+                            </button>
+                            @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+            <div class="form-group">
                 <label asp-for="TimeFrom" class="control-label"></label>
                 <input asp-for="TimeFrom" class="form-control" />
                 <span asp-validation-for="TimeFrom" class="text-danger"></span>
@@ -38,18 +59,12 @@
                 <span asp-validation-for="TimeTo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CommiteeID" class="control-label"></label>
-                <select id=""ddlCommitees asp-for="CommiteeID" class="form-control" asp-items="ViewBag.CommiteeID">
-                    <option value="0">All Commitees</option>
-                </select>
-                <span asp-validation-for="CommiteeID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label class="control-label custom-file-label">Upload Documents:</label>
                 <div class="input-group mb-3">
                     <input type="file" class="form-control" name="theFiles" multiple="multiple">
                 </div>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -60,6 +75,14 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/multiselect.js"></script>
+    <script src="~/js/refreshDDL.js"></script>
+}
 
 
 

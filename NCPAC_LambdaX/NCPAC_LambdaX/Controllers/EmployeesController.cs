@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,8 @@ using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
 using NCPAC_LambdaX.Utilities;
 using NCPAC_LambdaX.ViewModels;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -381,6 +384,131 @@ namespace NCPAC_LambdaX.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult DownloadEmployees()
+        {
+            //Get the appointments
+            var stf = from e in _context.Employees
+                          orderby e.LastName
+                          select new
+                          {
+                              ID = e.ID,
+                              FirstName = e.FirstName,
+                              LastName = e.LastName,
+                              IsActive = e.Active,
+                              Phone = e.PhoneNumber
+                          };
+
+            //How many rows?
+            int numRows = stf.Count();
+
+            if (numRows > 0) //We have data
+            {
+                //Create a new spreadsheet from scratch.
+                using (ExcelPackage excel = new ExcelPackage())
+                {
+
+                    //Note: you can also pull a spreadsheet out of the database if you
+                    //have saved it in the normal way we do, as a Byte Array in a Model
+                    //such as the UploadedFile class.
+                    //
+                    // Suppose...
+                    //
+                    // var theSpreadsheet = _context.UploadedFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+                    //
+                    //    //Pass the Byte[] FileContent to a MemoryStream
+                    //
+                    // using (MemoryStream memStream = new MemoryStream(theSpreadsheet.FileContent.Content))
+                    // {
+                    //     ExcelPackage package = new ExcelPackage(memStream);
+                    // }
+
+                    var workSheet = excel.Workbook.Worksheets.Add("Employees");
+
+                    //Note: Cells[row, column]
+                    workSheet.Cells[3, 1].LoadFromCollection(stf, true);
+
+
+                    //Note: You can define a BLOCK of cells: Cells[startRow, startColumn, endRow, endColumn]
+                    //Make Date and Patient Bold
+                    workSheet.Cells[4, 1, numRows + 3, 2].Style.Font.Bold = true;
+
+                    //Note: these are fine if you are only 'doing' one thing to the range of cells.
+                    //Otherwise you should USE a range object for efficiency
+                    workSheet.Cells[numRows + 5, 4].Value = stf.Count().ToString();
+                    workSheet.Cells[numRows + 5, 3].Value = "Staff Count:";
+                    //Set Style and backgound colour of headings
+                    using (ExcelRange headings = workSheet.Cells[3, 1, 3, 5])
+                    {
+                        headings.Style.Font.Bold = true;
+                        var fill = headings.Style.Fill;
+                        fill.PatternType = ExcelFillStyle.Solid;
+                        fill.BackgroundColor.SetColor(Color.LightBlue);
+                    }
+
+                    //Boy those notes are BIG!
+                    //Lets put them in comments instead.
+                    for (int i = 4; i < numRows + 4; i++)
+                    {
+                        using (ExcelRange Rng = workSheet.Cells[i, 4])
+                        {
+                            string[] commentWords = Rng.Value.ToString().Split(' ');
+                            Rng.Value = commentWords[0] + "...";
+                            //This LINQ adds a newline every 7 words
+                            string comment = string.Join(Environment.NewLine, commentWords
+                                .Select((word, index) => new { word, index })
+                                .GroupBy(x => x.index / 4)
+                                .Select(grp => string.Join(" ", grp.Select(x => x.word))));
+                            ExcelComment cmd = Rng.AddComment(comment, "Staff Notes");
+                            cmd.AutoFit = true;
+                        }
+                    }
+
+                    //Autofit columns
+                    workSheet.Cells.AutoFitColumns();
+                    //Note: You can manually set width of columns as well
+                    //workSheet.Column(7).Width = 10;
+
+                    //Add a title and timestamp at the top of the report
+                    workSheet.Cells[1, 1].Value = "Staff Report";
+                    using (ExcelRange Rng = workSheet.Cells[1, 1, 1, 5])
+                    {
+                        Rng.Merge = true; //Merge columns start and end range
+                        Rng.Style.Font.Bold = true; //Font should be bold
+                        Rng.Style.Font.Size = 18;
+                        Rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    }
+                    //Since the time zone where the server is running can be different, adjust to 
+                    //Local for us.
+                    DateTime utcDate = DateTime.UtcNow;
+                    TimeZoneInfo esTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    DateTime localDate = TimeZoneInfo.ConvertTimeFromUtc(utcDate, esTimeZone);
+                    using (ExcelRange Rng = workSheet.Cells[2, 6])
+                    {
+                        Rng.Value = "Created: " + localDate.ToShortTimeString() + " on " +
+                            localDate.ToShortDateString();
+                        Rng.Style.Font.Bold = true; //Font should be bold
+                        Rng.Style.Font.Size = 12;
+                        Rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    }
+
+                    //Ok, time to download the Excel
+
+                    try
+                    {
+                        Byte[] theData = excel.GetAsByteArray();
+                        string filename = "Staff.xlsx";
+                        string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        return File(theData, mimeType, filename);
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Could not build and download the file.");
+                    }
+                }
+            }
+            return NotFound("No data.");
+        }
         private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.ID == id);

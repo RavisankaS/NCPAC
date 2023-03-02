@@ -7,6 +7,7 @@
 <h1>All Meetings</h1>
 
 <p>
+    <a asp-action="DownloadMeetings" class="btn btn-info float-end">Download Meetings Report</a>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 
@@ -63,7 +64,7 @@
                 @Html.DisplayNameFor(model => model.TimeTo)
             </th>
             <th>
-                <label>Commitee(If Commitee Specific)</label>
+                <label>Commitees(If Specific)</label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsArchived)
@@ -88,7 +89,33 @@
                 @Html.DisplayFor(modelItem => item.TimeTo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Commitee.CommiteeName)
+                @{
+                    int playCount = item.MeetingCommitees.Count;
+                    if (playCount > 0)
+                    {
+                        string firstPlay = item.MeetingCommitees.FirstOrDefault().Commitee.CommiteeName;
+                        if (playCount > 1)
+                        {
+                            string playList = "";
+                            var c = item.MeetingCommitees.ToList();
+                            for (int i = 1; i < playCount; i++)//Skip the first because we have it already
+                            {
+                                playList += c[i].Commitee.CommiteeName + " <br />";
+                            }
+                            <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                    aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                @firstPlay <span class="badge bg-info">@playCount</span>
+                            </a>
+                            <div class="collapse" id="collapseHistory@(item.ID)">
+                                @Html.Raw(playList)
+                            </div>
+                        }
+                        else
+                        {
+                            @firstPlay
+                        }
+                    }
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsArchived)

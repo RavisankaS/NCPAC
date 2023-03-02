@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AnnouncementDescription" class="control-label"></label>
-                <input asp-for="AnnouncementDescription" class="form-control" />
+                @Html.TextAreaFor(model => model.AnnouncementDescription, new { @class = "form-control", @rows = 4 })
                 <span asp-validation-for="AnnouncementDescription" class="text-danger"></span>
             </div>
             <br />

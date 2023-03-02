@@ -43,7 +43,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "admin@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
 
                     if (result.Succeeded)
                     {
@@ -58,22 +58,22 @@ namespace NCPAC_LambdaX.Data
                         Email = "supervisor@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
 
                     if (result.Succeeded)
                     {
                         userManager.AddToRoleAsync(user, "Supervisor").Wait();
                     }
                 }
-                if (userManager.FindByEmailAsync("bambegoda@niagaracollege.ca").Result == null)
+                if (userManager.FindByEmailAsync("banu@outlook.com").Result == null)
                 {
                     IdentityUser user = new IdentityUser
                     {
-                        UserName = "bambegoda@niagaracollege.ca",
-                        Email = "bambegoda@niagaracollege.ca"
+                        UserName = "banu@outlook.com",
+                        Email = "banu@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
 
                     if (result.Succeeded)
                     {
@@ -88,7 +88,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "agrande@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("ejohn@outlook.com").Result == null)
@@ -99,7 +99,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "ejohn@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("lx@outlook.com").Result == null)
@@ -110,7 +110,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "lx@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("zmalik@outlook.com").Result == null)
@@ -121,7 +121,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "zmalik@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("iclearkson@outlook.com").Result == null)
@@ -132,7 +132,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "iclearkson@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("iskywalker@outlook.com").Result == null)
@@ -143,7 +143,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "iskywalker@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("ccathrin@outlook.com").Result == null)
@@ -154,7 +154,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "ccatherin@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("dtargarian@outlook.com").Result == null)
@@ -165,7 +165,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "dtargarian@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("jbabbenberg@outlook.com").Result == null)
@@ -176,7 +176,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "jbabbenberg@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("sjohnson@outlook.com").Result == null)
@@ -187,7 +187,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "sjohnson@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("jkhalifa@outlook.com").Result == null)
@@ -198,7 +198,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "jkhalifa@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("cnolan@outlook.com").Result == null)
@@ -209,7 +209,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "cnolan@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("rtarley@outlook.com").Result == null)
@@ -220,7 +220,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "rtarley@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("askywalker@outlook.com").Result == null)
@@ -231,7 +231,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "askywalker@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
                 if (userManager.FindByEmailAsync("bwaine@outlook.com").Result == null)
@@ -242,7 +242,7 @@ namespace NCPAC_LambdaX.Data
                         Email = "bwaine@outlook.com"
                     };
 
-                    IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
+                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
             }

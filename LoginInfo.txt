@@ -1,0 +1,23 @@
+Sample Usernames and Passwords for roles
+
+Admin Login
+Email : admin@outlook.com
+Pa55w@rd : LambdaX123@
+
+Supervisor Login
+Email : supervisor@outlook.com
+Pa55w@rd : LambdaX123@
+
+Staff Login
+Email : banu@outlook.com
+Pa55w@rd : LambdaX123@
+
+Some Member Logins
+Email : agrande@outlook.com
+Pa55w@rd : LambdaX123@
+
+Email : lx@outlook.com
+Pa55w@rd : LambdaX123@
+
+Email : ejohn@outlook.com
+Pa55w@rd : LambdaX123@

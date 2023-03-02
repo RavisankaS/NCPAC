@@ -159,7 +159,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             var member = await _context.Members
-                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.Meetings)
+                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.MeetingCommitees).ThenInclude(c => c.Meeting)
                 .Include(d => d.Province)
                 .Select(e => new MemberAdminVM
                 {
@@ -700,7 +700,7 @@ namespace NCPAC_LambdaX.Controllers
                 };
                 //Create a random password with a default 8 characters
                 string password = MakePassword.Generate();
-                IdentityResult result = _userManager.CreateAsync(user, "Pa55w@rd").Result;
+                IdentityResult result = _userManager.CreateAsync(user, "LambdaX123@").Result;
 
             }
             else

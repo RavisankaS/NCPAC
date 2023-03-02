@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "B6WHlaGHAi8CbzjrTqHyowP2JnRhecXeco5mh0uF5Qo=",
+  "Hash": "a0YSBOK6/wKqhOL0rXUCYjX4+Z6yqq6pAoLf95Up0bU=",
   "Source": "NCPAC_LambdaX",
   "BasePath": "_content/NCPAC_LambdaX",
   "Mode": "Default",
@@ -1105,6 +1105,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\images\\background-home.jpg",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "images/background-home.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\background-home.jpg"
+    },
+    {
       "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\images\\NCPAC_152x152.jpg",
       "SourceId": "NCPAC_LambdaX",
       "SourceType": "Discovered",
@@ -1596,6 +1613,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-saphyre.css",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "lib/bootstrap/dist/css/bootstrap-saphyre.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-saphyre.css"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-superhero.css",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "lib/bootstrap/dist/css/bootstrap-superhero.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-superhero.css"
     },
     {
       "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",

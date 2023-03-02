@@ -500,7 +500,6 @@ namespace NCPAC_LambdaX.Data
                          MeetingTitle = "Initial Discussion",
                          MeetingLink = "https://teams.microsoft.com/l/meetup-join/19%3alZYGNzRDe6e6GDSLAhH9TThi7A3kSskTL7mBHIkGv_Q1%40thread.tacv2/1675133744209?context=%7b%22Tid%22%3a%220edf0ac2-4bf0-4a8e-90b2-b3f527902fb9%22%2c%22Oid%22%3a%22ae8303c8-6da8-4114-b86e-f2f03a52d88d%22%7d",
                          Description = "Is a special meeting for everyone",
-                         CommiteeID = 2,
                          IsArchived = false
                      },
                      new Meeting
@@ -518,6 +517,32 @@ namespace NCPAC_LambdaX.Data
                          IsArchived = false
                      });
 
+                    context.SaveChanges();
+                }
+
+                if (!context.MeetingCommitees.Any())
+                {
+                    context.MeetingCommitees.AddRange(
+                    new MeetingCommitee
+                    {
+                        MeetingID = 1,
+                        CommiteeID = 7
+                    },
+                    new MeetingCommitee
+                    {
+                        MeetingID = 3,
+                        CommiteeID = 3
+                    },
+                    new MeetingCommitee
+                    {
+                        MeetingID = 2,
+                        CommiteeID = 4
+                    },
+                    new MeetingCommitee
+                    {
+                        MeetingID = 1,
+                        CommiteeID = 2
+                    });
                     context.SaveChanges();
                 }
 

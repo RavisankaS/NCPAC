@@ -24,7 +24,7 @@ namespace NCPAC_LambdaX.Models
         public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
 
         [Display(Name = "Meetings")]
-        public ICollection<Meeting> Meetings { get; set; } = new HashSet<Meeting>();
+        public ICollection<MeetingCommitee> MeetingCommitees { get; set; } = new HashSet<MeetingCommitee>();
 
     }
 }

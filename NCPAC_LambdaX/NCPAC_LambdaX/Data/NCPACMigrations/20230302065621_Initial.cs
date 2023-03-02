@@ -73,6 +73,25 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Meetings",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    MeetingLink = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
+                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    TimeTo = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    IsArchived = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meetings", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Provinces",
                 columns: table => new
                 {
@@ -85,28 +104,50 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meetings",
+                name: "MeetingCommitees",
+                columns: table => new
+                {
+                    MeetingID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingCommitees", x => new { x.MeetingID, x.CommiteeID });
+                    table.ForeignKey(
+                        name: "FK_MeetingCommitees_Commitees_CommiteeID",
+                        column: x => x.CommiteeID,
+                        principalTable: "Commitees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MeetingCommitees_Meetings_MeetingID",
+                        column: x => x.MeetingID,
+                        principalTable: "Meetings",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UploadedFiles",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
-                    MeetingLink = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
-                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    TimeTo = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: true),
-                    IsArchived = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
+                    FileName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: true),
+                    MimeType = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    MeetingID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meetings", x => x.ID);
+                    table.PrimaryKey("PK_UploadedFiles", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Meetings_Commitees_CommiteeID",
-                        column: x => x.CommiteeID,
-                        principalTable: "Commitees",
-                        principalColumn: "ID");
+                        name: "FK_UploadedFiles_Meetings_MeetingID",
+                        column: x => x.MeetingID,
+                        principalTable: "Meetings",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,24 +247,19 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UploadedFiles",
+                name: "FileContent",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    FileName = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: true),
-                    MimeType = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
-                    MeetingID = table.Column<int>(type: "INTEGER", nullable: true)
+                    FileContentID = table.Column<int>(type: "INTEGER", nullable: false),
+                    Content = table.Column<byte[]>(type: "BLOB", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UploadedFiles", x => x.ID);
+                    table.PrimaryKey("PK_FileContent", x => x.FileContentID);
                     table.ForeignKey(
-                        name: "FK_UploadedFiles_Meetings_MeetingID",
-                        column: x => x.MeetingID,
-                        principalTable: "Meetings",
+                        name: "FK_FileContent_UploadedFiles_FileContentID",
+                        column: x => x.FileContentID,
+                        principalTable: "UploadedFiles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -258,27 +294,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         principalColumn: "ID");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "FileContent",
-                columns: table => new
-                {
-                    FileContentID = table.Column<int>(type: "INTEGER", nullable: false),
-                    Content = table.Column<byte[]>(type: "BLOB", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FileContent", x => x.FileContentID);
-                    table.ForeignKey(
-                        name: "FK_FileContent_UploadedFiles_FileContentID",
-                        column: x => x.FileContentID,
-                        principalTable: "UploadedFiles",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Meetings_CommiteeID",
-                table: "Meetings",
+                name: "IX_MeetingCommitees_CommiteeID",
+                table: "MeetingCommitees",
                 column: "CommiteeID");
 
             migrationBuilder.CreateIndex(
@@ -339,10 +357,16 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 name: "FileContent");
 
             migrationBuilder.DropTable(
+                name: "MeetingCommitees");
+
+            migrationBuilder.DropTable(
                 name: "MemberCommitees");
 
             migrationBuilder.DropTable(
                 name: "UploadedFiles");
+
+            migrationBuilder.DropTable(
+                name: "Commitees");
 
             migrationBuilder.DropTable(
                 name: "Members");
@@ -358,9 +382,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             migrationBuilder.DropTable(
                 name: "Provinces");
-
-            migrationBuilder.DropTable(
-                name: "Commitees");
         }
     }
 }

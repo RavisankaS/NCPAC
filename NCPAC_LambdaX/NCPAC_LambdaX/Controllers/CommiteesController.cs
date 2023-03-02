@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using NCPAC_LambdaX.Data;
 using NCPAC_LambdaX.Models;
 using NCPAC_LambdaX.Utilities;
+using OfficeOpenXml.Style;
+using OfficeOpenXml;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -236,6 +239,152 @@ namespace NCPAC_LambdaX.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin,Supervisor")]
+        public IActionResult DownloadMembers()
+        {
+            //Get the appointments
+            var membs = from e in _context.Members
+                        .Include(a => a.MemberCommitees).ThenInclude(m => m.Commitee)
+                        orderby e.LastName 
+                        select new
+                        {
+                            ID = e.ID,
+                            Salutation = e.Salutation,
+                            FirstName = e.FirstName,
+                            MiddleName = e.MiddleName,
+                            LastName = e.LastName,
+                            DateJoined = e.DateJoined,
+                            IsActive = e.IsActive,
+                            StreetAddress = e.StreetAddress,
+                            City = e.City,
+                            Province = e.Province.Name,
+                            PostalCode = e.PostalCode,
+                            Phone = e.Phone,
+                            Email = e.Email,
+                            WorkStreetAddress = e.WorkStreetAddress,
+                            WorkCity = e.WorkCity,
+                            WorkProvince = e.WorkProvince.Name,
+                            WorkPostalCode = e.WorkPostalCode,
+                            WorkPhone = e.WorkPhone,
+                            WorkEmail = e.WorkEmail,
+                            MailPrefference = e.MailPrefference.Name,
+                            EducationalSummary = e.EducationalSummary,
+                            IsNCGrad = e.IsNCGrad,
+                            OccupationalSummary = e.OccupationalSummary,
+                            MemberCommitees = String.Join(", ", e.MemberCommitees.Select(a => a.Commitee.CommiteeName))
+                        };
+
+            //How many rows?
+            int numRows = membs.Count();
+
+            if (numRows > 0) //We have data
+            {
+                //Create a new spreadsheet from scratch.
+                using (ExcelPackage excel = new ExcelPackage())
+                {
+
+                    //Note: you can also pull a spreadsheet out of the database if you
+                    //have saved it in the normal way we do, as a Byte Array in a Model
+                    //such as the UploadedFile class.
+                    //
+                    // Suppose...
+                    //
+                    // var theSpreadsheet = _context.UploadedFiles.Include(f => f.FileContent).Where(f => f.ID == id).SingleOrDefault();
+                    //
+                    //    //Pass the Byte[] FileContent to a MemoryStream
+                    //
+                    // using (MemoryStream memStream = new MemoryStream(theSpreadsheet.FileContent.Content))
+                    // {
+                    //     ExcelPackage package = new ExcelPackage(memStream);
+                    // }
+
+                    var workSheet = excel.Workbook.Worksheets.Add("Members");
+
+                    //Note: Cells[row, column]
+                    workSheet.Cells[3, 1].LoadFromCollection(membs, true);
+
+
+                    //Note: You can define a BLOCK of cells: Cells[startRow, startColumn, endRow, endColumn]
+                    //Make Date and Patient Bold
+                    workSheet.Cells[4, 1, numRows + 3, 2].Style.Font.Bold = true;
+
+                    //Note: these are fine if you are only 'doing' one thing to the range of cells.
+                    //Otherwise you should USE a range object for efficiency
+                    workSheet.Cells[numRows + 5, 4].Value = membs.Count().ToString();
+                    workSheet.Cells[numRows + 5, 3].Value = "Member Count:";
+                    //Set Style and backgound colour of headings
+                    using (ExcelRange headings = workSheet.Cells[3, 1, 3, 24])
+                    {
+                        headings.Style.Font.Bold = true;
+                        var fill = headings.Style.Fill;
+                        fill.PatternType = ExcelFillStyle.Solid;
+                        fill.BackgroundColor.SetColor(Color.LightBlue);
+                    }
+
+                    //Boy those notes are BIG!
+                    //Lets put them in comments instead.
+                    for (int i = 4; i < numRows + 4; i++)
+                    {
+                        using (ExcelRange Rng = workSheet.Cells[i, 7])
+                        {
+                            string[] commentWords = Rng.Value.ToString().Split(' ');
+                            Rng.Value = commentWords[0] + "...";
+                            //This LINQ adds a newline every 7 words
+                            string comment = string.Join(Environment.NewLine, commentWords
+                                .Select((word, index) => new { word, index })
+                                .GroupBy(x => x.index / 7)
+                                .Select(grp => string.Join(" ", grp.Select(x => x.word))));
+                            ExcelComment cmd = Rng.AddComment(comment, "Member Notes");
+                            cmd.AutoFit = true;
+                        }
+                    }
+
+                    //Autofit columns
+                    workSheet.Cells.AutoFitColumns();
+                    //Note: You can manually set width of columns as well
+                    //workSheet.Column(7).Width = 10;
+
+                    //Add a title and timestamp at the top of the report
+                    workSheet.Cells[1, 1].Value = "Members and Commitees Report";
+                    using (ExcelRange Rng = workSheet.Cells[1, 1, 1, 24])
+                    {
+                        Rng.Merge = true; //Merge columns start and end range
+                        Rng.Style.Font.Bold = true; //Font should be bold
+                        Rng.Style.Font.Size = 18;
+                        Rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    }
+                    //Since the time zone where the server is running can be different, adjust to 
+                    //Local for us.
+                    DateTime utcDate = DateTime.UtcNow;
+                    TimeZoneInfo esTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    DateTime localDate = TimeZoneInfo.ConvertTimeFromUtc(utcDate, esTimeZone);
+                    using (ExcelRange Rng = workSheet.Cells[2, 6])
+                    {
+                        Rng.Value = "Created: " + localDate.ToShortTimeString() + " on " +
+                            localDate.ToShortDateString();
+                        Rng.Style.Font.Bold = true; //Font should be bold
+                        Rng.Style.Font.Size = 12;
+                        Rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    }
+
+                    //Ok, time to download the Excel
+
+                    try
+                    {
+                        Byte[] theData = excel.GetAsByteArray();
+                        string filename = "Members.xlsx";
+                        string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        return File(theData, mimeType, filename);
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Could not build and download the file.");
+                    }
+                }
+            }
+            return NotFound("No data.");
         }
 
         private bool CommiteeExists(int id)
