@@ -1,0 +1,58 @@
+﻿@model NCPAC_LambdaX.Models.ActionItem
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ActionItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="ActionItemTitle" class="control-label"></label>
+                <input asp-for="ActionItemTitle" class="form-control" />
+                <span asp-validation-for="ActionItemTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberID" class="control-label"></label>
+                <select class="form-control" id="MemberID" name="MemberID" asp-items="ViewBag.MemberID">
+                </select>
+                <span asp-validation-for="MemberID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeAppointed" class="control-label"></label>
+                <input asp-for="TimeAppointed" class="form-control" />
+                <span asp-validation-for="TimeAppointed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeUntil" class="control-label"></label>
+                <input asp-for="TimeUntil" class="form-control" />
+                <span asp-validation-for="TimeUntil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsCompleted" class="control-label"></label>
+                <input asp-for="IsCompleted" class="form-control" />
+                <span asp-validation-for="IsCompleted" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

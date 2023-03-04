@@ -265,6 +265,30 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ActionItems",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ActionItemTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    MemberID = table.Column<int>(type: "INTEGER", nullable: false),
+                    TimeAppointed = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    TimeUntil = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActionItems", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ActionItems_Members_MemberID",
+                        column: x => x.MemberID,
+                        principalTable: "Members",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MemberCommitees",
                 columns: table => new
                 {
@@ -293,6 +317,11 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         principalTable: "MemberVM",
                         principalColumn: "ID");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActionItems_MemberID",
+                table: "ActionItems",
+                column: "MemberID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeetingCommitees_CommiteeID",
@@ -347,6 +376,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ActionItems");
+
             migrationBuilder.DropTable(
                 name: "Announcements");
 

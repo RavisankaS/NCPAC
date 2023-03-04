@@ -546,6 +546,48 @@ namespace NCPAC_LambdaX.Data
                     context.SaveChanges();
                 }
 
+                if (!context.ActionItems.Any())
+                {
+                    context.ActionItems.AddRange(
+                    new ActionItem
+                    {
+                        ActionItemTitle = "Organization plans for the annual meetup",
+                        Description = "Please follow the instructions of the admin for now.",
+                        TimeAppointed = DateTime.Now,
+                        TimeUntil = DateTime.Now.AddDays(10),
+                        MemberID = 7,
+                        IsCompleted = false
+                    },
+                    new ActionItem
+                    {
+                        ActionItemTitle = "Complete the commitee report for the year",
+                        Description = "Please follow the instructions of the admin for now.",
+                        TimeAppointed = DateTime.Now,
+                        TimeUntil = DateTime.Now.AddDays(10),
+                        MemberID = 7,
+                        IsCompleted = false
+                    },
+                    new ActionItem
+                    {
+                        ActionItemTitle = "Arrange the pac member survay",
+                        Description = "Please follow the instructions of the admin for now.",
+                        TimeAppointed = DateTime.Now,
+                        TimeUntil = DateTime.Now.AddDays(7),
+                        MemberID = 2,
+                        IsCompleted = true
+                    },
+                    new ActionItem
+                    {
+                        ActionItemTitle = "Setup a forum to get feedback from members",
+                        Description = "Please follow the instructions of the admin for now.",
+                        TimeAppointed = DateTime.Now,
+                        TimeUntil = DateTime.Now.AddDays(12),
+                        MemberID = 6,
+                        IsCompleted = false
+                    });
+                    context.SaveChanges();
+                }
+
 
             }
             catch (Exception ex)

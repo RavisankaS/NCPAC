@@ -22,6 +22,7 @@ namespace NCPAC_LambdaX.Data
         public DbSet<Province> Provinces { get; set; }
         public DbSet<MailPrefference> MailPrefferences { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<ActionItem> ActionItems { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<MeetingDocument> MeetingDocuments { get; set; }
         public DbSet<UploadedFile> UploadedFiles { get; set; }

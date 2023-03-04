@@ -1,0 +1,102 @@
+﻿@model IEnumerable<NCPAC_LambdaX.Models.ActionItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Action Items</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New</a>    
+</p>
+<form asp-action="Index" method="get">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Filter/Search
+        </button>
+        <div class="collapse @(ViewData["Filtering"])" id="collapseFilter">
+            <div class="card card-body bg-light">
+                <div class="row">
+                    <div class="form-group col-md-5">
+                        <label class="control-label">Search By Action:</label>
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label class="control-label">Search By Description:</label>
+                        @Html.TextBox("SearchString2", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">   
+                    
+                    <div class="form-group col-md-2">
+                        <label class="control-label">Show Archived Members:</label><br />
+                        @Html.CheckBox("IsCompleted", false, htmlAttributes: new { @class="checkbox" })
+                    </div>
+                    @if ((User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Supervisor")) == false)
+                    {
+                        <div class="form-group col-md-5">
+                            <label class="control-label">Search By Member:</label>
+                            @Html.TextBox("SearchString3", null, new { @class = "form-control" })
+                        </div>
+                    }                   
+                    <div class="form-group col-md-2 align-self-end">
+                        <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ActionItemTitle)
+            </th>
+            <th>
+                <input type="submit" name="actionButton" value="Member" class="btn btn-outline-dark" />
+            </th>
+            <th>
+                <input type="submit" name="actionButton" value="TimeAppointed" class="btn btn-outline-dark" />
+            </th>
+            <th>
+                <input type="submit" name="actionButton" value="TimeUntil" class="btn btn-outline-dark" />
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionItemTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.MemberName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeAppointed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeUntil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>                
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>  |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+    <partial name="_PagingNavBar" />
+</form>

@@ -98,7 +98,7 @@ namespace NCPAC_LambdaX.Controllers
             ViewBag.sortFieldID = new SelectList(sortOptions, sortField.ToString());
 
             //Handle Paging
-            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "musicians");
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "commitees");
             ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
             var pagedData = await PaginatedList<Commitee>.CreateAsync(commitees.AsNoTracking(), page ?? 1, pageSize);
 

@@ -1,0 +1,331 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using NCPAC_LambdaX.Data;
+using NCPAC_LambdaX.Models;
+using NCPAC_LambdaX.Utilities;
+using NCPAC_LambdaX.ViewModels;
+
+namespace NCPAC_LambdaX.Controllers
+{
+    [Authorize]
+    public class ActionItemsController : Controller
+    {
+        private readonly NCPACContext _context;
+
+        public ActionItemsController(NCPACContext context)
+        {
+            _context = context;
+        }
+
+        // GET: ActionItems
+        public async Task<IActionResult> Index(string SearchString, string SearchString2, string SearchString3,  bool IsCompleted, 
+            int? page, int? pageSizeID, string actionButton, string sortDirection = "dsc", string sortField = "TimeUntil")
+        {
+            CookieHelper.CookieSet(HttpContext, "ActionItemsController" + "URL", "", -1);
+
+            ViewData["Filtering"] = "";
+
+            string[] sortOptions = new[] { "Member", "TimeAppointed", "TimeUntil" };
+
+            var actionItems = _context.ActionItems
+            .Include(m => m.Member)
+            .ThenInclude(m => m.MemberCommitees)
+            .AsNoTracking();
+
+                        
+            if ((User.IsInRole("Admin") || User.IsInRole("Supervisor") || User.IsInRole("Staff")) == false)
+            {
+                actionItems = actionItems.Where(m => (m.Member.Email == User.Identity.Name) || (m.Member.WorkEmail == User.Identity.Name));
+            }
+
+            if (!String.IsNullOrEmpty(SearchString3))
+            {
+                actionItems = actionItems.Where(p => p.Member.Salutation.ToUpper().Contains(SearchString3.ToUpper())
+                                       || p.Member.LastName.ToUpper().Contains(SearchString3.ToUpper())
+                                       || p.Member.FirstName.ToUpper().Contains(SearchString3.ToUpper())
+                                       || p.Member.MiddleName.ToUpper().Contains(SearchString3.ToUpper()));
+                ViewData["Filtering"] = "show";
+            }
+            if (!String.IsNullOrEmpty(SearchString2))
+            {
+                actionItems = actionItems.Where(p => p.Description.ToLower().Contains(SearchString2.ToLower()));
+                ViewData["Filtering"] = "show";
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                actionItems = actionItems.Where(p => p.ActionItemTitle.ToLower().Contains(SearchString2.ToLower()));
+                ViewData["Filtering"] = "show";
+            }
+            if (IsCompleted == true)
+            {
+                actionItems = actionItems.Where(p => p.IsCompleted == true);
+                ViewData["Filtering"] = "show";
+            }
+            else
+            {
+                actionItems = actionItems.Where(p => p.IsCompleted == false);
+            }
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;//Reset page start
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Member")
+            {
+                if (sortDirection == "asc")
+                {
+                    actionItems = actionItems
+                        .OrderBy(p => p.Member.LastName).ThenBy(p => p.Member.FirstName).ThenBy(p => p.Member.MiddleName);
+                }
+                else
+                {
+                    actionItems = actionItems
+                       .OrderByDescending(p => p.Member.LastName).ThenBy(p => p.Member.FirstName).ThenBy(p => p.Member.MiddleName);
+                }
+            }
+            if (sortField == "TimeAppointed")
+            {
+                if (sortDirection == "asc")
+                {
+                    actionItems = actionItems
+                        .OrderBy(p => p.Member.LastName).ThenBy(p => p.Member.FirstName).ThenBy(p => p.Member.MiddleName);
+                }
+                else
+                {
+                    actionItems = actionItems
+                       .OrderByDescending(p => p.Member.LastName).ThenBy(p => p.Member.FirstName).ThenBy(p => p.Member.MiddleName);
+                }
+            }
+            if (sortField == "TimeAppointed")
+            {
+                if (sortDirection == "asc")
+                {
+                    actionItems = actionItems
+                        .OrderBy(p => p.TimeAppointed);
+                }
+                else
+                {
+                    actionItems = actionItems
+                       .OrderByDescending(p => p.TimeAppointed);
+                }
+            }
+            else
+            {
+                if (sortDirection == "asc")
+                {
+                    actionItems = actionItems
+                        .OrderBy(p => p.TimeUntil);
+                }
+                else
+                {
+                    actionItems = actionItems
+                       .OrderByDescending(p => p.TimeUntil);
+                }
+            }
+
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "Members");
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+
+            var pagedData = await PaginatedList<ActionItem>.CreateAsync(actionItems.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
+        }
+
+        // GET: ActionItems/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.ActionItems == null)
+            {
+                return NotFound();
+            }
+
+
+            var actionItem = await _context.ActionItems
+                .Include(a => a.Member)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (actionItem == null)
+            {
+                return NotFound();
+            }
+
+            if ((User.IsInRole("Admin") || User.IsInRole("Supervisor") || User.IsInRole("Staff")) == false)
+            {
+                if (((User.Identity.Name == actionItem.Member.Email) || (User.Identity.Name == actionItem.Member.WorkEmail)) == false)
+                {
+                    return NotFound();
+                }
+            }
+
+            return View(actionItem);
+        }
+
+        // GET: ActionItems/Create
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
+        public IActionResult Create()
+        {
+            ViewData["MemberID"] = new SelectList(_context.Members, "ID", "ID");
+            return View();
+        }
+
+        // POST: ActionItems/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItem)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(actionItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            PopulateDropDownLists();
+            return View(actionItem);
+        }
+
+        // GET: ActionItems/Edit/5
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.ActionItems == null)
+            {
+                return NotFound();
+            }
+
+            var actionItem = await _context.ActionItems.FindAsync(id);
+            if (actionItem == null)
+            {
+                return NotFound();
+            }
+            PopulateDropDownLists(actionItem);
+            return View(actionItem);
+        }
+
+        // POST: ActionItems/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItem)
+        {
+            if (id != actionItem.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(actionItem);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ActionItemExists(actionItem.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            PopulateDropDownLists(actionItem);
+            return View(actionItem);
+        }
+
+        // GET: ActionItems/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.ActionItems == null)
+            {
+                return NotFound();
+            }
+
+            var actionItem = await _context.ActionItems
+                .Include(a => a.Member)
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (actionItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(actionItem);
+        }
+
+        // POST: ActionItems/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.ActionItems == null)
+            {
+                return Problem("Entity set 'NCPACContext.ActionItems'  is null.");
+            }
+            var actionItem = await _context.ActionItems.FindAsync(id);
+            if (actionItem != null)
+            {
+                _context.ActionItems.Remove(actionItem);
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ActionItemExists(int id)
+        {
+          return _context.ActionItems.Any(e => e.ID == id);
+        }
+
+        private SelectList MemberSelectList(int selectedId)
+        {
+            return new SelectList(_context.Members
+                .OrderBy(d => d.LastName), "ID", "MemberName", selectedId);
+        }
+
+        private SelectList MemberCSelectList()
+        {
+            return new SelectList(_context.Members
+                .OrderBy(d => d.LastName), "ID", "MemberName");
+        }
+
+        private void PopulateDropDownLists(ActionItem actionItem = null)
+        {
+            
+            if ((actionItem?.MemberID) != null)
+            {
+                ViewData["MemberID"] = MemberSelectList(actionItem.MemberID);
+            }
+            else
+            {
+                ViewData["MemberID"] = MemberCSelectList();
+            }
+        }
+    
+    }
+}

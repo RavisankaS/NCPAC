@@ -9,6 +9,7 @@
 <p>
     <a asp-action="DownloadMeetings" class="btn btn-info float-end">Download Meetings Report</a>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
+    
 </p>
 
 <form asp-action="Index" method="get">
@@ -22,7 +23,7 @@
             <div class="card card-body bg-light">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label class="control-label">Search Committees:</label>
+                        <label class="control-label">Search By Title:</label>
                         @Html.TextBox("SearchString", null, new { @class = "form-control" })
                     </div>
                     <div class="form-group col-md-4">
@@ -120,9 +121,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsArchived)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+            <td>                
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> | 
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>  |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>

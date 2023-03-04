@@ -17,5 +17,8 @@ namespace NCPAC_LambdaX.ViewModels
 
         [Display(Name = "Roles")]
         public List<string> UserRoles { get; set; } = new List<string>();
+
+        [Display(Name = "Action Items")]
+        public ICollection<ActionItem> ActionItems { get; set; } = new HashSet<ActionItem>();
     }
 }

@@ -17,6 +17,41 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.14");
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItem", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ActionItemTitle")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MemberID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("TimeAppointed")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimeUntil")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MemberID");
+
+                    b.ToTable("ActionItems");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.Announcement", b =>
                 {
                     b.Property<int>("ID")
@@ -434,6 +469,17 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.HasDiscriminator().HasValue("MeetingDocument");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItem", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Member", "Member")
+                        .WithMany("ActionItems")
+                        .HasForeignKey("MemberID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.FileContent", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.UploadedFile", "UploadedFile")
@@ -556,6 +602,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
                 {
+                    b.Navigation("ActionItems");
+
                     b.Navigation("MemberCommitees");
                 });
 
