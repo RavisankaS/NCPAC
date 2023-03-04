@@ -34,5 +34,9 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Is Completed")]
         public bool IsCompleted { get; set; }
 
+
+        [Display(Name = "Documents")]
+        public ICollection<ActionItemDocument> ActionItemDocuments { get; set; } = new HashSet<ActionItemDocument>();
+
     }
 }

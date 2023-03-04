@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
@@ -39,10 +39,44 @@
                 <input asp-for="TimeUntil" class="form-control" />
                 <span asp-validation-for="TimeUntil" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group form-check">
                 <label asp-for="IsCompleted" class="control-label"></label>
-                <input asp-for="IsCompleted" class="form-control" />
+                <input asp-for="IsCompleted" class="form-check-input" />
                 <span asp-validation-for="IsCompleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Current Documents:</label>
+                <div class="ml-md-3">
+                    @{
+                        int fileCount = Model.ActionItemDocuments.Count;
+                        if (fileCount > 0)
+                        {
+                            var firstFile = Model.ActionItemDocuments.FirstOrDefault(); ;
+                            if (fileCount > 1)
+                            {
+                                <a class="" role="button" data-bs-toggle="collapse" href="#collapseDocs@(Model.ID)" aria-expanded="false" aria-controls="collapseDocs@(Model.ID)">
+                                    Uploaded Files <span class="badge bg-info">@fileCount</span>
+                                </a>
+                                <div class="collapse" id="collapseDocs@(Model.ID)">
+                                    @{
+                                        foreach (var d in Model.ActionItemDocuments)
+                                        {
+                                            <a asp-action="Download" asp-route-id="@d.ID">@d.FileName</a> <br />
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <a asp-action="Download" asp-route-id="@firstFile.ID">@firstFile.FileName</a>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label custom-file-label">Upload Additional Documents:</label>
+                <input type="file" class="form-control" name="theFiles" multiple="multiple">
             </div>
             <br />
             <div class="form-group">
@@ -56,3 +90,10 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/multiselect.js"></script>
+    <script src="~/js/refreshDDL.js"></script>
+}

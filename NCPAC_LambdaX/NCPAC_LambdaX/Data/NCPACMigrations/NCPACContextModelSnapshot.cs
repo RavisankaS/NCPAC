@@ -457,6 +457,18 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.ToTable("MemberVM");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItemDocument", b =>
+                {
+                    b.HasBaseType("NCPAC_LambdaX.Models.UploadedFile");
+
+                    b.Property<int>("ActionItemID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("ActionItemID");
+
+                    b.HasDiscriminator().HasValue("ActionItemDocument");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.MeetingDocument", b =>
                 {
                     b.HasBaseType("NCPAC_LambdaX.Models.UploadedFile");
@@ -575,6 +587,17 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("WorkProvince");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItemDocument", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.ActionItem", "ActionItem")
+                        .WithMany("ActionItemDocuments")
+                        .HasForeignKey("ActionItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ActionItem");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.Models.MeetingDocument", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.Meeting", "Meeting")
@@ -584,6 +607,11 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .IsRequired();
 
                     b.Navigation("Meeting");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItem", b =>
+                {
+                    b.Navigation("ActionItemDocuments");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Commitee", b =>

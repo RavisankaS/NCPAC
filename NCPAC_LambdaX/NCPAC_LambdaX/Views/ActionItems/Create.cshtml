@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ActionItemTitle" class="control-label"></label>
@@ -37,10 +37,12 @@
                 <span asp-validation-for="TimeUntil" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IsCompleted" class="control-label"></label>
-                <input asp-for="IsCompleted" class="form-control" />
-                <span asp-validation-for="IsCompleted" class="text-danger"></span>
+                <label class="control-label custom-file-label">Upload Documents:</label>
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" name="theFiles" multiple="multiple">
+                </div>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -51,4 +53,12 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/multiselect.js"></script>
+    <script src="~/js/refreshDDL.js"></script>
+}
 

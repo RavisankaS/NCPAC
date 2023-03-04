@@ -46,6 +46,37 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsCompleted)
         </dd>
+        <dt class="col-md-3">
+            @Html.DisplayNameFor(model => model.ActionItemDocuments)
+        </dt>
+        <dd class="col-md-9">
+            @{
+                int fileCount = Model.ActionItemDocuments.Count;
+                if (fileCount > 0)
+                {
+                    var firstFile = Model.ActionItemDocuments.FirstOrDefault(); ;
+                    if (fileCount > 1)
+                    {
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseDocs@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseDocs@(Model.ID)">
+                            Uploaded Files <span class="badge bg-info">@fileCount</span>
+                        </a>
+                        <div class="collapse" id="collapseDocs@(Model.ID)">
+                            @{
+                                foreach (var d in Model.ActionItemDocuments)
+                                {
+                                    <a asp-action="Download" asp-route-id="@d.ID">@d.FileName</a> <br />
+                                }
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <a asp-action="Download" asp-route-id="@firstFile.ID">@firstFile.FileName</a>
+                    }
+                }
+            }
+        </dd>
     </dl>
 </div>
 <div>

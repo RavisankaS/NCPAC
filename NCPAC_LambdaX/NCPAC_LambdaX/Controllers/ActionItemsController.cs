@@ -27,7 +27,6 @@ namespace NCPAC_LambdaX.Controllers
         public async Task<IActionResult> Index(string SearchString, string SearchString2, string SearchString3,  bool IsCompleted, 
             int? page, int? pageSizeID, string actionButton, string sortDirection = "dsc", string sortField = "TimeUntil")
         {
-            CookieHelper.CookieSet(HttpContext, "ActionItemsController" + "URL", "", -1);
 
             ViewData["Filtering"] = "";
 
@@ -161,6 +160,7 @@ namespace NCPAC_LambdaX.Controllers
 
             var actionItem = await _context.ActionItems
                 .Include(a => a.Member)
+                .Include(d => d.ActionItemDocuments)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (actionItem == null)
             {
@@ -182,7 +182,7 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         public IActionResult Create()
         {
-            ViewData["MemberID"] = new SelectList(_context.Members, "ID", "ID");
+            ViewData["MemberID"] = new SelectList(_context.Members, "ID", "MemberName");
             return View();
         }
 
@@ -192,16 +192,13 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItem)
+        public async Task<IActionResult> Create([Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil")] ActionItem actionItem, List<IFormFile> theFiles)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(actionItem);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            await AddDocumentsAsync(actionItem, theFiles);
+            _context.Add(actionItem);
+            await _context.SaveChangesAsync();
             PopulateDropDownLists();
-            return View(actionItem);
+            return RedirectToAction(nameof(Index));     
         }
 
         // GET: ActionItems/Edit/5
@@ -213,7 +210,9 @@ namespace NCPAC_LambdaX.Controllers
                 return NotFound();
             }
 
-            var actionItem = await _context.ActionItems.FindAsync(id);
+            var actionItem = await _context.ActionItems
+                .Include(d => d.ActionItemDocuments)
+                .FirstOrDefaultAsync(d => d.ID == id);
             if (actionItem == null)
             {
                 return NotFound();
@@ -228,35 +227,31 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItem)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItemToUpdate, List<IFormFile> theFiles)
         {
-            if (id != actionItem.ID)
+            if (id != actionItemToUpdate.ID)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(actionItem);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ActionItemExists(actionItem.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await AddDocumentsAsync(actionItemToUpdate, theFiles);
+                _context.Update(actionItemToUpdate);
+                await _context.SaveChangesAsync();
             }
-            PopulateDropDownLists(actionItem);
-            return View(actionItem);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ActionItemExists(actionItemToUpdate.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ActionItems/Delete/5
@@ -295,6 +290,42 @@ namespace NCPAC_LambdaX.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<FileContentResult> Download(int id)
+        {
+            var theFile = await _context.UploadedFiles
+                .Include(d => d.FileContent)
+                .Where(f => f.ID == id)
+                .FirstOrDefaultAsync();
+            return File(theFile.FileContent.Content, theFile.MimeType, theFile.FileName);
+        }
+
+        private async Task AddDocumentsAsync(ActionItem actionItem, List<IFormFile> theFiles)
+        {
+            foreach (var f in theFiles)
+            {
+                if (f != null)
+                {
+                    string mimeType = f.ContentType;
+                    string fileName = Path.GetFileName(f.FileName);
+                    long fileLength = f.Length;
+                    //Note: you could filter for mime types if you only want to allow
+                    //certain types of files.  I am allowing everything.
+                    if (!(fileName == "" || fileLength == 0))//Looks like we have a file!!!
+                    {
+                        ActionItemDocument d = new();
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await f.CopyToAsync(memoryStream);
+                            d.FileContent.Content = memoryStream.ToArray();
+                        }
+                        d.MimeType = mimeType;
+                        d.FileName = fileName;
+                        actionItem.ActionItemDocuments.Add(d);
+                    };
+                }
+            }
         }
 
         private bool ActionItemExists(int id)

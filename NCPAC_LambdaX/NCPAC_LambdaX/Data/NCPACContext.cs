@@ -25,6 +25,7 @@ namespace NCPAC_LambdaX.Data
         public DbSet<ActionItem> ActionItems { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<MeetingDocument> MeetingDocuments { get; set; }
+        public DbSet<ActionItemDocument> ActionItemDocuments { get; set; }
         public DbSet<UploadedFile> UploadedFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
