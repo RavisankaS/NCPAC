@@ -220,11 +220,11 @@ namespace NCPAC_LambdaX.Controllers
         {
 
             //Add the selected memberCommitees
-            member.IsActive = true;
             try
             {
                 //Add the selected memberCommitees
                 UpdateMemberCommitees(selectedOptions, member);
+                member.IsActive = true;
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
