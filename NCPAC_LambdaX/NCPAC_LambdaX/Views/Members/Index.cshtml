@@ -68,6 +68,76 @@
             </div>
         </div>
     </div>
+    <br/>
+    <div class="container-fluid d-block d-md-none">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="card mb-sm-3" style="min-width: 18rem;">
+                    <h5 class="card-header"><strong>@Html.DisplayFor(modelItem => item.MemberName)</strong></h5>
+                    <div class="card-body">
+                            <figcaption class="col">
+                                <p class="card-text">
+                                    <dl class="row lh-1">
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.Email)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                            @Html.DisplayFor(model => item.Email)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.IsNCGrad)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.IsNCGrad)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.MemberCommitees)
+                                    </dt>
+                                    <dd>
+                                        @{
+                                            int playCount = item.MemberCommitees.Count;
+                                            if (playCount > 0)
+                                            {
+                                                string firstPlay = item.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
+                                                if (playCount > 1)
+                                                {
+                                                    string playList = "";
+                                                    var c = item.MemberCommitees.ToList();
+                                                    for (int i = 1; i < playCount; i++)//Skip the first because we have it already
+                                                    {
+                                                        playList += c[i].Commitee.CommiteeName + " <br />";
+                                                    }
+                                                    <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                                           aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                                        @firstPlay <span class="badge bg-info">@playCount</span>
+                                                    </a>
+                                                    <div class="collapse" id="collapseHistory@(item.ID)">
+                                                        @Html.Raw(playList)
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    @firstPlay
+                                                }
+                                            }
+                                        }
+                                    </dd>
+                                    </dl>
+                                </p>
+                            </figcaption>
+                        
+                        <div class="card-footer">
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        </div>
+    <div class="d-none d-md-block">
     <table class="table">
         <thead>
             <tr>
@@ -98,15 +168,15 @@
                             {
                                 if((item.MailPrefferenceID == "Work") || (item.MailPrefferenceID == "work"))
                                 {
-                                    @Html.DisplayFor(modelItem => item.WorkEmail)
+                                        @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
                                 else if ((item.MailPrefferenceID == "Personnal") || (item.MailPrefferenceID == "personnal"))
                                 {
-                                    @Html.DisplayFor(modelItem => item.Email)
+                                        @Html.DisplayFor(modelItem => item.Email)
                                 }
                                 else
                                 {
-                                    @Html.DisplayFor(modelItem => item.WorkEmail)
+                                        @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
                             
                             }
@@ -114,11 +184,11 @@
                         
                                 if ((item.Email == null) && (item.WorkEmail != null))
                                 {
-                                    @Html.DisplayFor(modelItem => item.WorkEmail)
+                                        @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
                                 else if ((item.Email != null) && (item.WorkEmail == null))
                                 {
-                                    @Html.DisplayFor(modelItem => item.Email)
+                                        @Html.DisplayFor(modelItem => item.Email)
                                 }
                             }
                          }
@@ -140,17 +210,17 @@
                                 {
                                     playList += c[i].Commitee.CommiteeName + " <br />";
                                 }
-                                <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
-                        aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
-                                    @firstPlay <span class="badge bg-info">@playCount</span>
-                                </a>
-                                <div class="collapse" id="collapseHistory@(item.ID)">
-                                    @Html.Raw(playList)
-                                </div>
+                                    <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                            aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                        @firstPlay <span class="badge bg-info">@playCount</span>
+                                    </a>
+                                    <div class="collapse" id="collapseHistory@(item.ID)">
+                                        @Html.Raw(playList)
+                                    </div>
                             }
                             else
                             {
-                                @firstPlay
+                                    @firstPlay
                             }
                         }
                     }
@@ -164,5 +234,6 @@
     }
         </tbody>
     </table>
+    </div>
     <partial name="_PagingNavBar" />
 </form>

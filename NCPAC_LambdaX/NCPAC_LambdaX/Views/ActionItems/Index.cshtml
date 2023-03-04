@@ -49,6 +49,56 @@
             </div>
         </div>
     </div>
+    <br />
+    <div class="container-fluid d-block d-md-none">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="card mb-sm-3" style="min-width: 18rem;">
+                    <h5 class="card-header"><strong>@Html.DisplayFor(modelItem => item.ActionItemTitle)</strong></h5>
+                    <div class="card-body">
+                        <figcaption class="col">
+                            <p class="card-text">
+                                <dl class="row lh-1">
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.Member.MemberName)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.Member.MemberName)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.TimeAppointed)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.TimeAppointed)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.TimeUntil)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.TimeUntil)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.IsCompleted)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.IsCompleted)
+                                    </dd>
+                                </dl>
+                            </p>
+                        </figcaption>
+
+                        <div class="card-footer">
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="d-none d-lg-block">
 <table class="table">
     <thead>
         <tr>
@@ -98,5 +148,6 @@
 }
     </tbody>
 </table>
+</div>
     <partial name="_PagingNavBar" />
 </form>

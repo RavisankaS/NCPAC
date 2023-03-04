@@ -12,6 +12,56 @@
 
 <div class="text-danger">@TempData["message"]</div>
 
+<br />
+<div class="container-fluid d-block d-md-none">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="card mb-sm-3" style="min-width: 18rem;">
+                <h5 class="card-header"><strong>@Html.DisplayFor(modelItem => item.FormalName)</strong></h5>
+                <div class="card-body">
+                    <figcaption class="col">
+                        <p class="card-text">
+                            <dl class="row lh-1">
+                                <dt class="col-8">
+                                    @Html.DisplayNameFor(model => item.Email)
+                                </dt>
+                                <dd class="col-4 text-truncate">
+                                    @Html.DisplayFor(model => item.Email)
+                                </dd>
+                                <dt class="col-8">
+                                    @Html.DisplayNameFor(model => item.Phone)
+                                </dt>
+                                <dd class="col-4 text-truncate">
+                                    @Html.DisplayFor(model => item.Phone)
+                                </dd>
+                                <dt class="col-8">
+                                    @Html.DisplayNameFor(model => item.UserRoles)
+                                </dt>
+                                <dd class="col-4 text-truncate">
+                                    @Html.DisplayFor(model => item.UserRoles)
+                                </dd>
+                                <dt class="col-8">
+                                    @Html.DisplayNameFor(model => item.Active)
+                                </dt>
+                                <dd class="col-4 text-truncate">
+                                    @Html.DisplayFor(model => item.Active)
+                                </dd>
+                            </dl>
+                        </p>
+                    </figcaption>
+
+                    <div class="card-footer">
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="d-none d-lg-block">
 <table class="table">
     <thead>
         <tr>
@@ -59,3 +109,4 @@
         }
     </tbody>
 </table>
+</div>
