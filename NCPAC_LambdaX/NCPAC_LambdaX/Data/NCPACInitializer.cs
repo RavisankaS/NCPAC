@@ -46,7 +46,7 @@ namespace NCPAC_LambdaX.Data
                      {
                          FirstName = "Banuka",
                          LastName = "Ambegoda",
-                         Email = "bambegoda@niagaracollege.ca",
+                         Email = "banu@outlook.com",
                          Phone = "6478574345"
                      });
 

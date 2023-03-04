@@ -15,6 +15,7 @@ namespace NCPAC_LambdaX.ViewModels
         public bool Active { get; set; }
 
         [Display(Name = "Roles")]
+        [Required(ErrorMessage = "You have to choose a role.")]
         public List<string> UserRoles { get; set; } = new List<string>();
     }
 }

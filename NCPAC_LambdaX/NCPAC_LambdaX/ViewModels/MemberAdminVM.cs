@@ -13,6 +13,7 @@ namespace NCPAC_LambdaX.ViewModels
     {
         public DateTime? DateJoined { get; set; }
 
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
         [Display(Name = "Roles")]

@@ -216,49 +216,46 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] Member member, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,IsActive")] Member member, string[] selectedOptions)
         {
 
             //Add the selected memberCommitees
+            member.IsActive = true;
             try
             {
                 //Add the selected memberCommitees
                 UpdateMemberCommitees(selectedOptions, member);
-                if (ModelState.IsValid)
+                _context.Add(member);
+                await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+                string EmailAddress = "";
+                if ((member.Email != null) || (member.WorkEmail != null))
                 {
-                    _context.Add(member);
-                    await _context.SaveChangesAsync();
-                    //return RedirectToAction(nameof(Index));
-                    string EmailAddress = "";
-                    if ((member.Email != null) || (member.WorkEmail != null))
+                    if (member.MailPrefferenceID != null)
                     {
-                        if (member.MailPrefferenceID != null)
-                        {
-                            if (member.MailPrefferenceID == "Work")
-                            {
-                                EmailAddress = member.WorkEmail;
-                            }
-                            if (member.MailPrefferenceID == "Personnal")
-                            {
-                                EmailAddress = member.Email;
-                            }
-                        }
-                        if (member.Email == null)
+                        if (member.MailPrefferenceID == "Work")
                         {
                             EmailAddress = member.WorkEmail;
                         }
-                        if (member.WorkEmail == null)
+                        if (member.MailPrefferenceID == "Personnal")
                         {
                             EmailAddress = member.Email;
                         }
-                        
                     }
-                    
-                    InsertIdentityUser(EmailAddress);
-
-                    //Send Email to new Member - commented out till email configured
+                    if (member.Email == null)
+                    {
+                        EmailAddress = member.WorkEmail;
+                    }
+                    if (member.WorkEmail == null)
+                    {
+                        EmailAddress = member.Email;
+                    }
 
                 }
+
+                InsertIdentityUser(EmailAddress);
+
+                //Send Email to new Member - commented out till email configured
             }
             catch (RetryLimitExceededException /* dex */)
             {
@@ -367,7 +364,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, bool Active, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined")] string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, bool Active, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,IsActive")] string[] selectedOptions)
         {
             var memberToUpdate = await _context.Members
                 .FirstOrDefaultAsync(m => m.ID == id);
