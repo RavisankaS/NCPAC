@@ -1,0 +1,35 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.btn-outline-dark {
+    border: none;
+    background: none;
+    outline: none;
+    color: black;
+    font-style:oblique;
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: black;
+    border-block-color: black;
+}
