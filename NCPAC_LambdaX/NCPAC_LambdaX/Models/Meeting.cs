@@ -20,23 +20,16 @@ namespace NCPAC_LambdaX.Models
         [StringLength(500, ErrorMessage = "Meeting description cannot be more than 500 characters long.")]
         public string Description { get; set; }
 
-        [Display(Name = "Meeting Link")]
-        [StringLength(1000, ErrorMessage = "Meeting Link cannot be more than 1000 characters long.")]
-        public string? MeetingLink { get; set; }
-
-        [Display(Name = "From")]
+        [Display(Name = "Meeting Time")]
         public DateTime? TimeFrom { get; set; }
 
-        [Display(Name = "To")]
-        public DateTime? TimeTo { get; set; }
+        [Display(Name = "Meeting Minitues")]
+        public int? Minitues { get; set; }
 
         [Display(Name = "Commitees")]
         public ICollection<MeetingCommitee> MeetingCommitees { get; set; } = new HashSet<MeetingCommitee>();
 
-        [Display(Name = "Is Complete")]
-        public bool IsArchived { get; set; }
-
-        [Display(Name = "Cancelled")]
+        [Display(Name = "Was Cancelled")]
         public bool IsCancelled { get; set; }
 
 

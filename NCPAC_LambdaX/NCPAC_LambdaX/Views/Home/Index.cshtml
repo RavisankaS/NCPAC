@@ -62,17 +62,46 @@
   <p>It is critical to Niagara College to have input from all stakeholders, internal and external, to ensure quality and ongoing improvement in our programs. <br /> Both practices and processes ensure standardized and regular quantitative and qualitative data from stakeholder is gathered to inform plans and actions with <br /> regards to continuous improvement.</p>
   
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4 ">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">My Account</h2>
-          <p class="card-text">View your member/ staff account. Edit your personal details</p>
-          <a href="./MemberAccount/Details" >Members Account</a>
-          <br />
-          <a href="./EmployeeAccount/Details" >Staff Account</a>
-        </div>
-      </div>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Supervisor"))
+        {
+            <div class="col-sm-12 col-md-6 col-lg-4 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">View Members</h2>
+                        <p class="card-text">View member data edit archive and manage members.</p>
+                        <a href="./Members">Members</a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-12 col-md-6 col-lg-4 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">My Account</h2>
+                                <p class="card-text">Please click here to update and view your personal account details.</p>
+                        <a href="./MemberAccount/Details">Members Account</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+            <div class="col-sm-12 col-md-6 col-lg-4 ">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Log In</h2>
+                        <p class="card-text">Please Login to view furthur options and information...</p>
+                        <a href="./Identity/Account/Login">LogIn</a>
+                    </div>
+                </div>
+            </div>
+    }
+
     
     <div class="col-sm-12 col-md-6 col-lg-4">
       <div class="card">
@@ -97,9 +126,9 @@
     <div class="col-sm-12 col-md-6 col-lg-4">
       <div class="card">
         <div class="card-body">
-          <h2 class="card-title">Polls</h2>
+          <h2 class="card-title">Action Items</h2>
           <p class="card-text">Review existing polls of the NCPAC. (Login Required)</p>
-          <a href="" target="_blank">Learn More</a>
+          <a href="./ActionItems" target="_blank">Learn More</a>
         </div>
       </div>
     </div>

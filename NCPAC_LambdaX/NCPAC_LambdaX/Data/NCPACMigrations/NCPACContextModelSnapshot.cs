@@ -185,25 +185,18 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsCancelled")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("MeetingLink")
-                        .HasMaxLength(1000)
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("MeetingTitle")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("TimeFrom")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("Minitues")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("TimeTo")
+                    b.Property<DateTime?>("TimeFrom")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");

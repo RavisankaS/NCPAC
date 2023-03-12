@@ -28,7 +28,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Meetings
-        public async Task<IActionResult> Index(string SearchString, bool ShowCompleted, bool ShowCanceled, int? CommiteeID,
+        public async Task<IActionResult> Index(string SearchString, bool ShowCanceled, int? CommiteeID,
             int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Meeting")
         {
             ViewData["Filtering"] = "";
@@ -66,14 +66,6 @@ namespace NCPAC_LambdaX.Controllers
             {
                 meetings = meetings.Where(p => p.MeetingCommitees.Any(m => m.CommiteeID == CommiteeID) );
                 ViewData["Filtering"] = "";
-            }
-            if (ShowCompleted == true)
-            {
-                meetings = meetings.Where(p => p.IsArchived == true);
-            }
-            else
-            {
-                meetings = meetings.Where(p => p.IsArchived == false);
             }
 
             if (ShowCanceled == true)
@@ -420,7 +412,8 @@ namespace NCPAC_LambdaX.Controllers
                             Title = e.MeetingTitle,
                             Description = e.Description,
                             Commitees = String.Join(", ", e.MeetingCommitees.Select(a => a.Commitee.CommiteeName)),
-                            MeetingLink = e.MeetingLink
+                            MeetingMinitues = e.Minitues.ToString() + "minitues",
+                            StartTime = e.TimeFrom.ToString()
                         };
 
             //How many rows?

@@ -498,23 +498,20 @@ namespace NCPAC_LambdaX.Data
                      new Meeting
                      {
                          MeetingTitle = "Initial Discussion",
-                         MeetingLink = "https://teams.microsoft.com/l/meetup-join/19%3alZYGNzRDe6e6GDSLAhH9TThi7A3kSskTL7mBHIkGv_Q1%40thread.tacv2/1675133744209?context=%7b%22Tid%22%3a%220edf0ac2-4bf0-4a8e-90b2-b3f527902fb9%22%2c%22Oid%22%3a%22ae8303c8-6da8-4114-b86e-f2f03a52d88d%22%7d",
                          Description = "Is a special meeting for everyone",
-                         IsArchived = false
+                         IsCancelled = false
                      },
                      new Meeting
                      {
                          MeetingTitle = "PAC Discussion",
-                         MeetingLink = "https://teams.microsoft.com/l/meetup-join/19%3alZYGNzRDe6e6GDSLAhH9TThi7A3kSskTL7mBHIkGv_Q1%40thread.tacv2/1675133744209?context=%7b%22Tid%22%3a%220edf0ac2-4bf0-4a8e-90b2-b3f527902fb9%22%2c%22Oid%22%3a%22ae8303c8-6da8-4114-b86e-f2f03a52d88d%22%7d",
                          Description = "Is a special meeting",
-                         IsArchived = false
+                         IsCancelled = true
                      },
                      new Meeting
                      {
                          MeetingTitle = "Commitee Discussion",
-                         MeetingLink = "https://teams.microsoft.com/l/meetup-join/19%3alZYGNzRDe6e6GDSLAhH9TThi7A3kSskTL7mBHIkGv_Q1%40thread.tacv2/1675133744209?context=%7b%22Tid%22%3a%220edf0ac2-4bf0-4a8e-90b2-b3f527902fb9%22%2c%22Oid%22%3a%22ae8303c8-6da8-4114-b86e-f2f03a52d88d%22%7d",
                          Description = "Everyone Must Join",
-                         IsArchived = false
+                         IsCancelled = false
                      });
 
                     context.SaveChanges();

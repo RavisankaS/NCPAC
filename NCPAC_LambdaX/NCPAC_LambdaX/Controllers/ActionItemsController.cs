@@ -202,7 +202,6 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: ActionItems/Edit/5
-        [Authorize(Roles = "Admin,Supervisor,Staff")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.ActionItems == null)
@@ -224,7 +223,6 @@ namespace NCPAC_LambdaX.Controllers
         // POST: ActionItems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItemToUpdate, List<IFormFile> theFiles)

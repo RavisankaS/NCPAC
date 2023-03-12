@@ -30,37 +30,37 @@ namespace NCPAC_LambdaX.Utilities
         /// <returns></returns>
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-                var message = new MimeMessage();
-                message.To.Add(new MailboxAddress(email, email));
-                message.From.Add(new MailboxAddress(_emailConfiguration.SmtpFromName, _emailConfiguration.SmtpUsername));
+            var message = new MimeMessage();
+            message.To.Add(new MailboxAddress(email, email));
+            message.From.Add(new MailboxAddress(_emailConfiguration.SmtpFromName, _emailConfiguration.SmtpUsername));
 
-                message.Subject = subject;
-                //We will say we are sending HTML. But there are options for plaintext etc. 
-                message.Body = new TextPart(TextFormat.Html)
-                {
-                    Text = htmlMessage
-                };
-                try
-                {
-                    //Be careful that the SmtpClient class is the one from Mailkit not the framework!
-                    using var emailClient = new SmtpClient();
-                    //The last parameter here is to use SSL (Which you should!)
-                    emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, false);
+            message.Subject = subject;
+            //We will say we are sending HTML. But there are options for plaintext etc. 
+            message.Body = new TextPart(TextFormat.Html)
+            {
+                Text = htmlMessage
+            };
+            try
+            {
+                //Be careful that the SmtpClient class is the one from Mailkit not the framework!
+                using var emailClient = new SmtpClient();
+                //The last parameter here is to use SSL (Which you should!)
+                emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, false);
 
-                    //Remove any OAuth functionality as we won't be using it. 
-                    emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
+                //Remove any OAuth functionality as we won't be using it. 
+                emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
 
-                    emailClient.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
+                emailClient.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
 
-                    await emailClient.SendAsync(message);
+                await emailClient.SendAsync(message);
 
-                    emailClient.Disconnect(true);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex.GetBaseException().Message);
-                }
+                emailClient.Disconnect(true);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.GetBaseException().Message);
+            }
+        }
     }
 
 }

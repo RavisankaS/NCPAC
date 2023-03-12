@@ -80,10 +80,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
-                    MeetingLink = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
                     TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    TimeTo = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IsArchived = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Minitues = table.Column<int>(type: "INTEGER", nullable: true),
                     IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

@@ -11,7 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230304001429_Initial")]
+    [Migration("20230312070601_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

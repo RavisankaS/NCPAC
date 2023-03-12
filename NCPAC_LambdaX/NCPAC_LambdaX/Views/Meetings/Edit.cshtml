@@ -24,19 +24,14 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MeetingLink" class="control-label"></label>
-                <input asp-for="MeetingLink" class="form-control" />
-                <span asp-validation-for="MeetingLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="TimeFrom" class="control-label"></label>
                 <input asp-for="TimeFrom" class="form-control" />
                 <span asp-validation-for="TimeFrom" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TimeTo" class="control-label"></label>
-                <input asp-for="TimeTo" class="form-control" />
-                <span asp-validation-for="TimeTo" class="text-danger"></span>
+                <label asp-for="Minitues" class="control-label"></label>
+                <input asp-for="Minitues" class="form-control" />
+                <span asp-validation-for="Minitues" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label"><b>@Html.DisplayNameFor(model => model.MeetingCommitees)</b></label>
@@ -58,16 +53,13 @@
                     </div>
                 </div>
             </div>
+            <br />
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsArchived" /> @Html.DisplayNameFor(model => model.IsArchived)
+                    <input class="form-check-input" asp-for="IsCancelled" /> <label>Was Cancelled</label>
                 </label>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsCancelled" /> @Html.DisplayNameFor(model => model.IsCancelled)
-                </label>
-            </div>
+            <br />
             <div class="form-group">
                 <label class="control-label"> Current Documents:</label>
                 <div class="ml-md-3">
