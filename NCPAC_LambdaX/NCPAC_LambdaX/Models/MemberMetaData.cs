@@ -33,28 +33,28 @@ namespace NCPAC_LambdaX.Models
         {
             get
             {
-                string? wc = City;
-                string? wsa = StreetAddress;
-                string? pc = PostalCodeFormatted;
-                string? p = ProvinceID;
-                if (WorkCity == null)
+                string? c = City;
+                string? sa = StreetAddress;
+                string? p = PostalCodeFormatted;
+                string? pv = ProvinceID;
+                if (City == null)
                 {
-                    wc = "";
+                    c = "";
                 }
-                if (WorkStreetAddress == null)
+                if (StreetAddress == null)
                 {
-                    wsa = "";
+                    sa = "";
                 }
-                if (WorkPostalCodeFormatted == null)
-                {
-                    pc = "";
-                }
-                if (WorkProvinceID == null)
+                if (PostalCodeFormatted == null)
                 {
                     p = "";
                 }
-                return wsa
-                    + " " + wc + " " + p + " " + pc;
+                if (ProvinceID == null)
+                {
+                    pv = "";
+                }
+                return sa
+                    + " " + c + " " + p + " " + pv;
 
             }
         }
@@ -148,7 +148,7 @@ namespace NCPAC_LambdaX.Models
             }
         }
 
-        [Display(Name = "First Name")]
+        [Display(Name = "First Name *")]
         [Required(ErrorMessage = "You cannot leave the first name empty.")]
         [StringLength(30, ErrorMessage = "First name cannot be more than 30 characters long.")]
         public string FirstName { get; set; }
@@ -157,7 +157,7 @@ namespace NCPAC_LambdaX.Models
         [StringLength(30, ErrorMessage = "Middle name cannot be more than 30 characters long.")]
         public string? MiddleName { get; set; }
 
-        [Display(Name = "Last Name")]
+        [Display(Name = "Last Name *")]
         [Required(ErrorMessage = "You cannot leave the last name empty.")]
         [StringLength(50, ErrorMessage = "Last name cannot be more than 50 characters long.")]
         public string LastName { get; set; }
@@ -184,6 +184,7 @@ namespace NCPAC_LambdaX.Models
         [RegularExpression(@"^[ABCEGHJ-NPRSTVXY]{1}[0-9]{1}[ABCEGHJ-NPRSTV-Z]{1}[0-9]{1}[ABCEGHJ-NPRSTV-Z]{1}[0-9]{1}$", ErrorMessage = "Invalid Postal Code.")]
         public string? PostalCode { get; set; }
 
+        [Display(Name = "Personal Phone *")]
         [Required(ErrorMessage = "Phone number is required.")]
         [RegularExpression("^\\d{10}$", ErrorMessage = "Please enter a valid 10-digit phone number (no spaces).")]
         [DataType(DataType.PhoneNumber)]
@@ -192,7 +193,7 @@ namespace NCPAC_LambdaX.Models
 
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Personal Email")]
+        [Display(Name = "Personal Email *")]
         public string? Email { get; set; }
 
         [Display(Name = "Work Street Adress")]
