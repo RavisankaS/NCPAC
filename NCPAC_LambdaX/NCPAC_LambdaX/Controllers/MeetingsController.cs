@@ -44,6 +44,7 @@ namespace NCPAC_LambdaX.Controllers
             var meetings = _context.Meetings
             .Include(m => m.MeetingCommitees).ThenInclude(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
+            .Include(m => m.MemberMeetings).ThenInclude(m => m.Member)
             .AsNoTracking();
 
             var member = await _context.Members
@@ -143,6 +144,7 @@ namespace NCPAC_LambdaX.Controllers
             .Include(d => d.MeetingDocuments)
             .Include(m => m.MeetingCommitees).ThenInclude(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
+            .Include(m => m.MemberMeetings).ThenInclude(m => m.Member)
             .FirstOrDefaultAsync(m => m.ID == id);
             if (meeting == null)
             {
@@ -158,6 +160,7 @@ namespace NCPAC_LambdaX.Controllers
         {
             Meeting meeting = new Meeting();
             PopulateAssignedMeetingCommiteesData(meeting);
+            PopulateAssignedMemberMeetingsData(meeting);
             return View();
         }
 
@@ -167,12 +170,13 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meeting, List<IFormFile> theFiles, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meeting, List<IFormFile> theFiles, string[] selectedOptions, string[] selectedOptions1)
         {
 
             if (ModelState.IsValid)
             {
                 UpdateMeetingCommitees(selectedOptions, meeting);
+                UpdateMemberMeetings(selectedOptions1, meeting);
                 await AddDocumentsAsync(meeting, theFiles);
                 _context.Add(meeting);
                 await _context.SaveChangesAsync();
@@ -180,6 +184,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             PopulateAssignedMeetingCommiteesData(meeting);
+            PopulateAssignedMemberMeetingsData(meeting);
             return View(meeting);
         }
 
@@ -195,6 +200,7 @@ namespace NCPAC_LambdaX.Controllers
             var meeting = await _context.Meetings
                 .Include(m => m.MeetingCommitees)
                 .Include(d => d.MeetingDocuments)
+                .Include(m => m.MemberMeetings).ThenInclude(m => m.Member)
                 .FirstOrDefaultAsync(d => d.ID == id);
             
             if (meeting == null)
@@ -202,6 +208,7 @@ namespace NCPAC_LambdaX.Controllers
                 return NotFound();
             }
             PopulateAssignedMeetingCommiteesData(meeting);
+            PopulateAssignedMemberMeetingsData(meeting);
             return View(meeting);
         }
 
@@ -211,7 +218,7 @@ namespace NCPAC_LambdaX.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Supervisor,Staff")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meetingToUpdate, List<IFormFile> theFiles, string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meetingToUpdate, List<IFormFile> theFiles, string[] selectedOptions, string[] selectedOptions1)
         {
             if (id != meetingToUpdate.ID)
             {
@@ -225,6 +232,7 @@ namespace NCPAC_LambdaX.Controllers
                 {
 
                     UpdateMeetingCommitees(selectedOptions, meetingToUpdate);
+                    UpdateMemberMeetings(selectedOptions1, meetingToUpdate);
                     await AddDocumentsAsync(meetingToUpdate, theFiles);
                     _context.Update(meetingToUpdate);
                     await _context.SaveChangesAsync();
@@ -243,6 +251,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             PopulateAssignedMeetingCommiteesData(meetingToUpdate);
+            PopulateAssignedMemberMeetingsData(meetingToUpdate);
             return View(meetingToUpdate);
         }
 
@@ -393,6 +402,72 @@ namespace NCPAC_LambdaX.Controllers
                     if (currentOptionsHS.Contains(s.ID))//but is currently in the Member's collection - Remove it!
                     {
                         MeetingCommitee specToRemove = meetingToUpdate.MeetingCommitees.FirstOrDefault(d => d.CommiteeID == s.ID);
+                        _context.Remove(specToRemove);
+                    }
+                }
+            }
+        }
+
+        private void PopulateAssignedMemberMeetingsData(Meeting meeting)
+        {
+            //For this to work, you must have Included the child collection in the parent object
+            var allOptions = _context.Members;
+            var currentOptionsHS = new HashSet<int>(meeting.MemberMeetings.Select(b => b.MemberID));
+            //Instead of one list with a boolean, we will make two lists
+            var selected = new List<ListOptionVM>();
+            var available = new List<ListOptionVM>();
+            foreach (var s in allOptions)
+            {
+                if (currentOptionsHS.Contains(s.ID))
+                {
+                    selected.Add(new ListOptionVM
+                    {
+                        ID = s.ID,
+                        DisplayText = s.MemberName
+                    });
+                }
+                else
+                {
+                    available.Add(new ListOptionVM
+                    {
+                        ID = s.ID,
+                        DisplayText = s.MemberName
+                    });
+                }
+            }
+
+            ViewData["selOpts1"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["availOpts1"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        }
+
+        private void UpdateMemberMeetings(string[] selectedOptions, Meeting meetingToUpdate)
+        {
+            if (selectedOptions == null)
+            {
+                meetingToUpdate.MemberMeetings = new List<MemberMeeting>();
+                return;
+            }
+
+            var selectedOptionsHS = new HashSet<string>(selectedOptions);
+            var currentOptionsHS = new HashSet<int>(meetingToUpdate.MemberMeetings.Select(b => b.MemberID));
+            foreach (var s in _context.Members)
+            {
+                if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
+                {
+                    if (!currentOptionsHS.Contains(s.ID))//but not currently in the Member's collection - Add it!
+                    {
+                        meetingToUpdate.MemberMeetings.Add(new MemberMeeting
+                        {
+                            MemberID = s.ID,
+                            MeetingID = meetingToUpdate.ID
+                        });
+                    }
+                }
+                else //not selected
+                {
+                    if (currentOptionsHS.Contains(s.ID))//but is currently in the Member's collection - Remove it!
+                    {
+                        MemberMeeting specToRemove = meetingToUpdate.MemberMeetings.FirstOrDefault(d => d.MemberID == s.ID);
                         _context.Remove(specToRemove);
                     }
                 }

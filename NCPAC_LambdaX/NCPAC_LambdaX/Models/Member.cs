@@ -196,6 +196,8 @@ namespace NCPAC_LambdaX.Models
 
         public ICollection<ActionItem> ActionItems { get; set; } = new HashSet<ActionItem>();
 
+        public ICollection<MemberMeeting> MemberMeetings { get; set; } = new HashSet<MemberMeeting>();
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (DateJoined > DateTime.Today)

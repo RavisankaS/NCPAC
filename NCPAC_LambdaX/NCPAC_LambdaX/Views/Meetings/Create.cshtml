@@ -42,6 +42,29 @@
                     </div>
                 </div>
             </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label"><b>@Html.DisplayNameFor(model => model.MemberMeetings)</b></label>
+                <div class="col-md-16">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Attendees Selected</label> <button type="button" id="btnRight1" class="btn btn-danger btn-sm">
+                                <strong>-</strong>
+                            </button>
+                            @Html.ListBox("selectedOptions1", (MultiSelectList)ViewBag.selOpts1, new { @size = 10, @class = "form-control" })
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label"> Choose Commitees</label> <button type="button" id="btnLeft1" class="btn btn-success btn-sm">
+                                <strong>+</strong>
+                            </button>
+                            @Html.ListBox("availOptions1", (MultiSelectList)ViewBag.availOpts1, new { @size = 10, @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
             <div class="form-group">
             <div class="form-group">
                 <label asp-for="TimeFrom" class="control-label"></label>
@@ -83,6 +106,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="~/js/multiselect.js"></script>
+    <script src="~/js/multiselect1.js"></script>
     <script src="~/js/refreshDDL.js"></script>
 }
 

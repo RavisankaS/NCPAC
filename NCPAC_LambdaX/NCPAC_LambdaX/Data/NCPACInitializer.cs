@@ -16,9 +16,9 @@ namespace NCPAC_LambdaX.Data
             try
             {
                 //Delete the database if you need to apply a new Migration
-                //context.Database.EnsureDeleted(); //Take time to add this to all other Initializer.Seed() code
+                context.Database.EnsureDeleted(); //Take time to add this to all other Initializer.Seed() code
                 //Create the database if it does not exist and apply your Migration
-                //context.Database.Migrate();
+                context.Database.Migrate();
 
                 //This approach to seeding data uses int and string arrays with loops to
                 //create the data using random values
@@ -581,6 +581,37 @@ namespace NCPAC_LambdaX.Data
                         TimeUntil = DateTime.Now.AddDays(12),
                         MemberID = 6,
                         IsCompleted = false
+                    });
+                    context.SaveChanges();
+                }
+
+                if (!context.MemberMeetings.Any())
+                {
+                    context.MemberMeetings.AddRange(
+                    new MemberMeeting
+                    {
+                        MeetingID = 1,
+                        MemberID = 7
+                    },
+                    new MemberMeeting
+                    {
+                        MeetingID = 3,
+                        MemberID = 3
+                    },
+                    new MemberMeeting
+                    {
+                        MeetingID = 2,
+                        MemberID = 4
+                    },
+                    new MemberMeeting
+                    {
+                        MeetingID = 1,
+                        MemberID = 2
+                    },
+                    new MemberMeeting
+                    {
+                        MeetingID = 2,
+                        MemberID = 4
                     });
                     context.SaveChanges();
                 }

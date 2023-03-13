@@ -186,6 +186,7 @@ namespace NCPAC_LambdaX.ViewModels
         public string? OccupationalSummary { get; set; }
 
         public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
+
     }
 
 }

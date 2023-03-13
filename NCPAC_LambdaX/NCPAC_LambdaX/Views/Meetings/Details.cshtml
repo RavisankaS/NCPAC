@@ -72,6 +72,38 @@
                 }
             }
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MemberMeetings)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                int playCount2 = Model.MemberMeetings.Count;
+                if (playCount2 > 0)
+                {
+                    string firstPlay2 = Model.MemberMeetings.FirstOrDefault().Member.MemberName;
+                    if (playCount2 > 1)
+                    {
+                        string playList2 = "";
+                        var c = Model.MemberMeetings.ToList();
+                        for (int i = 1; i < playCount2; i++)//Skip the first because we have it already
+                        {
+                            playList2 += c[i].Member.MemberName + " <br />";
+                        }
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                            @firstPlay2 <span class="badge bg-info">@playCount2</span>
+                        </a>
+                        <div class="collapse" id="collapseHistory@(Model.ID)">
+                            @Html.Raw(playList2)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstPlay2
+                    }
+                }
+            }
+        </dd>
         <dt class="col-md-3">
             @Html.DisplayNameFor(model => model.MeetingDocuments)
         </dt>

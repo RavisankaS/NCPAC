@@ -25,6 +25,7 @@ namespace NCPAC_LambdaX.Data
         public DbSet<ActionItem> ActionItems { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<MeetingDocument> MeetingDocuments { get; set; }
+        public DbSet<MemberMeeting> MemberMeetings { get; set; }
         public DbSet<ActionItemDocument> ActionItemDocuments { get; set; }
         public DbSet<UploadedFile> UploadedFiles { get; set; }
 
@@ -32,6 +33,9 @@ namespace NCPAC_LambdaX.Data
         {
             modelBuilder.Entity<MemberCommitee>()
             .HasKey(p => new { p.MemberID, p.CommiteeID });
+
+            modelBuilder.Entity<MemberMeeting>()
+            .HasKey(p => new { p.MemberID, p.MeetingID });
 
             modelBuilder.Entity<MeetingCommitee>()
             .HasKey(p => new { p.MeetingID, p.CommiteeID });
