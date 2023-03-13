@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ET47OIrkRFMzzSKgx8Z7tDA24qzhI1NOI/vUgrIcYng=",
+  "Hash": "XIKtNXUhAGo9AGu3wDekUjfXIcveZN2CoLW03HwyWH4=",
   "Source": "NCPAC_LambdaX",
   "BasePath": "_content/NCPAC_LambdaX",
   "Mode": "Default",
@@ -1120,6 +1120,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\background-home.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\images\\NCPAC.ico",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "images/NCPAC.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\NCPAC.ico"
     },
     {
       "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\images\\NCPAC_152x152.png",
