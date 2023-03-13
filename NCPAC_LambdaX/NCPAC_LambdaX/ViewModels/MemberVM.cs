@@ -31,28 +31,28 @@ namespace NCPAC_LambdaX.ViewModels
         {
             get
             {
-                string? wc = City;
-                string? wsa = StreetAddress;
-                string? pc = PostalCodeFormatted;
-                string? p = ProvinceID;
-                if (WorkCity == null)
+                string? c = City;
+                string? sa = StreetAddress;
+                string? p = PostalCodeFormatted;
+                string? pv = ProvinceID;
+                if (City == null)
                 {
-                    wc = "";
+                    c = "";
                 }
-                if (WorkStreetAddress == null)
+                if (StreetAddress == null)
                 {
-                    wsa = "";
+                    sa = "";
                 }
-                if (WorkPostalCodeFormatted == null)
-                {
-                    pc = "";
-                }
-                if (WorkProvinceID == null)
+                if (PostalCodeFormatted == null)
                 {
                     p = "";
                 }
-                return wsa
-                    + " " + wc + " " + p + " " + pc;
+                if (ProvinceID == null)
+                {
+                    pv = "";
+                }
+                return sa
+                    + " " + c + " " + pv + " " + p;
 
             }
         }

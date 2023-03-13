@@ -208,7 +208,16 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1991-02-09"),
                         ProvinceID = "AB",
                         Email = "agrande@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        StreetAddress = "58 Rose PLace",
+                        City = "Welland",
+                        PostalCode = "E5E6R6",
+                        WorkStreetAddress = "52 Rose PLace",
+                        WorkCity = "Toronto",
+                        WorkPostalCode = "E5E6R7",
+                        WorkProvinceID = "ON",
+                        WorkEmail = "agrande@gmail.com",
+                        WorkPhone = "1592587536"
                     },
                     new Member
                     {
@@ -220,7 +229,16 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1943-09-12"),
                         ProvinceID = "ON",
                         Email = "ejohn@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        StreetAddress = "58 King Street",
+                        City = "Welland",
+                        PostalCode = "E5E6R7",
+                        WorkStreetAddress = "57 King Street",
+                        WorkCity = "Toronto",
+                        WorkPostalCode = "E4E6R7",
+                        WorkProvinceID = "ON",
+                        WorkEmail = "ejohn@gmail.com",
+                        WorkPhone = "1592587836"
                     },
                     new Member
                     {
@@ -232,7 +250,16 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1987-08-10"),
                         ProvinceID = "BC",
                         Email = "lx@outlook.com",
-                        IsActive = true
+                        IsActive = false,
+                        StreetAddress = "58 John Street",
+                        City = "Niagara",
+                        PostalCode = "J5E6R7",
+                        WorkStreetAddress = "55 John Street",
+                        WorkCity = "Toronto",
+                        WorkPostalCode = "L4E6R7",
+                        WorkProvinceID = "AB",
+                        WorkEmail = "lx@gmail.com",
+                        WorkPhone = "1572587836"
                     },
                     new Member
                     {
@@ -244,7 +271,16 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1999-01-10"),
                         ProvinceID = "BC",
                         Email = "zmalik@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        StreetAddress = "22 Watt Avenue",
+                        City = "Torornto",
+                        PostalCode = "L3B6E6",
+                        WorkStreetAddress = "57 Empress Street",
+                        WorkCity = "Toronto",
+                        WorkPostalCode = "E4B6R7",
+                        WorkProvinceID = "AB",
+                        WorkEmail = "zmalik@gmail.com",
+                        WorkPhone = "1492557836"
                     },
                     new Member
                     {
@@ -256,7 +292,16 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1984-12-08"),
                         ProvinceID = "ON",
                         Email = "lclearkson@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        StreetAddress = "22 Queen Avenue",
+                        City = "Welland",
+                        PostalCode = "L3G6E6",
+                        WorkStreetAddress = "57 Dany Street",
+                        WorkCity = "Toronto",
+                        WorkPostalCode = "E4A6R7",
+                        WorkProvinceID = "ON",
+                        WorkEmail = "lclearkson@gmail.com",
+                        WorkPhone = "1592557836"
                     },
                     new Member
                     {
