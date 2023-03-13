@@ -125,6 +125,38 @@
             }
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActionItems)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                int playCount2 = Model.ActionItems.Count;
+                if (playCount2 > 0)
+                {
+                    string firstPlay2 = Model.ActionItems.FirstOrDefault().ActionItemTitle;
+                    if (playCount2 > 1)
+                    {
+                        string playList2 = "";
+                        var c = Model.ActionItems.ToList();
+                        for (int i = 1; i < playCount2; i++)//Skip the first because we have it already
+                        {
+                            playList2 += c[i].ActionItemTitle + " <br />";
+                        }
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                            @firstPlay2 <span class="badge bg-info">@playCount2</span>
+                        </a>
+                        <div class="collapse" id="collapseHistory@(Model.ID)">
+                            @Html.Raw(playList2)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstPlay2
+                    }
+                }
+            }
+        </dd>
+        <dt class="col-sm-2">
             <label>Member Meetings</label>
         </dt>
         <dd class="col-sm-10">

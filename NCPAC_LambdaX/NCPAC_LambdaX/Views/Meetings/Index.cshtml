@@ -6,11 +6,15 @@
 
 <h1>All Meetings</h1>
 
-<p>
-    <a asp-action="DownloadMeetings" class="btn btn-info float-end">Download Meetings Report</a>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-    
-</p>
+
+
+@if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+{
+    <p>
+        <a asp-action="DownloadMeetings" class="btn btn-info float-end">Download Meetings Report</a>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </p>
+}
 
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
@@ -62,7 +66,7 @@
                                         @Html.DisplayFor(model => item.TimeFrom)
                                     </dd>
                                     <dt class="col-8">
-                                        @Html.DisplayNameFor(model => item.Minitues)
+                                        <label>Duration (Mins)</label>
                                     </dt>
                                     <dd class="col-4 text-truncate">
                                         @Html.DisplayFor(model => item.Minitues)
@@ -78,9 +82,14 @@
                         </figcaption>
 
                         <div class="card-footer">
-                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
+                            @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ID"> | Edit |</a> 
+                                <a asp-action="Delete" asp-route-id="@item.ID"> Delete</a>
+ 
+                            }
+                            
                         </div>
                     </div>
                 </div>
@@ -98,7 +107,7 @@
                 <input type="submit" name="actionButton" value="TimeFrom" class="btn btn-outline-dark" />
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Minitues)
+                <label>Duration (Mins)</label>
             </th>
             <th>
                 <label>Commitees(If Specific)</label>
@@ -154,10 +163,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsCancelled)
             </td>
-            <td>                
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> | 
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>  |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.ID"> | Edit |</a>
+                    <a asp-action="Delete" asp-route-id="@item.ID"> Delete</a>
+
+                }
             </td>
         </tr>
 }

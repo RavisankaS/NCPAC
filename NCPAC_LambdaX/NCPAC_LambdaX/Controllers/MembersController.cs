@@ -161,6 +161,7 @@ namespace NCPAC_LambdaX.Controllers
             var member = await _context.Members
                 .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.MeetingCommitees).ThenInclude(c => c.Meeting)
                 .Include(d => d.Province)
+                .Include(m => m.ActionItems)
                 .Select(e => new MemberAdminVM
                 {
                     DateJoined = e.DateJoined,
@@ -189,7 +190,8 @@ namespace NCPAC_LambdaX.Controllers
                     EducationalSummary = e.EducationalSummary,
                     IsNCGrad = e.IsNCGrad,
                     OccupationalSummary = e.OccupationalSummary,
-                    MemberCommitees = e.MemberCommitees
+                    MemberCommitees = e.MemberCommitees,
+                    ActionItems = e.ActionItems
                 }).AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (member == null)

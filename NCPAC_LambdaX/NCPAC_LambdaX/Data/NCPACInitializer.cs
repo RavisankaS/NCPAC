@@ -630,37 +630,6 @@ namespace NCPAC_LambdaX.Data
                     context.SaveChanges();
                 }
 
-                if (!context.MemberMeetings.Any())
-                {
-                    context.MemberMeetings.AddRange(
-                    new MemberMeeting
-                    {
-                        MeetingID = 1,
-                        MemberID = 7
-                    },
-                    new MemberMeeting
-                    {
-                        MeetingID = 3,
-                        MemberID = 3
-                    },
-                    new MemberMeeting
-                    {
-                        MeetingID = 2,
-                        MemberID = 4
-                    },
-                    new MemberMeeting
-                    {
-                        MeetingID = 1,
-                        MemberID = 2
-                    },
-                    new MemberMeeting
-                    {
-                        MeetingID = 2,
-                        MemberID = 4
-                    });
-                    context.SaveChanges();
-                }
-
 
             }
             catch (Exception ex)

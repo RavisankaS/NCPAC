@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PCView\\Desktop\\Prototype_2-Final\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj": {}
+    "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PCView\\Desktop\\Prototype_2-Final\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj": {
+    "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PCView\\Desktop\\Prototype_2-Final\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
+        "projectUniqueName": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
         "projectName": "NCPAC_LambdaX",
-        "projectPath": "C:\\Users\\PCView\\Desktop\\Prototype_2-Final\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
-        "packagesPath": "C:\\Users\\PCView\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PCView\\Desktop\\Prototype_2-Final\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\obj\\",
+        "projectPath": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
+        "packagesPath": "C:\\Users\\Banuka Ambegoda\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\PCView\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Banuka Ambegoda\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -107,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

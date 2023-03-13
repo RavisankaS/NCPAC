@@ -6,9 +6,13 @@
 
 <h1>Action Items</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Add New</a>    
-</p>
+@if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Add New</a>
+    </p>
+}
+
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
@@ -89,9 +93,14 @@
                         </figcaption>
 
                         <div class="card-footer">
-                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            <a asp-action="Details" asp-route-id="@item.ID"> Details |</a>
+                            <a asp-action="Edit" asp-route-id="@item.ID"> Edit </a>
+                            @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+                            {
+
+                                <a asp-action="Delete" asp-route-id="@item.ID">| Delete</a>
+
+                            }
                         </div>
                     </div>
                 </div>
@@ -139,9 +148,14 @@
                 @Html.DisplayFor(modelItem => item.IsCompleted)
             </td>
             <td>                
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>  |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.ID"> Details |</a> 
+                <a asp-action="Edit" asp-route-id="@item.ID"> Edit </a> 
+                @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+                {
+
+                    <a asp-action="Delete" asp-route-id="@item.ID">| Delete</a>
+
+                }
                
             </td>
         </tr>

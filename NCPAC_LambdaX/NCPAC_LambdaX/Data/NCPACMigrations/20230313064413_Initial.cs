@@ -246,30 +246,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MemberMeetings",
-                columns: table => new
-                {
-                    MeetingID = table.Column<int>(type: "INTEGER", nullable: false),
-                    MemberID = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MemberMeetings", x => new { x.MemberID, x.MeetingID });
-                    table.ForeignKey(
-                        name: "FK_MemberMeetings_Meetings_MeetingID",
-                        column: x => x.MeetingID,
-                        principalTable: "Meetings",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MemberMeetings_Members_MemberID",
-                        column: x => x.MemberID,
-                        principalTable: "Members",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MemberCommitees",
                 columns: table => new
                 {
@@ -368,11 +344,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 column: "MemberVMID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MemberMeetings_MeetingID",
-                table: "MemberMeetings",
-                column: "MeetingID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Members_MailPrefferenceID",
                 table: "Members",
                 column: "MailPrefferenceID");
@@ -429,9 +400,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             migrationBuilder.DropTable(
                 name: "MemberCommitees");
-
-            migrationBuilder.DropTable(
-                name: "MemberMeetings");
 
             migrationBuilder.DropTable(
                 name: "UploadedFiles");

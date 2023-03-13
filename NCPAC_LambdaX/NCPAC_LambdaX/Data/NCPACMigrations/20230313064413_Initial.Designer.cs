@@ -11,11 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-<<<<<<< HEAD:NCPAC_LambdaX/NCPAC_LambdaX/Data/NCPACMigrations/20230313004224_Initial.Designer.cs
-    [Migration("20230313004224_Initial")]
-=======
-    [Migration("20230313011945_Initial")]
->>>>>>> d2524ad7f578f1ad769a0095b85aa38111fd44f0:NCPAC_LambdaX/NCPAC_LambdaX/Data/NCPACMigrations/20230313011945_Initial.Designer.cs
+    [Migration("20230313064413_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -330,21 +326,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.ToTable("MemberCommitees");
                 });
 
-            modelBuilder.Entity("NCPAC_LambdaX.Models.MemberMeeting", b =>
-                {
-                    b.Property<int>("MemberID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MeetingID")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("MemberID", "MeetingID");
-
-                    b.HasIndex("MeetingID");
-
-                    b.ToTable("MemberMeetings");
-                });
-
             modelBuilder.Entity("NCPAC_LambdaX.Models.Province", b =>
                 {
                     b.Property<string>("ID")
@@ -580,25 +561,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("NCPAC_LambdaX.Models.MemberMeeting", b =>
-                {
-                    b.HasOne("NCPAC_LambdaX.Models.Meeting", "Meeting")
-                        .WithMany("MemberMeetings")
-                        .HasForeignKey("MeetingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NCPAC_LambdaX.Models.Member", "Member")
-                        .WithMany("MemberMeetings")
-                        .HasForeignKey("MemberID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Meeting");
-
-                    b.Navigation("Member");
-                });
-
             modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.MailPrefference", "MailPrefference")
@@ -659,8 +621,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("MeetingCommitees");
 
                     b.Navigation("MeetingDocuments");
-
-                    b.Navigation("MemberMeetings");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Member", b =>
@@ -668,8 +628,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("ActionItems");
 
                     b.Navigation("MemberCommitees");
-
-                    b.Navigation("MemberMeetings");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.UploadedFile", b =>
