@@ -73,23 +73,6 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meetings",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
-                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Minitues = table.Column<int>(type: "INTEGER", nullable: true),
-                    IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Meetings", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Provinces",
                 columns: table => new
                 {
@@ -102,25 +85,25 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MeetingCommitees",
+                name: "Meetings",
                 columns: table => new
                 {
-                    MeetingID = table.Column<int>(type: "INTEGER", nullable: false),
-                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Minitues = table.Column<int>(type: "INTEGER", nullable: true),
+                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetingCommitees", x => new { x.MeetingID, x.CommiteeID });
+                    table.PrimaryKey("PK_Meetings", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_MeetingCommitees_Commitees_CommiteeID",
+                        name: "FK_Meetings_Commitees_CommiteeID",
                         column: x => x.CommiteeID,
                         principalTable: "Commitees",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MeetingCommitees_Meetings_MeetingID",
-                        column: x => x.MeetingID,
-                        principalTable: "Meetings",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -230,6 +213,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     ActionItemTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
                     MemberID = table.Column<int>(type: "INTEGER", nullable: false),
+                    MeetingID = table.Column<int>(type: "INTEGER", nullable: false),
                     TimeAppointed = table.Column<DateTime>(type: "TEXT", nullable: true),
                     TimeUntil = table.Column<DateTime>(type: "TEXT", nullable: true),
                     IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -237,6 +221,12 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ActionItems", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ActionItems_Meetings_MeetingID",
+                        column: x => x.MeetingID,
+                        principalTable: "Meetings",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ActionItems_Members_MemberID",
                         column: x => x.MemberID,
@@ -324,13 +314,18 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ActionItems_MeetingID",
+                table: "ActionItems",
+                column: "MeetingID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ActionItems_MemberID",
                 table: "ActionItems",
                 column: "MemberID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeetingCommitees_CommiteeID",
-                table: "MeetingCommitees",
+                name: "IX_Meetings_CommiteeID",
+                table: "Meetings",
                 column: "CommiteeID");
 
             migrationBuilder.CreateIndex(
@@ -396,16 +391,10 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 name: "FileContent");
 
             migrationBuilder.DropTable(
-                name: "MeetingCommitees");
-
-            migrationBuilder.DropTable(
                 name: "MemberCommitees");
 
             migrationBuilder.DropTable(
                 name: "UploadedFiles");
-
-            migrationBuilder.DropTable(
-                name: "Commitees");
 
             migrationBuilder.DropTable(
                 name: "MemberVM");
@@ -418,6 +407,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             migrationBuilder.DropTable(
                 name: "Members");
+
+            migrationBuilder.DropTable(
+                name: "Commitees");
 
             migrationBuilder.DropTable(
                 name: "MailPrefferences");

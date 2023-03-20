@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace NCPAC_LambdaX.Controllers
 {
-    [Authorize(Roles = "Admin,Supervisor,Staff")]
+    [Authorize]
     public class MembersController : Controller
     {
         private readonly NCPACContext _context;
@@ -150,7 +150,109 @@ namespace NCPAC_LambdaX.Controllers
             return View(pagedData);
         }
 
+        public async Task<IActionResult> MemberIndex(string SearchString, string SearchString2, bool IsNcGrad, bool ShowInactive, int? CommiteeIDVal,
+            int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Members")
+        {
+            CookieHelper.CookieSet(HttpContext, "MembersController" + "URL", "", -1);
+
+            ViewData["Filtering"] = "";
+
+            string[] sortOptions = new[] { "Member" };
+
+            var members = _context.Members
+                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee)
+                .Include(d => d.Province)
+                .Select(e => new MemberAdminVM
+                {
+                    DateJoined = e.DateJoined,
+                    IsActive = e.IsActive,
+                    ID = e.ID,
+                    FirstName = e.FirstName,
+                    MiddleName = e.MiddleName,
+                    LastName = e.LastName,
+                    Salutation = e.Salutation,
+                    StreetAddress = e.StreetAddress,
+                    City = e.City,
+                    ProvinceID = e.ProvinceID,
+                    Province = e.Province,
+                    PostalCode = e.PostalCode,
+                    Phone = e.Phone,
+                    Email = e.Email,
+                    WorkStreetAddress = e.WorkStreetAddress,
+                    WorkCity = e.WorkCity,
+                    WorkProvinceID = e.WorkProvinceID,
+                    WorkProvince = e.WorkProvince,
+                    WorkPostalCode = e.WorkPostalCode,
+                    WorkPhone = e.WorkPhone,
+                    WorkEmail = e.WorkEmail,
+                    MailPrefferenceID = e.MailPrefferenceID,
+                    MailPrefference = e.MailPrefference,
+                    EducationalSummary = e.EducationalSummary,
+                    IsNCGrad = e.IsNCGrad,
+                    OccupationalSummary = e.OccupationalSummary,
+                    MemberCommitees = e.MemberCommitees
+                }).AsNoTracking();
+
+            members = members.Where(m => m.MemberCommitees.Any(m => m.Commitee.MemberCommitees.Any(m => (m.Member.Email == User.Identity.Name) || (m.Member.WorkEmail == User.Identity.Name))));
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                members = members.Where(p => p.Salutation.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.LastName.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.FirstName.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.MiddleName.ToUpper().Contains(SearchString.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchString2))
+            {
+                members = members.Where(p => p.Email.Contains(SearchString2) || p.WorkEmail.Contains(SearchString2));
+            }
+            if (IsNcGrad == true)
+            {
+                members = members.Where(p => p.IsNCGrad == true);
+            }
+            members = members.Where(p => p.IsActive == true);
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;//Reset page start
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Member")
+            {
+                if (sortDirection == "asc")
+                {
+                    members = members
+                        .OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ThenBy(p => p.MiddleName);
+                }
+                else
+                {
+                    members = members
+                       .OrderByDescending(p => p.LastName).ThenBy(p => p.FirstName).ThenBy(p => p.MiddleName);
+                }
+            }
+
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, "Members");
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+
+            var pagedData = await PaginatedList<MemberAdminVM>.CreateAsync(members.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
+        }
+
         // GET: Members/Details/5
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Members == null)
@@ -159,7 +261,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             var member = await _context.Members
-                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.MeetingCommitees).ThenInclude(c => c.Meeting)
+                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.Meetings)
                 .Include(d => d.Province)
                 .Include(m => m.ActionItems)
                 .Select(e => new MemberAdminVM
@@ -203,6 +305,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Members/Create
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
         public IActionResult Create()
         {
             MemberAdminVM member = new MemberAdminVM();
@@ -216,6 +319,7 @@ namespace NCPAC_LambdaX.Controllers
         // POST: Members/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,IsActive")] Member member, string[] selectedOptions)
@@ -305,6 +409,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
         // GET: Members/Edit/5
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -364,9 +469,10 @@ namespace NCPAC_LambdaX.Controllers
         // POST: Members/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, bool Active, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,IsActive")] string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, bool IsActive, string MailPrefferenceID, string Email, string WorkEmail, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,IsActive")] string[] selectedOptions)
         {
             var memberToUpdate = await _context.Members
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -377,9 +483,56 @@ namespace NCPAC_LambdaX.Controllers
 
             //Note the current Email and Active Status
             bool ActiveStatus = memberToUpdate.IsActive;
-            string databaseEmail = memberToUpdate.Email;
+            string databaseEmail = "";
+            if ((memberToUpdate.Email != null) || (memberToUpdate.WorkEmail != null))
+            {
+                if (memberToUpdate.MailPrefferenceID != null)
+                {
+                    if (memberToUpdate.MailPrefferenceID == "Work")
+                    {
+                        databaseEmail = memberToUpdate.WorkEmail;
+                    }
+                    if (memberToUpdate.MailPrefferenceID == "Personnal")
+                    {
+                        databaseEmail = memberToUpdate.Email;
+                    }
+                }
+                if (memberToUpdate.WorkEmail != null)
+                {
+                    databaseEmail = memberToUpdate.WorkEmail;
+                }
+                if (memberToUpdate.Email != null)
+                {
+                    databaseEmail = memberToUpdate.Email;
+                }
 
-            UpdateMemberCommitees(selectedOptions, memberToUpdate);
+            }
+
+            string EmailAddress = "";
+            if ((Email != null) || (WorkEmail != null))
+            {
+                if (MailPrefferenceID != null)
+                {
+                    if (MailPrefferenceID == "Work")
+                    {
+                        EmailAddress = WorkEmail;
+                    }
+                    if (MailPrefferenceID == "Personnal")
+                    {
+                        EmailAddress = Email;
+                    }
+                }
+                if (WorkEmail != null)
+                {
+                    EmailAddress = WorkEmail;
+                }
+                if (Email != null)
+                {
+                    EmailAddress = Email;
+                }
+
+            }
+
 
             if (await TryUpdateModelAsync<Member>(memberToUpdate, "",
                 p => p.FirstName, p => p.MiddleName, p => p.LastName, p => p.DateJoined, p => p.StreetAddress, p => p.WorkStreetAddress, p => p.City, p => p.WorkCity,
@@ -389,30 +542,9 @@ namespace NCPAC_LambdaX.Controllers
 
             }
 
-            string EmailAddress = "";
-            if ((memberToUpdate.Email != null) || (memberToUpdate.WorkEmail != null))
-            {
-                if (memberToUpdate.MailPrefferenceID != null)
-                {
-                    if (memberToUpdate.MailPrefferenceID == "Work")
-                    {
-                        EmailAddress = memberToUpdate.WorkEmail;
-                    }
-                    if (memberToUpdate.MailPrefferenceID == "Personnal")
-                    {
-                        EmailAddress = memberToUpdate.Email;
-                    }
-                }
-                if (memberToUpdate.Email == null)
-                {
-                    EmailAddress = memberToUpdate.WorkEmail;
-                }
-                if (memberToUpdate.WorkEmail == null)
-                {
-                    EmailAddress = memberToUpdate.Email;
-                }
+            UpdateMemberCommitees(selectedOptions, memberToUpdate);
 
-            }
+            
 
             try
             {
@@ -420,20 +552,20 @@ namespace NCPAC_LambdaX.Controllers
                 //Save successful so go on to related changes
 
                 //Check for changes in the Active state
-                if (memberToUpdate.IsActive == false && ActiveStatus == true)
+                if (IsActive == false && ActiveStatus == true)
                 {
                     //Deactivating them so delete the IdentityUser
                     //This deletes the user's login from the security system
                     await DeleteIdentityUser(EmailAddress);
 
                 }
-                else if (memberToUpdate.IsActive == true && ActiveStatus == false)
+                else if (IsActive == true && ActiveStatus == false)
                 {
                     //You reactivating the user, create them and
                     //give them the selected roles
                     InsertIdentityUser(EmailAddress);
                 }
-                else if (memberToUpdate.IsActive == true && ActiveStatus == true)
+                else if (IsActive == true && ActiveStatus == true)
                 {
                     //No change to Active status so check for a change in Email
                     //If you Changed the email, Delete the old login and create a new one
@@ -505,6 +637,7 @@ namespace NCPAC_LambdaX.Controllers
                 MemberCommitees = memberToUpdate.MemberCommitees
             };
 
+            await InviteUserToResetPassword(memberAdminVM, null);
             PopulateDropDownLists(memberAdminVM);
             PopulateAssignedMemberCommiteesData(memberAdminVM);
             return View(memberAdminVM);
@@ -512,6 +645,7 @@ namespace NCPAC_LambdaX.Controllers
         }
 
 
+        [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
 

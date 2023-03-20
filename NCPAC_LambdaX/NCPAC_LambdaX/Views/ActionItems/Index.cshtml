@@ -70,6 +70,9 @@
                                     <dd class="col-4 text-truncate">
                                         @Html.DisplayFor(model => item.Member.MemberName)
                                     </dd>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.Meeting.MeetingTitle)
+                                    </dd>
                                     <dt class="col-8">
                                         @Html.DisplayNameFor(model => item.TimeAppointed)
                                     </dt>
@@ -115,10 +118,10 @@
                 @Html.DisplayNameFor(model => model.ActionItemTitle)
             </th>
             <th>
-                <input type="submit" name="actionButton" value="Member" class="btn btn-outline-dark" />
+                @Html.DisplayNameFor(model => model.Meeting)
             </th>
             <th>
-                <input type="submit" name="actionButton" value="TimeAppointed" class="btn btn-outline-dark" />
+                <input type="submit" name="actionButton" value="Member" class="btn btn-outline-dark" />
             </th>
             <th>
                 <input type="submit" name="actionButton" value="TimeUntil" class="btn btn-outline-dark" />
@@ -136,10 +139,10 @@
                 @Html.DisplayFor(modelItem => item.ActionItemTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Member.MemberName)
+                @Html.DisplayFor(modelItem => item.Meeting.MeetingTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TimeAppointed)
+                @Html.DisplayFor(modelItem => item.Member.MemberName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeUntil)

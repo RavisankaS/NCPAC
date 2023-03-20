@@ -27,7 +27,8 @@ namespace NCPAC_LambdaX.Models
         public int? Minitues { get; set; }
 
         [Display(Name = "Commitees")]
-        public ICollection<MeetingCommitee> MeetingCommitees { get; set; } = new HashSet<MeetingCommitee>();
+        public int CommiteeID { get; set; }
+        public Commitee Commitee { get; set; }
 
         [Display(Name = "Was Cancelled")]
         public bool IsCancelled { get; set; }

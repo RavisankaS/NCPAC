@@ -170,14 +170,14 @@
                     var c = Model.MemberCommitees.ToList();
                     for (int i = 1; i < pCount; i++)//Skip the first because we have it already
                     {
-                        foreach (NCPAC_LambdaX.Models.MeetingCommitee m in c[i].Commitee.MeetingCommitees)
+                        foreach (NCPAC_LambdaX.Models.Meeting m in c[i].Commitee.Meetings)
                         {
                             cnt += 1;
                             if (cnt == 1)
                             {
-                                firstPlay = m.Meeting.MeetingTitle;
+                                firstPlay = m.MeetingTitle;
                             }
-                            pList += m.Meeting.MeetingTitle;
+                            pList += m.MeetingTitle;
                             pList += " \n";
                         }
                     }

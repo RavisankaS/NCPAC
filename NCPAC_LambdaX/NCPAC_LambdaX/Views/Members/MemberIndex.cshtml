@@ -4,29 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Members</h1>
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
+<h1>Members of your PAC</h1>
 <hr />
-<form asp-action="InsertFromExcel" asp-controller="Members" method="post" enctype="multipart/form-data">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label custom-file-label">Upload Excel File (.xls):</label> 
-                <span class="text-danger">@TempData["Message"]</span>
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" name="theExcel" id="theExcel">
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Upload Data" class="btn btn-primary"/>
-            </div>
-        </div>
-    </div>
-</form>
-<hr />
-<form asp-action="Index" method="get">
+<form asp-action="MemberIndex" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
     <div class="form-horizontal">
@@ -40,10 +20,6 @@
                         <label class="control-label">Search By Name:</label>
                         @Html.TextBox("SearchString", null, new { @class = "form-control" })
                     </div>
-                    <div class="form-group col-md-5">
-                        <label class="control-label">Search By Commitee:</label>
-                        @Html.TextBox("SearchString4", null, new { @class = "form-control" })
-                    </div>
                     <div class="form-group col-md-2">
                         <label class="control-label">Filter NC Grads:</label><br />
                         @Html.CheckBox("IsNCGrad", false, htmlAttributes: new { @class="checkbox" })
@@ -55,10 +31,6 @@
                             <label class="control-label">Search Email:</label>
                             @Html.TextBox("SearchString2", null, new { @class = "form-control" })
                         </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label class="control-label">Show Archived Members:</label><br />
-                        @Html.CheckBox("ShowInactive", false, htmlAttributes: new { @class="checkbox" })
                     </div>
                     <div class="form-group col-md-2 align-self-end">
                         <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
@@ -128,9 +100,6 @@
                             </figcaption>
                         
                         <div class="card-footer">
-                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -153,7 +122,6 @@
                 <th>
                     <input type="submit" disabled="disabled" value="Committees" class="btn btn-outline-dark" />
                 </th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -176,7 +144,7 @@
                                 }
                                 else
                                 {
-                                        @Html.DisplayFor(modelItem => item.Email)
+                                        @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
                             
                             }
@@ -226,10 +194,6 @@
                     }
                 </td>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
-                </td>
             </tr>
     }
         </tbody>

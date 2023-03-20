@@ -25,6 +25,11 @@ namespace NCPAC_LambdaX.Models
         public int MemberID { get; set; }
         public Member Member { get; set; }
 
+        [Display(Name = "Meeting")]
+        [Required(ErrorMessage = "You have to choose a meeting.")]
+        public int MeetingID { get; set; }
+        public Meeting Meeting { get; set; }
+
         [Display(Name = "DateTime Appointed")]
         public DateTime? TimeAppointed { get; set; }
 

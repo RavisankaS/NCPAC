@@ -544,49 +544,27 @@ namespace NCPAC_LambdaX.Data
                      {
                          MeetingTitle = "Initial Discussion",
                          Description = "Is a special meeting for everyone",
-                         IsCancelled = false
+                         IsCancelled = false,
+                         CommiteeID= 1
                      },
                      new Meeting
                      {
                          MeetingTitle = "PAC Discussion",
                          Description = "Is a special meeting",
-                         IsCancelled = true
+                         IsCancelled = true,
+                         CommiteeID = 3
                      },
                      new Meeting
                      {
                          MeetingTitle = "Commitee Discussion",
                          Description = "Everyone Must Join",
-                         IsCancelled = false
+                         IsCancelled = false,
+                         CommiteeID = 2
                      });
 
                     context.SaveChanges();
                 }
 
-                if (!context.MeetingCommitees.Any())
-                {
-                    context.MeetingCommitees.AddRange(
-                    new MeetingCommitee
-                    {
-                        MeetingID = 1,
-                        CommiteeID = 7
-                    },
-                    new MeetingCommitee
-                    {
-                        MeetingID = 3,
-                        CommiteeID = 3
-                    },
-                    new MeetingCommitee
-                    {
-                        MeetingID = 2,
-                        CommiteeID = 4
-                    },
-                    new MeetingCommitee
-                    {
-                        MeetingID = 1,
-                        CommiteeID = 2
-                    });
-                    context.SaveChanges();
-                }
 
                 if (!context.ActionItems.Any())
                 {
@@ -597,7 +575,8 @@ namespace NCPAC_LambdaX.Data
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,
                         TimeUntil = DateTime.Now.AddDays(10),
-                        MemberID = 7,
+                        MemberID = 3,
+                        MeetingID = 1,
                         IsCompleted = false
                     },
                     new ActionItem
@@ -606,7 +585,8 @@ namespace NCPAC_LambdaX.Data
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,
                         TimeUntil = DateTime.Now.AddDays(10),
-                        MemberID = 7,
+                        MemberID = 2,
+                        MeetingID = 1,
                         IsCompleted = false
                     },
                     new ActionItem
@@ -615,7 +595,8 @@ namespace NCPAC_LambdaX.Data
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,
                         TimeUntil = DateTime.Now.AddDays(7),
-                        MemberID = 2,
+                        MemberID = 4,
+                        MeetingID = 2,
                         IsCompleted = true
                     },
                     new ActionItem
@@ -624,7 +605,8 @@ namespace NCPAC_LambdaX.Data
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,
                         TimeUntil = DateTime.Now.AddDays(12),
-                        MemberID = 6,
+                        MemberID = 2,
+                        MeetingID = 3,
                         IsCompleted = false
                     });
                     context.SaveChanges();

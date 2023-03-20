@@ -35,6 +35,7 @@ namespace NCPAC_LambdaX.Controllers
             var actionItems = _context.ActionItems
             .Include(m => m.Member)
             .ThenInclude(m => m.MemberCommitees)
+            .Include(m => m.Meeting)
             .AsNoTracking();
 
                         
@@ -161,6 +162,7 @@ namespace NCPAC_LambdaX.Controllers
             var actionItem = await _context.ActionItems
                 .Include(a => a.Member)
                 .Include(d => d.ActionItemDocuments)
+                .Include(a => a.Meeting)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (actionItem == null)
             {
@@ -192,7 +194,7 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil")] ActionItem actionItem, List<IFormFile> theFiles)
+        public async Task<IActionResult> Create([Bind("ID,ActionItemTitle,Description,MeetingID,MemberID,TimeAppointed,TimeUntil")] ActionItem actionItem, List<IFormFile> theFiles)
         {
             await AddDocumentsAsync(actionItem, theFiles);
             _context.Add(actionItem);
@@ -225,7 +227,7 @@ namespace NCPAC_LambdaX.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ActionItemTitle,Description,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItemToUpdate, List<IFormFile> theFiles)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ActionItemTitle,Description,MeetingID,MemberID,TimeAppointed,TimeUntil,IsCompleted")] ActionItem actionItemToUpdate, List<IFormFile> theFiles)
         {
             if (id != actionItemToUpdate.ID)
             {
@@ -262,6 +264,7 @@ namespace NCPAC_LambdaX.Controllers
 
             var actionItem = await _context.ActionItems
                 .Include(a => a.Member)
+                .Include(a => a.Meeting)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (actionItem == null)
             {
@@ -343,6 +346,18 @@ namespace NCPAC_LambdaX.Controllers
                 .OrderBy(d => d.LastName), "ID", "MemberName");
         }
 
+        private SelectList MeetingSelectList(int selectedId)
+        {
+            return new SelectList(_context.Meetings
+                .OrderBy(d => d.TimeFrom), "ID", "MeetingName", selectedId);
+        }
+
+        private SelectList MeetingSelectList()
+        {
+            return new SelectList(_context.Meetings
+                .OrderBy(d => d.TimeFrom), "ID", "MeetingName");
+        }
+
         private void PopulateDropDownLists(ActionItem actionItem = null)
         {
             
@@ -354,6 +369,16 @@ namespace NCPAC_LambdaX.Controllers
             {
                 ViewData["MemberID"] = MemberCSelectList();
             }
+
+            if ((actionItem?.MeetingID) != null)
+            {
+                ViewData["MeetingID"] = MeetingSelectList(actionItem.MeetingID);
+            }
+            else
+            {
+                ViewData["MeetingID"] = MeetingSelectList();
+            }
+
         }
     
     }

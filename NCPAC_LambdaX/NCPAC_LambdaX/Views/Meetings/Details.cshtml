@@ -41,36 +41,10 @@
             @Html.DisplayFor(model => model.IsCancelled)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MeetingCommitees)
+            @Html.DisplayNameFor(model => model.Commitee)
         </dt>
         <dd class="col-sm-10">
-            @{
-                int playCount = Model.MeetingCommitees.Count;
-                if (playCount > 0)
-                {
-                    string firstPlay = Model.MeetingCommitees.FirstOrDefault().Commitee.CommiteeName;
-                    if (playCount > 1)
-                    {
-                        string playList = "";
-                        var c = Model.MeetingCommitees.ToList();
-                        for (int i = 1; i < playCount; i++)//Skip the first because we have it already
-                        {
-                            playList += c[i].Commitee.CommiteeName + " <br />";
-                        }
-                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
-                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
-                            @firstPlay <span class="badge bg-info">@playCount</span>
-                        </a>
-                        <div class="collapse" id="collapseHistory@(Model.ID)">
-                            @Html.Raw(playList)
-                        </div>
-                    }
-                    else
-                    {
-                        @firstPlay
-                    }
-                }
-            }
+            @Html.DisplayFor(model => model.Commitee.CommiteeName)
         </dd>
         <dt class="col-md-3">
             @Html.DisplayNameFor(model => model.MeetingDocuments)

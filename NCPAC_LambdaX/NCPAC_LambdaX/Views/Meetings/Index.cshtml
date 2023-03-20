@@ -72,10 +72,10 @@
                                         @Html.DisplayFor(model => item.Minitues)
                                     </dd>
                                     <dt class="col-8">
-                                        @Html.DisplayNameFor(model => item.MeetingCommitees)
+                                        @Html.DisplayNameFor(model => item.Commitee)
                                     </dt>
                                     <dd class="col-4 text-truncate">
-                                        @Html.DisplayFor(model => item.MeetingCommitees)
+                                        @Html.DisplayFor(model => item.Commitee)
                                     </dd>
                                 </dl>
                             </p>
@@ -132,33 +132,7 @@
                 @Html.DisplayFor(modelItem => item.Minitues)
             </td>
             <td>
-                @{
-                    int playCount = item.MeetingCommitees.Count;
-                    if (playCount > 0)
-                    {
-                        string firstPlay = item.MeetingCommitees.FirstOrDefault().Commitee.CommiteeName;
-                        if (playCount > 1)
-                        {
-                            string playList = "";
-                            var c = item.MeetingCommitees.ToList();
-                            for (int i = 1; i < playCount; i++)//Skip the first because we have it already
-                            {
-                                playList += c[i].Commitee.CommiteeName + " <br />";
-                            }
-                            <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
-                    aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
-                                @firstPlay <span class="badge bg-info">@playCount</span>
-                            </a>
-                            <div class="collapse" id="collapseHistory@(item.ID)">
-                                @Html.Raw(playList)
-                            </div>
-                        }
-                        else
-                        {
-                            @firstPlay
-                        }
-                    }
-                }
+                @Html.DisplayFor(modelItem => item.Commitee.CommiteeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsCancelled)

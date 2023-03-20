@@ -42,7 +42,7 @@ namespace NCPAC_LambdaX.Controllers
             string[] sortOptions = new[] { "Meeting", "TimeFrom" };
 
             var meetings = _context.Meetings
-            .Include(m => m.MeetingCommitees).ThenInclude(m => m.Commitee)
+            .Include(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
             .AsNoTracking();
 
@@ -55,7 +55,7 @@ namespace NCPAC_LambdaX.Controllers
 
             if((User.IsInRole("Admin") || User.IsInRole("Supervisor") || User.IsInRole("Staff")) == false)
             {
-                meetings = meetings.Where(m => (m.MeetingCommitees.Any(a => a.Commitee.MemberCommitees.Any(c => c.MemberID == member.ID))) || (m.MeetingCommitees == null));
+                meetings = meetings.Where(m => (m.Commitee.MemberCommitees.Any(a => a.MemberID == member.ID)));
             }
 
             if (!String.IsNullOrEmpty(SearchString))
@@ -64,7 +64,7 @@ namespace NCPAC_LambdaX.Controllers
             }
             if (CommiteeID.HasValue)
             {
-                meetings = meetings.Where(p => p.MeetingCommitees.Any(m => m.CommiteeID == CommiteeID) );
+                meetings = meetings.Where(p => p.CommiteeID == CommiteeID);
                 ViewData["Filtering"] = "";
             }
 
@@ -141,7 +141,7 @@ namespace NCPAC_LambdaX.Controllers
 
             var meeting = await _context.Meetings
             .Include(d => d.MeetingDocuments)
-            .Include(m => m.MeetingCommitees).ThenInclude(m => m.Commitee)
+            .Include(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
             .FirstOrDefaultAsync(m => m.ID == id);
             if (meeting == null)
@@ -157,7 +157,7 @@ namespace NCPAC_LambdaX.Controllers
         public IActionResult Create()
         {
             Meeting meeting = new Meeting();
-            PopulateAssignedMeetingCommiteesData(meeting);
+            PopulateDropDownLists(meeting);
             return View();
         }
 
@@ -167,19 +167,18 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meeting, List<IFormFile> theFiles, string[] selectedOptions, string[] selectedOptions1)
+        public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,TimeFrom,Minitues,CommiteeID,IsCancelled")] Meeting meeting, List<IFormFile> theFiles)
         {
 
             if (ModelState.IsValid)
             {
-                UpdateMeetingCommitees(selectedOptions, meeting);
                 await AddDocumentsAsync(meeting, theFiles);
                 _context.Add(meeting);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            PopulateAssignedMeetingCommiteesData(meeting);
+            PopulateDropDownLists(meeting);
             return View(meeting);
         }
 
@@ -193,7 +192,7 @@ namespace NCPAC_LambdaX.Controllers
             }
 
             var meeting = await _context.Meetings
-                .Include(m => m.MeetingCommitees)
+                .Include(m => m.Commitee)
                 .Include(d => d.MeetingDocuments)
                 .FirstOrDefaultAsync(d => d.ID == id);
             
@@ -201,7 +200,7 @@ namespace NCPAC_LambdaX.Controllers
             {
                 return NotFound();
             }
-            PopulateAssignedMeetingCommiteesData(meeting);
+            PopulateDropDownLists(meeting);
             return View(meeting);
         }
 
@@ -211,7 +210,7 @@ namespace NCPAC_LambdaX.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Supervisor,Staff")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,MeetingTitle,Description,MeetingLink,TimeFrom,TimeTo,IsArchived,CommiteeID,IsCancelled")] Meeting meetingToUpdate, List<IFormFile> theFiles, string[] selectedOptions, string[] selectedOptions1)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,MeetingTitle,Description,TimeFrom,Minitues,CommiteeID,IsCancelled")] Meeting meetingToUpdate, List<IFormFile> theFiles)
         {
             if (id != meetingToUpdate.ID)
             {
@@ -224,7 +223,6 @@ namespace NCPAC_LambdaX.Controllers
                 try
                 {
 
-                    UpdateMeetingCommitees(selectedOptions, meetingToUpdate);
                     await AddDocumentsAsync(meetingToUpdate, theFiles);
                     _context.Update(meetingToUpdate);
                     await _context.SaveChangesAsync();
@@ -242,7 +240,7 @@ namespace NCPAC_LambdaX.Controllers
                 }
             }
 
-            PopulateAssignedMeetingCommiteesData(meetingToUpdate);
+            PopulateDropDownLists(meetingToUpdate);
             return View(meetingToUpdate);
         }
 
@@ -333,71 +331,7 @@ namespace NCPAC_LambdaX.Controllers
           return _context.Meetings.Any(e => e.ID == id);
         }
 
-        private void PopulateAssignedMeetingCommiteesData(Meeting meeting)
-        {
-            //For this to work, you must have Included the child collection in the parent object
-            var allOptions = _context.Commitees;
-            var currentOptionsHS = new HashSet<int>(meeting.MeetingCommitees.Select(b => b.CommiteeID));
-            //Instead of one list with a boolean, we will make two lists
-            var selected = new List<ListOptionVM>();
-            var available = new List<ListOptionVM>();
-            foreach (var s in allOptions)
-            {
-                if (currentOptionsHS.Contains(s.ID))
-                {
-                    selected.Add(new ListOptionVM
-                    {
-                        ID = s.ID,
-                        DisplayText = s.CommiteeName
-                    });
-                }
-                else
-                {
-                    available.Add(new ListOptionVM
-                    {
-                        ID = s.ID,
-                        DisplayText = s.CommiteeName
-                    });
-                }
-            }
-
-            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        }
-
-        private void UpdateMeetingCommitees(string[] selectedOptions, Meeting meetingToUpdate)
-        {
-            if (selectedOptions == null)
-            {
-                meetingToUpdate.MeetingCommitees = new List<MeetingCommitee>();
-                return;
-            }
-
-            var selectedOptionsHS = new HashSet<string>(selectedOptions);
-            var currentOptionsHS = new HashSet<int>(meetingToUpdate.MeetingCommitees.Select(b => b.CommiteeID));
-            foreach (var s in _context.Commitees)
-            {
-                if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
-                {
-                    if (!currentOptionsHS.Contains(s.ID))//but not currently in the Member's collection - Add it!
-                    {
-                        meetingToUpdate.MeetingCommitees.Add(new MeetingCommitee
-                        {
-                            CommiteeID = s.ID,
-                            MeetingID = meetingToUpdate.ID
-                        });
-                    }
-                }
-                else //not selected
-                {
-                    if (currentOptionsHS.Contains(s.ID))//but is currently in the Member's collection - Remove it!
-                    {
-                        MeetingCommitee specToRemove = meetingToUpdate.MeetingCommitees.FirstOrDefault(d => d.CommiteeID == s.ID);
-                        _context.Remove(specToRemove);
-                    }
-                }
-            }
-        }
+        
 
 
         [Authorize(Roles = "Admin,Supervisor")]
@@ -405,14 +339,14 @@ namespace NCPAC_LambdaX.Controllers
         {
             //Get the appointments
             var meeetns = from e in _context.Meetings
-                        .Include(a => a.MeetingCommitees).ThenInclude(m => m.Commitee)
+                        .Include(m => m.Commitee)
                         orderby e.TimeFrom
                         select new
                         {
                             ID = e.ID,
                             Title = e.MeetingTitle,
                             Description = e.Description,
-                            Commitees = String.Join(", ", e.MeetingCommitees.Select(a => a.Commitee.CommiteeName)),
+                            Commitee = e.Commitee.CommiteeName,
                             MeetingMinitues = e.Minitues.ToString() + "minitues",
                             StartTime = e.TimeFrom.ToString()
                         };
@@ -528,15 +462,22 @@ namespace NCPAC_LambdaX.Controllers
             return NotFound("No data.");
         }
 
-        private SelectList CommiteeeSelectList()
+        private SelectList CommiteeeSelectList(int? selectedId)
         {
             return new SelectList(_context.Commitees
-                .OrderBy(d => d.CommiteeName), "ID", "Name");
+                .OrderBy(d => d.CommiteeName), "ID", "CommiteeName", selectedId);
         }
 
         private void PopulateDropDownLists(Meeting meeting = null)
         {
-            ViewData["CommiteeID"] = CommiteeeSelectList();
+            if ((meeting?.CommiteeID) != null)
+            {
+                ViewData["CommiteeID"] = CommiteeeSelectList(meeting.CommiteeID);
+            }
+            else
+            {
+                ViewData["MailPrefferenceID"] = CommiteeeSelectList(null);
+            }
         }
 
 
