@@ -185,6 +185,7 @@ namespace NCPAC_LambdaX.Controllers
         public IActionResult Create()
         {
             ViewData["MemberID"] = new SelectList(_context.Members, "ID", "MemberName");
+            PopulateDropDownLists();
             return View();
         }
 
@@ -349,13 +350,13 @@ namespace NCPAC_LambdaX.Controllers
         private SelectList MeetingSelectList(int selectedId)
         {
             return new SelectList(_context.Meetings
-                .OrderBy(d => d.TimeFrom), "ID", "MeetingName", selectedId);
+                .OrderBy(d => d.TimeFrom), "ID", "MeetingTitle", selectedId);
         }
 
-        private SelectList MeetingSelectList()
+        private SelectList MeetingsSelectList()
         {
             return new SelectList(_context.Meetings
-                .OrderBy(d => d.TimeFrom), "ID", "MeetingName");
+                .OrderBy(d => d.TimeFrom), "ID", "MeetingTitle");
         }
 
         private void PopulateDropDownLists(ActionItem actionItem = null)
@@ -376,7 +377,7 @@ namespace NCPAC_LambdaX.Controllers
             }
             else
             {
-                ViewData["MeetingID"] = MeetingSelectList();
+                ViewData["MeetingID"] = MeetingsSelectList();
             }
 
         }

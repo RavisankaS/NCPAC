@@ -26,7 +26,7 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Meeting Minitues")]
         public int? Minitues { get; set; }
 
-        [Display(Name = "Commitees")]
+        [Display(Name = "Commitee")]
         public int CommiteeID { get; set; }
         public Commitee Commitee { get; set; }
 

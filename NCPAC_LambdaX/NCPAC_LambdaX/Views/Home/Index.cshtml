@@ -59,7 +59,7 @@
     <div class="container">
   <h1>Welcome to NCPAC Manager</h1>
   <br />
-  <p>It is critical to Niagara College to have input from all stakeholders, internal and external, to ensure quality and ongoing improvement in our programs. <br /> Both practices and processes ensure standardized and regular quantitative and qualitative data from stakeholder is gathered to inform plans and actions with <br /> regards to continuous improvement.</p>
+  <p>This application is the centralized management system of all the information of the Niagara College Policy Management Commitee. Please check out the following information tiles for furthur information. Please be reminded to keep all your information upto date and keep an eye on Announcements and Action Items assigned to you.</p>
   
   <div class="row">
     @if (User.Identity.IsAuthenticated)
@@ -75,6 +75,16 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-4">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title">Meetings</h2>
+                  <p class="card-text">Click here to check the meetings archive/ Archive meeting minitues.</p>
+                  <a href="./Meetings" target="_blank">Click Here</a>
+                </div>
+              </div>
+            </div>
         }
         else
         {
@@ -82,10 +92,20 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title">My Account</h2>
-                                <p class="card-text">Please click here to update and view your personal account details.</p>
+                        <p class="card-text">Click here to update your account details. <b>Start here if it's your first LogIn</b></p>
                         <a href="./MemberAccount/Details">Members Account</a>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-4">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title">Contact</h2>
+                  <p class="card-text">Contact the admin if you have any furthur issues.</p>
+                  <a href="mailto:ncpacinfo@niagaracollege.ca">Email Admin</a>
+                </div>
+              </div>
             </div>
         }
     }
@@ -113,35 +133,29 @@
       </div>
     </div>
     
-    <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Meetings</h2>
-          <p class="card-text">Check if you have any meetings (Login Required)</p>
-          <a href="./Meetings" target="_blank">Learn More</a>
-        </div>
-      </div>
-    </div>
+    
     
     <div class="col-sm-12 col-md-6 col-lg-4">
       <div class="card">
         <div class="card-body">
           <h2 class="card-title">Action Items</h2>
-          <p class="card-text">Review existing polls of the NCPAC. (Login Required)</p>
-          <a href="./ActionItems" target="_blank">Learn More</a>
+          <p class="card-text">View all the action items assigned. (Login Required)</p>
+          <a href="./ActionItems" target="_blank">Click Here</a>
         </div>
       </div>
     </div>
-    
+
     <div class="col-sm-12 col-md-6 col-lg-4">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Contact Admin</h2>
-          <p class="card-text">Users, If you are having any trouble with the application contact the admin.</p>
-          <a href="mailto:ncpacinfo@niagaracollege.ca">Email</a>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Usage Guide</h2>
+                <p class="card-text">Download the user manuel for help with using the application.</p>
+                <a href="#" download="user-manuel">Download Manuel</a>
+            </div>
         </div>
-      </div>
     </div>
+
+    
   </div>
 </div>
 </body>
