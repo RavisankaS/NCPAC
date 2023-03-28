@@ -250,7 +250,7 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1987-08-10"),
                         ProvinceID = "BC",
                         Email = "lx@outlook.com",
-                        IsActive = false,
+                        IsActive = true,
                         StreetAddress = "58 John Street",
                         City = "Niagara",
                         PostalCode = "J5E6R7",
@@ -312,7 +312,8 @@ namespace NCPAC_LambdaX.Data
                         Phone = "2435424547",
                         DateJoined = DateTime.Parse("1991-03-09"),
                         ProvinceID = "YT",
-                        Email = "lskywalker@outlook.com"
+                        Email = "lskywalker@outlook.com",
+                        IsActive= false
                     },
                     new Member
                     {
@@ -338,7 +339,7 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1957-08-10"),
                         ProvinceID = "QC",
                         Email = "dtargarian@outlook.com",
-                        IsActive = true
+                        IsActive = false
                     },
                     new Member
                     {
@@ -400,7 +401,8 @@ namespace NCPAC_LambdaX.Data
                         Phone = "6543421678",
                         DateJoined = DateTime.Parse("1987-08-10"),
                         ProvinceID = "PE",
-                        Email = "rtarley@outlook.com"
+                        Email = "rtarley@outlook.com",
+                        IsActive= true
                     },
                     new Member
                     {
@@ -574,7 +576,7 @@ namespace NCPAC_LambdaX.Data
                         ActionItemTitle = "Organization plans for the annual meetup",
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,
-                        TimeUntil = DateTime.Now.AddDays(10),
+                        TimeUntil = DateTime.Now.AddDays(3),
                         MemberID = 3,
                         MeetingID = 1,
                         IsCompleted = false
@@ -594,7 +596,7 @@ namespace NCPAC_LambdaX.Data
                         ActionItemTitle = "Arrange the pac member survay",
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,
-                        TimeUntil = DateTime.Now.AddDays(7),
+                        TimeUntil = DateTime.Now.AddDays(6),
                         MemberID = 4,
                         MeetingID = 2,
                         IsCompleted = true

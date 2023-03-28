@@ -135,34 +135,12 @@ namespace NCPAC_LambdaX.Data
                     IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
                     //Not in any role
                 }
-                if (userManager.FindByEmailAsync("iskywalker@outlook.com").Result == null)
-                {
-                    IdentityUser user = new IdentityUser
-                    {
-                        UserName = "iskywalker@outlook.com",
-                        Email = "iskywalker@outlook.com"
-                    };
-
-                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
-                    //Not in any role
-                }
                 if (userManager.FindByEmailAsync("ccathrin@outlook.com").Result == null)
                 {
                     IdentityUser user = new IdentityUser
                     {
                         UserName = "ccatherin@outlook.com",
                         Email = "ccatherin@outlook.com"
-                    };
-
-                    IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;
-                    //Not in any role
-                }
-                if (userManager.FindByEmailAsync("dtargarian@outlook.com").Result == null)
-                {
-                    IdentityUser user = new IdentityUser
-                    {
-                        UserName = "dtargarian@outlook.com",
-                        Email = "dtargarian@outlook.com"
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "LambdaX123@").Result;

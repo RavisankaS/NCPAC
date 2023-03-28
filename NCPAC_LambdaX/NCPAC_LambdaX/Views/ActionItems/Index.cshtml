@@ -145,7 +145,14 @@
                 @Html.DisplayFor(modelItem => item.Member.MemberName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TimeUntil)
+                @if (((item.TimeUntil.Value.Day - DateTime.Now.Day) < 7) && (item.IsCompleted == false))
+                {
+                    <label style="color:red;">@Html.DisplayFor(modelItem => item.TimeUntil)</label>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.TimeUntil)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsCompleted)

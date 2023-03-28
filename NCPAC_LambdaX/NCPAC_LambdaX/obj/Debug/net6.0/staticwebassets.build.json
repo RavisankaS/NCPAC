@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Sa60JtpepeYwvUb0eiKZMmOhvk6LE7BSsJfXEwnTu+w=",
+  "Hash": "o7bLqyzgA5gMA7Gpc8JO4HJR3zRbdbcfsJh/gZdAiX4=",
   "Source": "NCPAC_LambdaX",
   "BasePath": "_content/NCPAC_LambdaX",
   "Mode": "Default",
@@ -1103,6 +1103,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\files\\user-manuel.pdf",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "files/user-manuel.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\user-manuel.pdf"
     },
     {
       "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\images\\background-home.jpg",
