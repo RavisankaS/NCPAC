@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TfdqK6HCJAfgSGljc3N4knYgS3wip/H63QWQY80KdWQ=",
+  "Hash": "WRxmnLr2pmmkG+o6H9fPjLCUKP+3KDBqQUj9fkASJuE=",
   "Source": "NCPAC_LambdaX",
   "BasePath": "_content/NCPAC_LambdaX",
   "Mode": "Default",
@@ -2344,6 +2344,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\lib\\qrcode.js",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "lib/qrcode.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\qrcode.js"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\lib\\qrcode.min.js",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "lib/qrcode.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\qrcode.min.js"
     },
     {
       "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\manifest.json",
