@@ -8,6 +8,8 @@
 <div class="text-danger">@TempData["message"]</div>
 <div>
     <h4>Member</h4>
+    <br />
+    <h4><label><b><i>Personal Information</i></b></label></h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -17,53 +19,57 @@
             @Html.DisplayFor(model => model.MemberName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.HomeAddress)
+            <label>Address</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.HomeAddress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Phone)
+            <label>Phone</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PhoneFormatted)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            <label>Email</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
+        </br>
         <br />
-        <label><b><i>Work Information</i></b></label>
+        <h4><label><b><i>Work Information</i></b></label></h4>
         <hr />
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkAddress)
+            <label>Address</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.WorkAddress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkPhone)
+            <label>Phone</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.WorkPhoneFormatted)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkEmail)
+            <label>Email</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.WorkEmail)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OccupationalSummary)
+            <label>Occupational Summary</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.OccupationalSummary)
         </dd>
+        </br>
+        <br />
+        <h4><label><b><i>Other Information</i></b></label></h4>
         <hr />
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MailPrefferenceID)
+            <label>Preferred Email</label>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.MailPrefferenceID)

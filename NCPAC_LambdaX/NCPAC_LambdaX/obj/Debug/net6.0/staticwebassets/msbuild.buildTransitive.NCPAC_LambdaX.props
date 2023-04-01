@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\NCPAC_LambdaX.props" />
+</Project>

@@ -130,7 +130,7 @@
             <input type="hidden" asp-for="ID" />
             <div class="page active-page" data-number="1">
                 <div class="page-container">
-                    <h3>Required info</h3>
+                    <h3>Required information</h3>
                     <div class="form-group">
                         <label asp-for="FirstName" class="control-label"></label>
                         <input asp-for="FirstName" class="form-control" />
@@ -161,7 +161,7 @@
 
             <div class="page" data-number="2">
                 <div class="page-container">
-                    <h3>Commitees and Basic Info</h3>
+                    <h3>Commitees and Basic Information</h3>
                     <div class="form-group">
                         <label class="control-label"><b>@Html.DisplayNameFor(model => model.MemberCommitees)</b></label>
                         <div class="col-md-16">
@@ -198,7 +198,7 @@
 
             <div class="page" data-number="3">
                 <div class="page-container">
-                    <h3>Other Personal Info</h3>
+                    <h3>Other Personal Information</h3>
                     <div class="form-group">
                         <label asp-for="Salutation" class="control-label"></label>
                         <input asp-for="Salutation" class="form-control" />
@@ -240,41 +240,41 @@
 
             <div class="page" data-number="4">
                 <div class="page-container">
-                    <h3>Work Info</h3>
-                    <div class="form-group">
-                        <label asp-for="WorkStreetAddress" class="control-label"></label>
+                    <h3>Work Information</h3>
+                        <div class="form-group">
+                        <label>Street Address</label>
                         <input asp-for="WorkStreetAddress" class="form-control" />
                         <span asp-validation-for="WorkStreetAddress" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="WorkCity" class="control-label"></label>
+                        <div class="form-group">
+                        <label>City</label>
                         <input asp-for="WorkCity" class="form-control" />
                         <span asp-validation-for="WorkCity" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="WorkProvinceID" class="control-label"></label>
+                        <div class="form-group">
+                        <label>Province</label>
                         <select class="form-control" id="WorkProvinceID" name="WorkProvinceID" asp-items="ViewBag.WorkProvinceID">
                         </select>
                         <span asp-validation-for="WorkProvinceID" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="WorkPostalCode" class="control-label"></label>
+                        <div class="form-group">
+                        <label>Postal Code</label>
                         <input asp-for="WorkPostalCode" class="form-control" placeholder="eg: A1A1B1" />
                         <span asp-validation-for="WorkPostalCode" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="WorkPhone" class="control-label"></label>
+                        <label>Phone</label>
                         <input asp-for="WorkPhone" class="form-control" />
                         <span asp-validation-for="WorkPhone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="WorkEmail" class="control-label"></label>
+                        <label>Email</label>
                         <input asp-for="WorkEmail" class="form-control" placeholder="eg: example@example.com" />
                         <span asp-validation-for="WorkEmail" class="text-danger"></span>
                     </div>
                     <br />
                     <div class="form-group">
-                        <label asp-for="MailPrefferenceID" class="control-label"></label>
+                        <label>Preferred Email</label>
                         <select class="form-control" id="MailPrefferenceID" name="MailPrefferenceID" asp-items="ViewBag.MailPrefferenceID">
                         </select>
                         <span asp-validation-for="MailPrefferenceID" class="text-danger"></span>
