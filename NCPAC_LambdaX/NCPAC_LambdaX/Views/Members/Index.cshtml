@@ -108,17 +108,17 @@
                                                     {
                                                         playList += c[i].Commitee.CommiteeName + " <br />";
                                                     }
-                                                    <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
-                                           aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
-                                                        @firstPlay <span class="badge bg-info">@playCount</span>
-                                                    </a>
-                                                    <div class="collapse" id="collapseHistory@(item.ID)">
-                                                        @Html.Raw(playList)
-                                                    </div>
+                                                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                                               aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                                            @firstPlay <span class="badge bg-info">@playCount</span>
+                                                        </a>
+                                                        <div class="collapse" id="collapseHistory@(item.ID)">
+                                                            @Html.Raw(playList)
+                                                        </div>
                                                 }
                                                 else
                                                 {
-                                                    @firstPlay
+                                                        @firstPlay
                                                 }
                                             }
                                         }
@@ -168,15 +168,15 @@
                             {
                                 if((item.MailPrefferenceID == "Work") || (item.MailPrefferenceID == "work"))
                                 {
-                                        @Html.DisplayFor(modelItem => item.WorkEmail)
+                                            @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
                                 else if ((item.MailPrefferenceID == "Personnal") || (item.MailPrefferenceID == "personnal"))
                                 {
-                                        @Html.DisplayFor(modelItem => item.Email)
+                                            @Html.DisplayFor(modelItem => item.Email)
                                 }
                                 else
                                 {
-                                        @Html.DisplayFor(modelItem => item.Email)
+                                            @Html.DisplayFor(modelItem => item.Email)
                                 }
                             
                             }
@@ -184,11 +184,11 @@
                         
                                 if ((item.Email == null) && (item.WorkEmail != null))
                                 {
-                                        @Html.DisplayFor(modelItem => item.WorkEmail)
+                                            @Html.DisplayFor(modelItem => item.WorkEmail)
                                 }
                                 else if ((item.Email != null) && (item.WorkEmail == null))
                                 {
-                                        @Html.DisplayFor(modelItem => item.Email)
+                                            @Html.DisplayFor(modelItem => item.Email)
                                 }
                             }
                          }
@@ -210,25 +210,26 @@
                                 {
                                     playList += c[i].Commitee.CommiteeName + " <br />";
                                 }
-                                    <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
-                            aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
-                                        @firstPlay <span class="badge bg-info">@playCount</span>
-                                    </a>
-                                    <div class="collapse" id="collapseHistory@(item.ID)">
-                                        @Html.Raw(playList)
-                                    </div>
+                                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(item.ID)"
+                                aria-expanded="false" aria-controls="collapseHistory@(item.ID)">
+                                            @firstPlay <span class="badge bg-info">@playCount</span>
+                                        </a>
+                                        <div class="collapse" id="collapseHistory@(item.ID)">
+                                            @Html.Raw(playList)
+                                        </div>
                             }
                             else
                             {
-                                    @firstPlay
+                                        @firstPlay
                             }
                         }
                     }
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
+                    <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.ID" style="text-decoration:none;">Edit</a>
+                    <a asp-action="Details" class="btn btn-secondary" asp-route-id="@item.ID" style="text-decoration:none;"> Details</a>
+                    <a asp-action="Archive" class="btn btn-secondary" asp-route-id="@item.ID" style="text-decoration:none;">  &#10002;</a>
                 </td>
             </tr>
     }

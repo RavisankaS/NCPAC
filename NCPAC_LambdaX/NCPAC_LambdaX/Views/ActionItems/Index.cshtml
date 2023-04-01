@@ -9,7 +9,7 @@
 @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
 {
     <p>
-        <a asp-action="Create" class="btn btn-primary">Add New</a>
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
     </p>
 }
 
@@ -98,12 +98,6 @@
                         <div class="card-footer">
                             <a asp-action="Details" asp-route-id="@item.ID"> Details |</a>
                             <a asp-action="Edit" asp-route-id="@item.ID"> Edit </a>
-                            @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
-                            {
-
-                                <a asp-action="Delete" asp-route-id="@item.ID">| Delete</a>
-
-                            }
                         </div>
                     </div>
                 </div>
@@ -150,13 +144,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsCompleted)
             </td>
-            <td>                
-                <a asp-action="Details" asp-route-id="@item.ID"> Details |</a> 
-                <a asp-action="Edit" asp-route-id="@item.ID"> Edit </a> 
+            <td>
+                <a asp-action="Details" class="btn btn-secondary" asp-route-id="@item.ID">Details</a>
+                <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.ID">Edit</a>
                 @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
                 {
 
-                    <a asp-action="Delete" asp-route-id="@item.ID">| Delete</a>
+                    <a asp-action="Delete" class="btn btn-secondary" asp-route-id="@item.ID">Delete</a>
 
                 }
                

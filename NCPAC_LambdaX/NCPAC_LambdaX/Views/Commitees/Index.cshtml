@@ -93,8 +93,8 @@
                         @Html.DisplayFor(modelItem => item.Division)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
+                        <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.ID">Edit</a> 
+                        <a asp-action="Details" class="btn btn-secondary" asp-route-id="@item.ID">Details</a>
                     </td>
                 </tr>
             }

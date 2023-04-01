@@ -29,6 +29,12 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label" style="margin-top:3%"><b>Please go through this link to update your account login email if required</b> &nbsp;</label>
+                <a href="../../Identity/Account/Manage/Email" style="text-decoration:none;">Email Update</a>
+            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -37,7 +43,8 @@
 </form>
 
 <div>
-    <a asp-action="Details">Back to Account Details</a>
+    <br />
+    <a asp-action="Details" class="btn btn-secondary">Cancal</a>
 </div>
 
 @section Scripts {

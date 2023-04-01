@@ -170,16 +170,11 @@ namespace NCPAC_LambdaX.Controllers
         public async Task<IActionResult> Create([Bind("ID,MeetingTitle,Description,TimeFrom,Minitues,CommiteeID,IsCancelled")] Meeting meeting, List<IFormFile> theFiles)
         {
 
-            if (ModelState.IsValid)
-            {
-                await AddDocumentsAsync(meeting, theFiles);
-                _context.Add(meeting);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            await AddDocumentsAsync(meeting, theFiles);
+            _context.Add(meeting);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
-            PopulateDropDownLists(meeting);
-            return View(meeting);
         }
 
         // GET: Meetings/Edit/5
@@ -218,25 +213,22 @@ namespace NCPAC_LambdaX.Controllers
             }
 
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
 
-                    await AddDocumentsAsync(meetingToUpdate, theFiles);
-                    _context.Update(meetingToUpdate);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                await AddDocumentsAsync(meetingToUpdate, theFiles);
+                _context.Update(meetingToUpdate);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MeetingExists(meetingToUpdate.ID))
                 {
-                    if (!MeetingExists(meetingToUpdate.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
                 }
             }
 

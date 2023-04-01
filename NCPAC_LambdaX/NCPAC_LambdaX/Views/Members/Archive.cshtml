@@ -1,0 +1,215 @@
+﻿@model NCPAC_LambdaX.ViewModels.MemberAdminVM
+
+@{
+    ViewData["Title"] = "Archives";
+}
+
+<h1>Archive / Un Archive</h1>
+<div class="text-danger">@TempData["message"]</div>
+<div>    
+    <form asp-action="ArchiveConfirm">
+        <input type="hidden" asp-for="ID" />
+    <h4>Member</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MemberName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MemberName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HomeAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HomeAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneFormatted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <br />
+        <label><b><i>Work Information</i></b></label>
+        <hr />
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WorkAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkPhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WorkPhoneFormatted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WorkEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OccupationalSummary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OccupationalSummary)
+        </dd>
+        <hr />
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MailPrefferenceID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MailPrefferenceID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EducationalSummary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EducationalSummary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsNCGrad)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsNCGrad)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateJoined)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateJoined)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MemberCommitees)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                int playCount = Model.MemberCommitees.Count;
+                if (playCount > 0)
+                {
+                    string firstPlay = Model.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
+                    if (playCount > 1)
+                    {
+                        string playList = "";
+                        var c = Model.MemberCommitees.ToList();
+                        for (int i = 1; i < playCount; i++)//Skip the first because we have it already
+                        {
+                            playList += c[i].Commitee.CommiteeName + " <br />";
+                        }
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                            @firstPlay <span class="badge bg-info">@playCount</span>
+                        </a>
+                        <div class="collapse" id="collapseHistory@(Model.ID)">
+                            @Html.Raw(playList)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstPlay
+                    }
+                }
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActionItems)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                int playCount2 = Model.ActionItems.Count;
+                if (playCount2 > 0)
+                {
+                    string firstPlay2 = Model.ActionItems.FirstOrDefault().ActionItemTitle;
+                    if (playCount2 > 1)
+                    {
+                        string playList2 = "";
+                        var c = Model.ActionItems.ToList();
+                        for (int i = 1; i < playCount2; i++)//Skip the first because we have it already
+                        {
+                            playList2 += c[i].ActionItemTitle + " <br />";
+                        }
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                            @firstPlay2 <span class="badge bg-info">@playCount2</span>
+                        </a>
+                        <div class="collapse" id="collapseHistory@(Model.ID)">
+                            @Html.Raw(playList2)
+                        </div>
+                    }
+                    else
+                    {
+                        @firstPlay2
+                    }
+                }
+            }
+        </dd>
+        <dt class="col-sm-2">
+            <label>Member Meetings</label>
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                int pCount = Model.MemberCommitees.Count;
+                if (pCount > 0)
+                {
+                    string firstPlay = Model.MemberCommitees.FirstOrDefault().Commitee.CommiteeName;
+                    int cnt = 0;
+                    string pList = "";
+                    var c = Model.MemberCommitees.ToList();
+                    for (int i = 1; i < pCount; i++)//Skip the first because we have it already
+                    {
+                        foreach (NCPAC_LambdaX.Models.Meeting m in c[i].Commitee.Meetings)
+                        {
+                            cnt += 1;
+                            if (cnt == 1)
+                            {
+                                firstPlay = m.MeetingTitle;
+                            }
+                            pList += m.MeetingTitle;
+                            pList += " \n";
+                        }
+                    }
+                    if(cnt != 0)
+                    {
+                        if(cnt > 1)
+                        {
+                            <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                   aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                                @firstPlay <span class="badge bg-info">@cnt</span>
+                            </a>
+                            <div class="collapse" id="collapseHistory@(Model.ID)">
+                                @Html.Raw(pList)
+                            </div>
+                        }
+                        else{
+                            <label>@firstPlay</label>
+                        }
+                        
+                    }
+                    
+                }
+            }
+        </dd>
+    </dl>
+    <input type="submit" value="Confirm" class="btn btn-primary" />
+    <br /><br />
+    </form>
+</div>
+<div>
+    
+    <a asp-action="Index"class="btn btn-secondary">Back to List</a>
+</div>

@@ -16,6 +16,7 @@ using System.Numerics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
+using System.Linq.Expressions;
 
 namespace NCPAC_LambdaX.Controllers
 {
@@ -337,7 +338,7 @@ namespace NCPAC_LambdaX.Controllers
                 string EmailAddress = "";
                 if ((member.Email != null) || (member.WorkEmail != null))
                 {
-                    if (member.MailPrefferenceID != null)
+                    if (member.MailPrefferenceID != "Any")
                     {
                         if (member.MailPrefferenceID == "Work")
                         {
@@ -348,11 +349,15 @@ namespace NCPAC_LambdaX.Controllers
                             EmailAddress = member.Email;
                         }
                     }
-                    if (member.Email == null)
+                    else if (member.Email == null)
                     {
                         EmailAddress = member.WorkEmail;
                     }
-                    if (member.WorkEmail == null)
+                    else if (member.WorkEmail == null)
+                    {
+                        EmailAddress = member.Email;
+                    }
+                    else
                     {
                         EmailAddress = member.Email;
                     }
@@ -481,12 +486,14 @@ namespace NCPAC_LambdaX.Controllers
                 return NotFound();
             }
 
+            bool mailUpdate = false;
+
             //Note the current Email and Active Status
             bool ActiveStatus = memberToUpdate.IsActive;
             string databaseEmail = "";
             if ((memberToUpdate.Email != null) || (memberToUpdate.WorkEmail != null))
             {
-                if (memberToUpdate.MailPrefferenceID != null)
+                if (memberToUpdate.MailPrefferenceID != "Any")
                 {
                     if (memberToUpdate.MailPrefferenceID == "Work")
                     {
@@ -497,11 +504,15 @@ namespace NCPAC_LambdaX.Controllers
                         databaseEmail = memberToUpdate.Email;
                     }
                 }
-                if (memberToUpdate.WorkEmail != null)
+                else if (memberToUpdate.WorkEmail != null)
                 {
                     databaseEmail = memberToUpdate.WorkEmail;
                 }
-                if (memberToUpdate.Email != null)
+                else if (memberToUpdate.Email != null)
+                {
+                    databaseEmail = memberToUpdate.Email;
+                }
+                else
                 {
                     databaseEmail = memberToUpdate.Email;
                 }
@@ -511,7 +522,7 @@ namespace NCPAC_LambdaX.Controllers
             string EmailAddress = "";
             if ((Email != null) || (WorkEmail != null))
             {
-                if (MailPrefferenceID != null)
+                if (MailPrefferenceID != "Any")
                 {
                     if (MailPrefferenceID == "Work")
                     {
@@ -522,11 +533,15 @@ namespace NCPAC_LambdaX.Controllers
                         EmailAddress = Email;
                     }
                 }
-                if (WorkEmail != null)
+                else if (WorkEmail != null)
                 {
                     EmailAddress = WorkEmail;
                 }
-                if (Email != null)
+                else if (Email != null)
+                {
+                    EmailAddress = Email;
+                }
+                else
                 {
                     EmailAddress = Email;
                 }
@@ -571,12 +586,14 @@ namespace NCPAC_LambdaX.Controllers
                     //If you Changed the email, Delete the old login and create a new one
                     //with the selected roles
                     if (EmailAddress != databaseEmail)
-                    {
-                        //Add the new login with the selected roles
-                        InsertIdentityUser(EmailAddress);
+                    {                        
 
                         //This deletes the user's old login from the security system
                         await DeleteIdentityUser(databaseEmail);
+
+                        //Add the new login with the selected roles
+                        InsertIdentityUser(EmailAddress);
+                        mailUpdate = true;
                     }
                 }
 
@@ -637,11 +654,96 @@ namespace NCPAC_LambdaX.Controllers
                 MemberCommitees = memberToUpdate.MemberCommitees
             };
 
-            await InviteUserToResetPassword(memberAdminVM, null);
+            if (mailUpdate)
+            {
+                await InviteUserToResetPassword(memberAdminVM, null);
+            }
             PopulateDropDownLists(memberAdminVM);
             PopulateAssignedMemberCommiteesData(memberAdminVM);
             return View(memberAdminVM);
 
+        }
+
+        public async Task<IActionResult> Archive(int? id)
+        {
+            if (id == null || _context.Members == null)
+            {
+                return NotFound();
+            }
+
+            var member = await _context.Members
+                .Include(m => m.MemberCommitees).ThenInclude(mc => mc.Commitee).ThenInclude(c => c.Meetings)
+                .Include(d => d.Province)
+                .Include(m => m.ActionItems)
+                .Select(e => new MemberAdminVM
+                {
+                    DateJoined = e.DateJoined,
+                    IsActive = e.IsActive,
+                    ID = e.ID,
+                    FirstName = e.FirstName,
+                    MiddleName = e.MiddleName,
+                    LastName = e.LastName,
+                    Salutation = e.Salutation,
+                    StreetAddress = e.StreetAddress,
+                    City = e.City,
+                    ProvinceID = e.ProvinceID,
+                    Province = e.Province,
+                    PostalCode = e.PostalCode,
+                    Phone = e.Phone,
+                    Email = e.Email,
+                    WorkStreetAddress = e.WorkStreetAddress,
+                    WorkCity = e.WorkCity,
+                    WorkProvinceID = e.WorkProvinceID,
+                    WorkProvince = e.WorkProvince,
+                    WorkPostalCode = e.WorkPostalCode,
+                    WorkPhone = e.WorkPhone,
+                    WorkEmail = e.WorkEmail,
+                    MailPrefferenceID = e.MailPrefferenceID,
+                    MailPrefference = e.MailPrefference,
+                    EducationalSummary = e.EducationalSummary,
+                    IsNCGrad = e.IsNCGrad,
+                    OccupationalSummary = e.OccupationalSummary,
+                    MemberCommitees = e.MemberCommitees,
+                    ActionItems = e.ActionItems
+                }).AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            return View(member);
+        }
+
+        [HttpPost, ActionName("ArchiveConfirm")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ArchiveConfirm(int id)
+        {
+            if (_context.Members == null)
+            {
+                return NotFound();
+            }
+            var member = await _context.Members.FindAsync(id);
+
+            if (member != null)
+            {
+                if(member.IsActive == true)
+                {
+                    member.IsActive = false;
+                }
+                else
+                {
+                    member.IsActive = true;
+                }
+
+                _context.Entry(member).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                _context.Entry(member).Reload();
+            }
+
+            //var members = membe
+
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -708,7 +810,7 @@ namespace NCPAC_LambdaX.Controllers
                     string EmailAddress = "";
                     if ((a.Email != null) || (a.WorkEmail != null))
                     {
-                        if (a.MailPrefferenceID != null)
+                        if (a.MailPrefferenceID != "Any")
                         {
                             if (a.MailPrefferenceID == "Work")
                             {
@@ -719,11 +821,15 @@ namespace NCPAC_LambdaX.Controllers
                                 EmailAddress = a.Email;
                             }
                         }
-                        if (a.Email == null)
+                        else if (a.Email == null)
                         {
                             EmailAddress = a.WorkEmail;
                         }
-                        if (a.WorkEmail == null)
+                        else if (a.WorkEmail == null)
+                        {
+                            EmailAddress = a.Email;
+                        }
+                        else
                         {
                             EmailAddress = a.Email;
                         }
@@ -857,7 +963,7 @@ namespace NCPAC_LambdaX.Controllers
             string EmailAddress = "";
             if ((member.Email != null) || (member.WorkEmail != null))
             {
-                if (member.MailPrefferenceID != null)
+                if (member.MailPrefferenceID != "Any")
                 {
                     if (member.MailPrefferenceID == "Work")
                     {
@@ -868,11 +974,15 @@ namespace NCPAC_LambdaX.Controllers
                         EmailAddress = member.Email;
                     }
                 }
-                if (member.Email == null)
+                else if (member.Email == null)
                 {
                     EmailAddress = member.WorkEmail;
                 }
-                if (member.WorkEmail == null)
+                else if (member.WorkEmail == null)
+                {
+                    EmailAddress = member.Email;
+                }
+                else
                 {
                     EmailAddress = member.Email;
                 }
