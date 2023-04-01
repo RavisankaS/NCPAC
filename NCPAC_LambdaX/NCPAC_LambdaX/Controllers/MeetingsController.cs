@@ -215,7 +215,6 @@ namespace NCPAC_LambdaX.Controllers
 
             try
             {
-
                 await AddDocumentsAsync(meetingToUpdate, theFiles);
                 _context.Update(meetingToUpdate);
                 await _context.SaveChangesAsync();
@@ -232,8 +231,7 @@ namespace NCPAC_LambdaX.Controllers
                 }
             }
 
-            PopulateDropDownLists(meetingToUpdate);
-            return View(meetingToUpdate);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Meetings/Delete/5
