@@ -66,36 +66,41 @@
                                         @Html.DisplayFor(model => item.TimeFrom)
                                     </dd>
                                     <dt class="col-8">
-                                        <label>Duration (Mins)</label>
+                                        @Html.DisplayNameFor(model => item.Minitues)
                                     </dt>
                                     <dd class="col-4 text-truncate">
                                         @Html.DisplayFor(model => item.Minitues)
                                     </dd>
                                     <dt class="col-8">
-                                        @Html.DisplayNameFor(model => item.Commitee)
+                                        @Html.DisplayNameFor(model => item.Commitee.CommiteeName)
                                     </dt>
                                     <dd class="col-4 text-truncate">
-                                        @Html.DisplayFor(model => item.Commitee)
+                                        @Html.DisplayFor(model => item.Commitee.CommiteeName)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.IsCancelled)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.IsCancelled)
                                     </dd>
                                 </dl>
                             </p>
                         </figcaption>
 
                         <div class="card-footer">
-                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
+                            <a asp-action="Details" class="btn btn-secondary" asp-route-id="@item.ID">Details</a>
                             @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
                             {
-                                <a asp-action="Edit" asp-route-id="@item.ID"> | Edit</a> 
- 
+                                <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.ID"> Edit </a>
+
                             }
-                            
                         </div>
                     </div>
                 </div>
             }
         </div>
     </div>
-    <div class="d-none d-lg-block">
+    <div class="d-none d-md-block">
 <table class="table">
     <thead>
         <tr>

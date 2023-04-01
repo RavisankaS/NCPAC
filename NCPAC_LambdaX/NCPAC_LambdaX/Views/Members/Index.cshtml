@@ -128,9 +128,9 @@
                             </figcaption>
                         
                         <div class="card-footer">
-                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.ID" style="text-decoration:none;">Edit</a>
+                            <a asp-action="Details" class="btn btn-secondary" asp-route-id="@item.ID" style="text-decoration:none;"> Details</a>
+                            <a asp-action="Archive" class="btn btn-secondary" asp-route-id="@item.ID" style="text-decoration:none;">  &#10002;</a>
                         </div>
                     </div>
                 </div>
