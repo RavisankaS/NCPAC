@@ -36,5 +36,7 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Documents")]
         public ICollection<MeetingDocument> MeetingDocuments { get; set; } = new HashSet<MeetingDocument>();
 
+        public ICollection<ActionItem> ActionItems { get; set; } = new HashSet<ActionItem>();
+
     }
 }
