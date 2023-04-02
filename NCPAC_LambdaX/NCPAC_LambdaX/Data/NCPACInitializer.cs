@@ -603,6 +603,16 @@ namespace NCPAC_LambdaX.Data
                     },
                     new ActionItem
                     {
+                        ActionItemTitle = "Setup 2FA to increase your account security",
+                        Description = "Please follow the instructions of the admin for now.",
+                        TimeAppointed = DateTime.Now,
+                        TimeUntil = DateTime.Now.AddDays(15),
+                        MemberID = 2,
+                        MeetingID = 3,
+                        IsCompleted = false
+                    },
+                    new ActionItem
+                    {
                         ActionItemTitle = "Setup a forum to get feedback from members",
                         Description = "Please follow the instructions of the admin for now.",
                         TimeAppointed = DateTime.Now,

@@ -4,6 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
+<style>
+    .control-label{
+        font-weight:700;
+    }
+</style>
 <h1>Edit</h1>
 
 <h4>Meeting</h4>
@@ -81,6 +86,42 @@
                 <label class="control-label custom-file-label">Upload Meeting Minitues:</label>
                 <input type="file" class="form-control" name="theFiles" multiple="multiple">
             </div>
+            <br/>
+            <div class="form-group">
+                <label class="control-label"> Current ActionItems:</label>
+                <div class="ml-md-3">
+                @{
+                    int playCount2 = Model.ActionItems.Count;
+                    if (playCount2 > 0)
+                    {
+                        string firstPlay2 = Model.ActionItems.FirstOrDefault().ActionItemTitle;
+                        if (playCount2 > 1)
+                        {
+                            string playList2 = "";
+                            var c = Model.ActionItems.ToList();
+                            for (int i = 1; i < playCount2; i++)//Skip the first because we have it already
+                            {
+                                playList2 += c[i].ActionItemTitle + " <br />";
+                            }
+                        <a class="" role="button" data-bs-toggle="collapse" href="#collapseHistory@(Model.ID)"
+                           aria-expanded="false" aria-controls="collapseHistory@(Model.ID)">
+                                @firstPlay2 <span class="badge bg-info">@playCount2</span>
+                        </a>
+                        <div class="collapse" id="collapseHistory@(Model.ID)">
+                                @Html.Raw(playList2)
+                        </div>
+                        }
+                        else
+                        {
+                            @firstPlay2
+                        }
+                    }
+                }
+                </div>
+            </div>
+            <br />
+            <a href="../../ActionItems/Create" class="btn btn-dark" data-toggle="tooltip" data-placement="right" title="Click the button to create new Action Item">Create New Action Item</a>
+            <br />
             <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

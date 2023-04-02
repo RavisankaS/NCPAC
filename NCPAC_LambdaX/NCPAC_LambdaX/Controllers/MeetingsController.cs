@@ -141,6 +141,7 @@ namespace NCPAC_LambdaX.Controllers
 
             var meeting = await _context.Meetings
             .Include(d => d.MeetingDocuments)
+            .Include(m => m.ActionItems)
             .Include(m => m.Commitee)
             .ThenInclude(m => m.MemberCommitees)
             .FirstOrDefaultAsync(m => m.ID == id);
@@ -188,6 +189,7 @@ namespace NCPAC_LambdaX.Controllers
 
             var meeting = await _context.Meetings
                 .Include(m => m.Commitee)
+                .Include(m => m.ActionItems)
                 .Include(d => d.MeetingDocuments)
                 .FirstOrDefaultAsync(d => d.ID == id);
             
