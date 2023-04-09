@@ -9,7 +9,7 @@
 @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Supervisor"))
 {
     <p>
-        <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <a asp-action="Create" class="btn btn-primary" tooltip="Add new announcement" flow="right">Create New</a>
     </p>
 }
 
@@ -29,7 +29,7 @@
             @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Supervisor"))
             {
                 <td>
-            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID">Delete</a>
+            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID" tooltip="Delete Announcement" flow="right">Delete</a>
                 </td>
             }            
         <hr>

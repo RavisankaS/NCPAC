@@ -7,14 +7,14 @@
 <h1>Committees</h1>
 
 <p>
-    <a asp-action="DownloadMembers" class="btn btn-info float-end">Download Full Member Committee Report</a>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="DownloadMembers" class="btn btn-info float-end" tooltip="Information of All Members and Commitees" flow="left">Download Full Member Committee Report</a>
+    <a asp-action="Create" class="btn btn-primary" tooltip="Add new Commitees" flow="right">Create New</a>
 </p>
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
     <div class="form-horizontal">
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter" tooltip="Toggle the Filter Pane" flow="right">
             Filter/Search
         </button>
         <div class="collapse" @(ViewData["Filtering"]) id="collapseFilter">

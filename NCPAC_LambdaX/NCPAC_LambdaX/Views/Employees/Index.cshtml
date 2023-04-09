@@ -6,8 +6,8 @@
 <h2>Staff Members</h2>
 
 <p>
-    <a asp-action="DownloadEmployees" class="btn btn-info float-end">Download Staff Report</a>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="DownloadEmployees" class="btn btn-info float-end" tooltip="Download a Staff Excel Report." flow="left">Download Staff Report</a>
+    <a asp-action="Create" class="btn btn-primary" tooltip="Add new Staff Members" flow="right">Create New</a>
 </p>
 
 <div class="text-danger">@TempData["message"]</div>

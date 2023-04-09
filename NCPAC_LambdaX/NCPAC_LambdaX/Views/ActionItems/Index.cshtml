@@ -9,7 +9,7 @@
 @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
 {
     <p>
-        <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <a asp-action="Create" class="btn btn-primary" tooltip="Add new Action Items" flow="right">Create New</a>
     </p>
 }
 
@@ -17,7 +17,7 @@
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
     <div class="form-horizontal">
-        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter" tooltip="Toggle the Filter Pane" flow="right">
             Filter/Search
         </button>
         <div class="collapse @(ViewData["Filtering"])" id="collapseFilter">

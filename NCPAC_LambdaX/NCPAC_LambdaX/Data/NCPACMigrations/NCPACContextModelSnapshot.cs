@@ -472,7 +472,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
             modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItem", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.Meeting", "Meeting")
-                        .WithMany()
+                        .WithMany("ActionItems")
                         .HasForeignKey("MeetingID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -611,6 +611,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Meeting", b =>
                 {
+                    b.Navigation("ActionItems");
+
                     b.Navigation("MeetingDocuments");
                 });
 
