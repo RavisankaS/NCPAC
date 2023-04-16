@@ -32,6 +32,9 @@ namespace NCPAC_LambdaX.Controllers
         public async Task<IActionResult> Index(string SearchCommitee, string SearchDivision,int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Commitee")
         {
             ViewData["Filtering"] = "";
+            var members = _context.Members
+                .ToList();
+            ViewData["ToRenew"] = members.Where(m => m.RenewalDate <= DateTime.Now).Count().ToString();
 
             //List of sort options.
             //NOTE: make sure this array has matching values to the column headings

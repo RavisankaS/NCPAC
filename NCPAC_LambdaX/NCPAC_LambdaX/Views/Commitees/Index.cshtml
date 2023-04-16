@@ -10,6 +10,9 @@
     <a asp-action="DownloadMembers" class="btn btn-info float-end" tooltip="Information of All Members and Commitees" flow="left">Download Full Member Committee Report</a>
     <a asp-action="Create" class="btn btn-primary" tooltip="Add new Commitees" flow="right">Create New</a>
 </p>
+
+<div class="alert alert-danger" role="alert">You have @ViewData["ToRenew"] <label>members from all the commitees to be renewed.</label></div>
+
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
