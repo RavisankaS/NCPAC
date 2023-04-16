@@ -157,7 +157,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     IsNCGrad = table.Column<bool>(type: "INTEGER", nullable: false),
                     OccupationalSummary = table.Column<string>(type: "TEXT", nullable: true),
                     DateJoined = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    RenewalDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -11,7 +11,7 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230416182151_Initial")]
+    [Migration("20230416191145_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,6 +265,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProvinceID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("RenewalDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Salutation")

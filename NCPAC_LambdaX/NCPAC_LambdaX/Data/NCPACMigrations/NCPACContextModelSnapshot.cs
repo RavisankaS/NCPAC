@@ -265,6 +265,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Property<string>("ProvinceID")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("RenewalDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Salutation")
                         .HasColumnType("TEXT");
 

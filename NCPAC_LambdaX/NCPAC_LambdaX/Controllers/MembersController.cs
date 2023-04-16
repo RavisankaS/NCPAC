@@ -40,7 +40,7 @@ namespace NCPAC_LambdaX.Controllers
 
         // GET: Members
         [Authorize(Roles ="Admin,Supervisor,Staff")]
-        public async Task<IActionResult> Index(string SearchString, string SearchString4, string SearchString2, bool IsNcGrad, bool ShowInactive, int? CommiteeIDVal,
+        public async Task<IActionResult> Index(string SearchString, string SearchString4, string SearchString2, bool IsNcGrad, bool ShowInactive, bool ToBeRenewed, int? CommiteeIDVal,
             int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Members")
         {
             CookieHelper.CookieSet(HttpContext, "MembersController" + "URL", "", -1);
@@ -56,6 +56,7 @@ namespace NCPAC_LambdaX.Controllers
                 {
                     DateJoined = e.DateJoined,
                     IsActive = e.IsActive,
+                    RenewalDate = e.RenewalDate,
                     ID = e.ID,
                     FirstName = e.FirstName,
                     MiddleName = e.MiddleName,
@@ -101,6 +102,10 @@ namespace NCPAC_LambdaX.Controllers
             if (ShowInactive== true)
             {
                 members = members.Where(p => p.IsActive == false);
+            }
+            if (ToBeRenewed == true)
+            {
+                members = members.Where(p => p.RenewalDate <= DateTime.Now);
             }
             else
             {
@@ -167,6 +172,7 @@ namespace NCPAC_LambdaX.Controllers
                 {
                     DateJoined = e.DateJoined,
                     IsActive = e.IsActive,
+                    RenewalDate = e.RenewalDate,
                     ID = e.ID,
                     FirstName = e.FirstName,
                     MiddleName = e.MiddleName,
@@ -269,6 +275,7 @@ namespace NCPAC_LambdaX.Controllers
                 {
                     DateJoined = e.DateJoined,
                     IsActive = e.IsActive,
+                    RenewalDate = e.RenewalDate,
                     ID = e.ID,
                     FirstName = e.FirstName,
                     MiddleName = e.MiddleName,
@@ -332,6 +339,7 @@ namespace NCPAC_LambdaX.Controllers
                 //Add the selected memberCommitees
                 UpdateMemberCommitees(selectedOptions, member);
                 member.IsActive = true;
+                member.RenewalDate = DateTime.Now.AddYears(3);
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
@@ -380,6 +388,7 @@ namespace NCPAC_LambdaX.Controllers
             {
                 DateJoined = member.DateJoined,
                 IsActive = member.IsActive,
+                RenewalDate = member.RenewalDate,
                 ID = member.ID,
                 FirstName = member.FirstName,
                 MiddleName = member.MiddleName,
@@ -428,6 +437,7 @@ namespace NCPAC_LambdaX.Controllers
                 {
                     DateJoined = m.DateJoined,
                     IsActive = m.IsActive,
+                    RenewalDate = m.RenewalDate,
                     ID = m.ID,
                     FirstName = m.FirstName,
                     MiddleName = m.MiddleName,
@@ -477,7 +487,7 @@ namespace NCPAC_LambdaX.Controllers
         [Authorize(Roles = "Admin,Supervisor,Staff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, bool IsActive, string MailPrefferenceID, string Email, string WorkEmail, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,IsActive")] string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, bool IsActive, string MailPrefferenceID, string Email, string WorkEmail, [Bind("ID,FirstName,MiddleName,LastName,Salutation,StreetAddress,City,ProvinceID,PostalCode,Phone,Email,WorkStreetAddress,WorkCity,WorkProvinceID,WorkPostalCode,WorkPhone,WorkEmail,MailPrefferenceID,EducationalSummary,IsNCGrad,OccupationalSummary,DateJoined,RenewalDate,IsActive")] string[] selectedOptions)
         {
             var memberToUpdate = await _context.Members
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -552,7 +562,7 @@ namespace NCPAC_LambdaX.Controllers
             if (await TryUpdateModelAsync<Member>(memberToUpdate, "",
                 p => p.FirstName, p => p.MiddleName, p => p.LastName, p => p.DateJoined, p => p.StreetAddress, p => p.WorkStreetAddress, p => p.City, p => p.WorkCity,
                 p => p.PostalCode, p => p.WorkPostalCode, p => p.ProvinceID, p => p.WorkProvinceID, p => p.Phone, p => p.WorkPhone, p => p.Email, p => p.WorkEmail, p => p.MailPrefferenceID,
-                p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation, p => p.IsActive))
+                p => p.IsNCGrad, p => p.EducationalSummary, p => p.OccupationalSummary, p => p.Salutation, p => p.IsActive, p => p.RenewalDate))
             {
 
             }
@@ -627,6 +637,7 @@ namespace NCPAC_LambdaX.Controllers
             {
                 DateJoined = memberToUpdate.DateJoined,
                 IsActive = memberToUpdate.IsActive,
+                RenewalDate = memberToUpdate.RenewalDate,
                 ID = memberToUpdate.ID,
                 FirstName = memberToUpdate.FirstName,
                 MiddleName = memberToUpdate.MiddleName,
@@ -679,6 +690,7 @@ namespace NCPAC_LambdaX.Controllers
                 {
                     DateJoined = e.DateJoined,
                     IsActive = e.IsActive,
+                    RenewalDate = e.RenewalDate,
                     ID = e.ID,
                     FirstName = e.FirstName,
                     MiddleName = e.MiddleName,
@@ -841,6 +853,7 @@ namespace NCPAC_LambdaX.Controllers
                     {
                         DateJoined = a.DateJoined,
                         IsActive = a.IsActive,
+                        RenewalDate = a.RenewalDate,
                         ID = a.ID,
                         FirstName = a.FirstName,
                         MiddleName = a.MiddleName,
