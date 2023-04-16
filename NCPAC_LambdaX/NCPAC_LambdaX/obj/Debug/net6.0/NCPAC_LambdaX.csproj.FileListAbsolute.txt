@@ -2397,3 +2397,9 @@ C:\Users\PCView\Desktop\NCPAC_FIlnal_PRoto3\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\ob
 C:\Users\PCView\Desktop\NCPAC_FIlnal_PRoto3\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\NCPAC_LambdaX.pdb
 C:\Users\PCView\Desktop\NCPAC_FIlnal_PRoto3\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\NCPAC_LambdaX.genruntimeconfig.cache
 C:\Users\PCView\Desktop\NCPAC_FIlnal_PRoto3\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\ref\NCPAC_LambdaX.dll
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\staticwebassets\msbuild.NCPAC_LambdaX.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\staticwebassets\msbuild.build.NCPAC_LambdaX.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.NCPAC_LambdaX.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.NCPAC_LambdaX.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

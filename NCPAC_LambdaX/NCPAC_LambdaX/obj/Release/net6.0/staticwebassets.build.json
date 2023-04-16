@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hXHfEhBaGhHQcrJs764yGqnHnSQQ7eKtDg/4ibHt3XQ=",
+  "Hash": "CGTuY8ZrNP83mX/IV0oymMUkMaxyfiSj6eQ+xV6c+dM=",
   "Source": "NCPAC_LambdaX",
   "BasePath": "_content/NCPAC_LambdaX",
   "Mode": "Default",
@@ -1103,6 +1103,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\files\\nclogo.png",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "files/nclogo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\nclogo.png"
+    },
+    {
+      "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\files\\SampleExcel.xlsx",
+      "SourceId": "NCPAC_LambdaX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\",
+      "BasePath": "_content/NCPAC_LambdaX",
+      "RelativePath": "files/SampleExcel.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\SampleExcel.xlsx"
     },
     {
       "Identity": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\wwwroot\\files\\user-manuel.pdf",

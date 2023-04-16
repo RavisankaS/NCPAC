@@ -1,0 +1,115 @@
+﻿@model IEnumerable<dynamic>
+
+<h1>Current Results for Poll : <b>@ViewBag.PollQuestion</b></h1>
+<br />
+
+<div class="row">
+    <div class="col-md-6">
+        <canvas id="pollChart"></canvas>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Votes</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model)
+                {
+                    <tr>
+                        <td>@result.OptionText</td>
+                        <td>@result.VoteCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var data = {
+            labels: [@Html.Raw(string.Join(",", Model.Select(m => $"\"{m.OptionText}\""))) ],
+            datasets: [{
+                data: [@Html.Raw(string.Join(",", Model.Select(m => $"{m.VoteCount}"))) ],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#4BC0C0",
+                    "#9966FF",
+                    "#FF9999",
+                    "#66CCCC"
+                ]
+            }]
+        };
+
+        var options = {
+            responsive: true,
+            legend: {
+                position: 'right'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            title: {
+                display: true,
+                text: 'Poll Results'
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var labels = data.labels[tooltipItem.index];
+                        var value = dataset.data[tooltipItem.index];
+                        return `${labels}: ${value}`;
+                    }
+                }
+            }
+        };
+
+        var ctx = document.getElementById("pollChart").getContext("2d");
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: options
+        });
+    </script>
+    <style>
+        .poll-results-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .poll-results-chart {
+            width: 50%;
+            padding: 20px;
+        }
+        .poll-results-table {
+            width: 50%;
+            padding: 20px;
+        }
+        .poll-results-table table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .poll-results-table th, .poll-results-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .poll-results-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+}
+
+<br /><br />
+<button class="btn btn-primary" onclick="window.print()">Print Results</button>
+<br /><br />
+<a asp-action="Index" class="btn btn-secondary">Back</a>

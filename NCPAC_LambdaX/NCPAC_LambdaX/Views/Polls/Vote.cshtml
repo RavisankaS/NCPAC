@@ -1,0 +1,93 @@
+﻿@model NCPAC_LambdaX.Models.Poll
+
+<style>
+    /* Style for the radio buttons */
+    input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    /* Style for the radio buttons' container */
+    .radio-container {
+        display: block;
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: normal;
+        line-height: 22px;
+        color: #3f3f3f;
+    }
+
+    /* Style for the radio buttons' checkmark */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    /* Style for the radio buttons' checkmark when checked */
+    input[type="radio"]:checked + .checkmark:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.6);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #2196F3;
+    }
+</style>
+
+<h2>Poll : @Model.Question</h2>
+<br />
+@if (ViewBag.AlreadyVoted != null)
+{
+    <div class="alert alert-danger" role="alert">You have already voted in this poll.</div>
+}
+<br />
+
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt class="col-sm-2">
+        <label>Deadline </label>
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.TimeUntil)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Commitee.CommiteeName)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model =>  model.Commitee.CommiteeName)
+    </dd>
+</dl>
+<br />
+<form asp-controller="Polls" asp-action="Vote" method="post">
+    @foreach (var option in Model.Options)
+    {
+        <label class="radio-container">
+            @option.Text
+            <input type="radio" name="optionId" value="@option.Id" id="@option.Id" />
+            <span class="checkmark"></span>
+        </label>
+    }
+    <br />
+    <button type="submit" class="btn btn-primary">Vote</button>
+</form>
+
+<br />
+<a asp-action="Index" class="btn btn-secondary">Back</a>

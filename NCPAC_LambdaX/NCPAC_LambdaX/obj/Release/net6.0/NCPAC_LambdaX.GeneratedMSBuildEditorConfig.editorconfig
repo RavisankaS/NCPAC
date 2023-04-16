@@ -5,6 +5,7 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = NCPAC_LambdaX
 build_property.RootNamespace = NCPAC_LambdaX
@@ -305,6 +306,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Members/MemberIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyc1xNZW1iZXJJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Polls/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9sbHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Polls/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9sbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Polls/Results.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9sbHNcUmVzdWx0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Polls/Vote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9sbHNcVm90ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Banuka Ambegoda/Desktop/NCPAC_New/NCPAC/NCPAC_LambdaX/NCPAC_LambdaX/Views/Shared/Error.cshtml]

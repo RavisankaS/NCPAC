@@ -1,0 +1,73 @@
+﻿@model NCPAC_LambdaX.Models.Poll
+
+<h1>Create Poll</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label"> Poll Title:</label>
+                <input asp-for="Question" placeholder="required" class="form-control" />
+                <span asp-validation-for="Question" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Description:</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Deadline:</label>
+                <input asp-for="TimeUntil" class="form-control" />
+                <span asp-validation-for="TimeUntil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"> Commitee:</label>
+                <select class="form-control" id="CommiteeID" name="CommiteeID" asp-items="ViewBag.CommiteeID">
+                </select>
+                <span asp-validation-for="CommiteeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Options : </label><br />
+                <button type="button" class="btn btn-outline-success add-option">+</button><br /><br />
+                <div id="options-container">
+                    <div class="input-group mb-3">
+                        <input type="text" name="Options[0].Text" placeholder="Option 1 required" class="form-control" />
+                        <span asp-validation-for="Options[0].Text" class="text-danger"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="Options[1].Text" placeholder="Option 2 required" class="form-control" />
+                        <span asp-validation-for="Options[1].Text" class="text-danger"></span>
+                    </div>
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.add-option').on('click', function () {
+                var index = $('#options-container .input-group').length;
+                var optionName = `Options[${index}].Text`;
+                var newOption = `
+                            <div class="input-group mb-3">
+                                <input type="text" name="${optionName}" class="form-control" />
+                                <div class="input-group-append">
+                                     <button class="btn btn-outline-danger remove-option" type="button">-</button>
+                                </div>
+                                <span asp-validation-for="${optionName}" class="text-danger"></span>
+                            </div>
+                        `;
+                $('#options-container').append(newOption);
+            });
+
+            $('#options-container').on('click', '.remove-option', function () {
+                $(this).closest('.input-group').remove();
+            });
+        });
+    </script>
+}

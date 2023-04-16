@@ -92,7 +92,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     MeetingTitle = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
-                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    TimeFrom = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Minitues = table.Column<int>(type: "INTEGER", nullable: true),
                     CommiteeID = table.Column<int>(type: "INTEGER", nullable: false),
                     IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -106,6 +106,27 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         principalTable: "Commitees",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Poll",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Question = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    TimeUntil = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CommiteeID = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Poll", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Poll_Commitees_CommiteeID",
+                        column: x => x.CommiteeID,
+                        principalTable: "Commitees",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -202,6 +223,48 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         column: x => x.WorkProvinceID,
                         principalTable: "Provinces",
                         principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PollOptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Text = table.Column<string>(type: "TEXT", nullable: false),
+                    PollId = table.Column<int>(type: "INTEGER", nullable: false),
+                    VoteCount = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PollOptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PollOptions_Poll_PollId",
+                        column: x => x.PollId,
+                        principalTable: "Poll",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PollVotes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PollId = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    SelectedOption = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PollVotes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PollVotes_Poll_PollId",
+                        column: x => x.PollId,
+                        principalTable: "Poll",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -369,6 +432,21 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 column: "WorkProvinceID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Poll_CommiteeID",
+                table: "Poll",
+                column: "CommiteeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PollOptions_PollId",
+                table: "PollOptions",
+                column: "PollId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PollVotes_PollId",
+                table: "PollVotes",
+                column: "PollId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UploadedFiles_ActionItemID",
                 table: "UploadedFiles",
                 column: "ActionItemID");
@@ -394,10 +472,19 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                 name: "MemberCommitees");
 
             migrationBuilder.DropTable(
+                name: "PollOptions");
+
+            migrationBuilder.DropTable(
+                name: "PollVotes");
+
+            migrationBuilder.DropTable(
                 name: "UploadedFiles");
 
             migrationBuilder.DropTable(
                 name: "MemberVM");
+
+            migrationBuilder.DropTable(
+                name: "Poll");
 
             migrationBuilder.DropTable(
                 name: "ActionItems");

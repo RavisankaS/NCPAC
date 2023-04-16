@@ -20,6 +20,7 @@ namespace NCPAC_LambdaX.Models
         [StringLength(500, ErrorMessage = "Meeting description cannot be more than 500 characters long.")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "You cannot leave the Meeting Title blank.")]
         [Display(Name = "Meeting Time")]
         public DateTime? TimeFrom { get; set; }
 

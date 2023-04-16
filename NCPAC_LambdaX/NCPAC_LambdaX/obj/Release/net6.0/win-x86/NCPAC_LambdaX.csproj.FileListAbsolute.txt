@@ -595,7 +595,6 @@ C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\hostfxr.dll
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\hostpolicy.dll
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\mscordaccore.dll
-C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\mscordaccore_x86_x86_6.0.922.41905.dll
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\mscordbi.dll
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\mscorrc.dll
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\msquic.dll
@@ -621,3 +620,9 @@ C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\NCPAC_LambdaX.pdb
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\NCPAC_LambdaX.genruntimeconfig.cache
 C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\ref\NCPAC_LambdaX.dll
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\bin\Release\net6.0\win-x86\mscordaccore_x86_x86_6.0.1623.17311.dll
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\staticwebassets\msbuild.NCPAC_LambdaX.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\staticwebassets\msbuild.build.NCPAC_LambdaX.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\staticwebassets\msbuild.buildMultiTargeting.NCPAC_LambdaX.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\staticwebassets\msbuild.buildTransitive.NCPAC_LambdaX.props
+C:\Users\Banuka Ambegoda\Desktop\NCPAC_New\NCPAC\NCPAC_LambdaX\NCPAC_LambdaX\obj\Release\net6.0\win-x86\staticwebassets.pack.json

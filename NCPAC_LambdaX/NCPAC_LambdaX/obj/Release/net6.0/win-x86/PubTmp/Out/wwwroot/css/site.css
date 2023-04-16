@@ -196,6 +196,18 @@ hr {
     margin-bottom: 1rem;
 }
 
+.control-label {
+    font-weight: 700;
+}
 
+/*Theme*/
+.nav-link.btn-link.text-dark:hover {
+    color: #fff;
+    background-color: #6b6d71;
+}
+
+.bg-dark {
+    background-color: #383838 !important;
+}
 
 

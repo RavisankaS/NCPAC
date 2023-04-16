@@ -1,0 +1,48 @@
+﻿@model IEnumerable<NCPAC_LambdaX.Models.Poll>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Polls</h1>
+
+@if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary" tooltip="Create a poll" flow="right">Create New</a>
+    </p>
+}
+
+@if (Model.Count() == 0)
+{
+    <p>There are no polls.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Poll</th>
+                <th>Total Votes</th>
+                <th>Vote Deadline</th>
+                <th>Commitee</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var poll in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => poll.Question)</td>
+                    <td>@poll.Votes.Count()</td>
+                    <td>@Html.DisplayFor(modelItem => poll.TimeUntil)</td>
+                    <td>@Html.DisplayFor(modelItem => poll.Commitee.CommiteeName)</td>
+                    <td>
+                        <a asp-action="Vote" class="btn btn-secondary" asp-route-id="@poll.Id">Vote</a>
+                        <a asp-action="Results" class="btn btn-secondary" asp-route-id="@poll.Id">Status</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

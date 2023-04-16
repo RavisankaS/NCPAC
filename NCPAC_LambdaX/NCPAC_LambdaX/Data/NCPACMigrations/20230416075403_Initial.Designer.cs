@@ -11,13 +11,13 @@ using NCPAC_LambdaX.Data;
 namespace NCPAC_LambdaX.Data.NCPACMigrations
 {
     [DbContext(typeof(NCPACContext))]
-    [Migration("20230402222317_Initial")]
+    [Migration("20230416075403_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.14");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.15");
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.ActionItem", b =>
                 {
@@ -207,6 +207,7 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("TimeFrom")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
@@ -319,6 +320,81 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.HasIndex("MemberVMID");
 
                     b.ToTable("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Poll", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CommiteeID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TimeUntil")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommiteeID");
+
+                    b.ToTable("Poll");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.PollOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PollId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("VoteCount")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollId");
+
+                    b.ToTable("PollOptions");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.PollVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PollId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SelectedOption")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollId");
+
+                    b.ToTable("PollVotes");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.Province", b =>
@@ -556,6 +632,37 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("Member");
                 });
 
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Poll", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Commitee", "Commitee")
+                        .WithMany()
+                        .HasForeignKey("CommiteeID");
+
+                    b.Navigation("Commitee");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.PollOption", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Poll", "Poll")
+                        .WithMany("Options")
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Poll");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.PollVote", b =>
+                {
+                    b.HasOne("NCPAC_LambdaX.Models.Poll", "Poll")
+                        .WithMany("Votes")
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Poll");
+                });
+
             modelBuilder.Entity("NCPAC_LambdaX.ViewModels.MemberVM", b =>
                 {
                     b.HasOne("NCPAC_LambdaX.Models.MailPrefference", "MailPrefference")
@@ -623,6 +730,13 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Navigation("ActionItems");
 
                     b.Navigation("MemberCommitees");
+                });
+
+            modelBuilder.Entity("NCPAC_LambdaX.Models.Poll", b =>
+                {
+                    b.Navigation("Options");
+
+                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("NCPAC_LambdaX.Models.UploadedFile", b =>

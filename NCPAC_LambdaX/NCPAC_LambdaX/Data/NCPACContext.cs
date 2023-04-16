@@ -26,6 +26,9 @@ namespace NCPAC_LambdaX.Data
         public DbSet<MeetingDocument> MeetingDocuments { get; set; }
         public DbSet<ActionItemDocument> ActionItemDocuments { get; set; }
         public DbSet<UploadedFile> UploadedFiles { get; set; }
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<PollVote> PollVotes { get; set; }
+        public DbSet<PollOption> PollOptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,5 +43,7 @@ namespace NCPAC_LambdaX.Data
         }
 
         public DbSet<NCPAC_LambdaX.ViewModels.MemberVM> MemberVM { get; set; }
+
+        public DbSet<NCPAC_LambdaX.Models.Poll> Poll { get; set; }
     }
 }
