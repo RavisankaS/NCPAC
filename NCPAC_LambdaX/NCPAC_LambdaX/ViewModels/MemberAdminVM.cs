@@ -16,6 +16,9 @@ namespace NCPAC_LambdaX.ViewModels
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "Renewal Date")]
+        public DateTime? RenewalDate { get; set; }
+
         [Display(Name = "Roles")]
         public List<string> UserRoles { get; set; } = new List<string>();
 

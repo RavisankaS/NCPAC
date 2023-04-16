@@ -115,8 +115,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Question = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
                     TimeUntil = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     CommiteeID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -156,7 +157,8 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     IsNCGrad = table.Column<bool>(type: "INTEGER", nullable: false),
                     OccupationalSummary = table.Column<string>(type: "TEXT", nullable: true),
                     DateJoined = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
+                    RenewalDate = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

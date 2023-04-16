@@ -23,10 +23,13 @@ namespace NCPAC_LambdaX.Models
 
         [Display(Name = "Description")]
         [StringLength(500, ErrorMessage = "Poll description cannot be more than 500 characters long.")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Display(Name = "Deadline")]
         public DateTime? TimeUntil { get; set; }
+
+        [Display(Name = "Is Archieved")]
+        public bool IsActive { get; set; }
 
         [Display(Name = "Commitee")]
         public int? CommiteeID { get; set; }

@@ -245,6 +245,9 @@ namespace NCPAC_LambdaX.Models
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "Renewal Date")]
+        public DateTime? RenewalDate { get; set; }
+
         [Display(Name = "Commitees")]
         public ICollection<MemberCommitee> MemberCommitees { get; set; } = new HashSet<MemberCommitee>();
 

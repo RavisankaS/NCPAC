@@ -265,6 +265,9 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                     b.Property<string>("ProvinceID")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("RenewalDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Salutation")
                         .HasColumnType("TEXT");
 
@@ -330,9 +333,11 @@ namespace NCPAC_LambdaX.Data.NCPACMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Question")
                         .IsRequired()

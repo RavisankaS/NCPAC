@@ -1,0 +1,48 @@
+﻿@model NCPAC_LambdaX.Models.Poll
+
+@{
+    ViewData["Title"] = "Archives";
+}
+
+<h1>Archive / Un Archive Polls</h1>
+<div class="text-danger">@TempData["message"]</div>
+
+<div>    
+    <form asp-action="ArchiveConfirm">
+        <input type="hidden" asp-for="Id" />
+    <h4>Poll</h4>
+    <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Question)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Question)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                <label>Deadline </label>
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TimeUntil)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Commitee.CommiteeName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model =>  model.Commitee.CommiteeName)
+            </dd>
+        </dl>
+        <input type="submit" value="Confirm" class="btn btn-primary" />
+        <br /><br />
+    </form>
+</div>
+<div>
+
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

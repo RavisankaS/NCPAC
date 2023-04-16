@@ -217,7 +217,8 @@ namespace NCPAC_LambdaX.Data
                         WorkPostalCode = "E5E6R7",
                         WorkProvinceID = "ON",
                         WorkEmail = "agrande@gmail.com",
-                        WorkPhone = "1592587536"
+                        WorkPhone = "1592587536",
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -238,7 +239,9 @@ namespace NCPAC_LambdaX.Data
                         WorkPostalCode = "E4E6R7",
                         WorkProvinceID = "ON",
                         WorkEmail = "ejohn@gmail.com",
-                        WorkPhone = "1592587836"
+                        WorkPhone = "1592587836",
+                        RenewalDate = DateTime.Now.AddYears(3)
+
                     },
                     new Member
                     {
@@ -259,7 +262,8 @@ namespace NCPAC_LambdaX.Data
                         WorkPostalCode = "L4E6R7",
                         WorkProvinceID = "AB",
                         WorkEmail = "lx@gmail.com",
-                        WorkPhone = "1572587836"
+                        WorkPhone = "1572587836",
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -280,7 +284,8 @@ namespace NCPAC_LambdaX.Data
                         WorkPostalCode = "E4B6R7",
                         WorkProvinceID = "AB",
                         WorkEmail = "zmalik@gmail.com",
-                        WorkPhone = "1492557836"
+                        WorkPhone = "1492557836",
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -301,7 +306,8 @@ namespace NCPAC_LambdaX.Data
                         WorkPostalCode = "E4A6R7",
                         WorkProvinceID = "ON",
                         WorkEmail = "lclearkson@gmail.com",
-                        WorkPhone = "1592557836"
+                        WorkPhone = "1592557836",
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -313,7 +319,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1991-03-09"),
                         ProvinceID = "YT",
                         Email = "lskywalker@outlook.com",
-                        IsActive= false
+                        IsActive= false,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -326,7 +333,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1978-09-12"),
                         ProvinceID = "MB",
                         Email = "ccatherin@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -339,7 +347,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1957-08-10"),
                         ProvinceID = "QC",
                         Email = "dtargarian@outlook.com",
-                        IsActive = false
+                        IsActive = false,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -351,7 +360,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1999-01-10"),
                         ProvinceID = "AB",
                         Email = "jbabbenberg@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -364,7 +374,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1984-12-08"),
                         ProvinceID = "MB",
                         Email = "sjohnson@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -377,7 +388,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1991-02-09"),
                         ProvinceID = "QC",
                         Email = "jkhalifa@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -389,7 +401,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1943-09-12"),
                         ProvinceID = "NT",
                         Email = "cnolan@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -402,7 +415,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1987-08-10"),
                         ProvinceID = "PE",
                         Email = "rtarley@outlook.com",
-                        IsActive= true
+                        IsActive= true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -415,7 +429,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1999-01-10"),
                         ProvinceID = "NB",
                         Email = "askywalker@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     },
                     new Member
                     {
@@ -427,7 +442,8 @@ namespace NCPAC_LambdaX.Data
                         DateJoined = DateTime.Parse("1999-12-08"),
                         ProvinceID = "SK",
                         Email = "bwaine@outlook.com",
-                        IsActive = true
+                        IsActive = true,
+                        RenewalDate = DateTime.Now.AddYears(3)
                     });
                     context.SaveChanges();
                 }

@@ -81,12 +81,16 @@
     {
         <label class="radio-container">
             @option.Text
-            <input type="radio" name="optionId" value="@option.Id" id="@option.Id" />
+            <input type="radio" name="optionId" value="@option.Id" id="@option.Id" required />
             <span class="checkmark"></span>
         </label>
     }
     <br />
-    <button type="submit" class="btn btn-primary">Vote</button>
+    @if (ViewBag.AlreadyVoted == null)
+    {
+        <button type="submit" class="btn btn-primary">Vote</button>
+    }
+    
 </form>
 
 <br />

@@ -62,6 +62,12 @@
                             @Html.CheckBox("ShowInactive", false, htmlAttributes: new { @type="checkbox", @class="form-check-input", @style="margin-left:10px;"})
                         </div>
                     </div>
+                    <div class="form-group col-md-2 form-check form-switch">
+                        <label class="control-label">To be Renewed:</label><br />
+                        <div class="justify-content-center">
+                            @Html.CheckBox("ToBeRenewed", false, htmlAttributes: new { @type="checkbox", @class="form-check-input", @style="margin-left:10px;"})
+                        </div>
+                    </div>
                     <div class="form-group col-md-2 align-self-end">
                         <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
                         <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
@@ -88,10 +94,10 @@
                                             @Html.DisplayFor(model => item.Email)
                                     </dd>
                                     <dt class="col-8">
-                                        @Html.DisplayNameFor(model => item.IsNCGrad)
+                                        @Html.DisplayNameFor(model => item.RenewalDate)
                                     </dt>
                                     <dd class="col-4 text-truncate">
-                                        @Html.DisplayFor(model => item.IsNCGrad)
+                                        @Html.DisplayFor(model => item.RenewalDate)
                                     </dd>
                                     <dt class="col-8">
                                         @Html.DisplayNameFor(model => item.MemberCommitees)
@@ -150,7 +156,7 @@
                     <input type="submit" disabled="disabled" value="Email" class="btn btn-outline-dark" />
                 </th>
                 <th>
-                    <input type="submit" disabled="disabled" value="Is NC Grad?" class="btn btn-outline-dark" />
+                    <input type="submit" disabled="disabled" value="Renewal Date" class="btn btn-outline-dark" />
                 </th>
                 <th>
                     <input type="submit" disabled="disabled" value="Committees" class="btn btn-outline-dark" />
@@ -196,7 +202,19 @@
                          }
                 </td>
                 <td>
-                        @Html.CheckBoxFor(modelItem => item.IsNCGrad, new { @disabled = "disabled"})
+                            @{
+                                DateTime? renewalDate = item.RenewalDate; // Assuming Model is your model object and RenewalDate is a nullable DateTime property
+                            }
+
+                            <!-- Display only the date portion if the value is not null -->
+                            @if (renewalDate.HasValue)
+                            {
+                                <p>@renewalDate.Value.ToShortDateString()</p>
+                            }
+                            else
+                            {
+                                <p>N/A</p>
+                            }
                 </td>
                 <td>
                     @{
