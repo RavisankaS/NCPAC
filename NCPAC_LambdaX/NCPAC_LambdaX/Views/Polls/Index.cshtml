@@ -6,6 +6,7 @@
 
 <h1>Polls</h1>
 
+
 @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
 {
     <p>
@@ -13,6 +14,81 @@
     </p>
 }
 
+<form asp-action="Index" method="get">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" id="filterToggle" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter" tooltip="Toggle the Filter Pane" flow="right">
+            Filter/Search
+        </button>
+        <div class="collapse" @(ViewData["Filtering"]) id="collapseFilter">
+            <div class="card card-body bg-light">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Search Question:</label>
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-2 form-check form-switch">
+                        <label class="control-label">Show Archived Members:</label><br />
+                        <div class="justify-content-center">
+                            @Html.CheckBox("ShowInactive", false, htmlAttributes: new { @type="checkbox", @class="form-check-input", @style="margin-left:10px;"})
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 align-self-end">
+                        <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid d-block d-md-none">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="card mb-sm-3" style="min-width: 18rem;">
+                    <h5 class="card-header"><strong>@Html.DisplayFor(modelItem => item.Question)</strong></h5>
+                    <div class="card-body">
+                        <figcaption class="col">
+                            <p class="card-text">
+                                <dl class="row lh-1">
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.Votes)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @item.Votes.Count() <label>/</label> @item.Commitee.MemberCommitees.ToList().Count()
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.TimeUntil)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.TimeUntil)
+                                    </dd>
+                                    <dt class="col-8">
+                                        @Html.DisplayNameFor(model => item.Commitee.CommiteeName)
+                                    </dt>
+                                    <dd class="col-4 text-truncate">
+                                        @Html.DisplayFor(model => item.Commitee.CommiteeName)
+                                    </dd>
+                                </dl>
+                            </p>
+                        </figcaption>
+
+                        <div class="card-footer">
+                            <a asp-action="Vote" class="btn btn-secondary" asp-route-id="@item.Id">Vote</a>
+                            <a asp-action="Results" class="btn btn-secondary" asp-route-id="@item.Id">Status</a>
+                            @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+                            {
+                                <a asp-action="Archive" class="btn btn-secondary" asp-route-id="@item.Id" style="text-decoration:none;">  &#10002;</a>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="d-none d-lg-block">
 @if (Model.Count() == 0)
 {
     <p>There are no polls.</p>
@@ -34,15 +110,24 @@ else
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => poll.Question)</td>
-                    <td>@poll.Votes.Count()</td>
+                    <td>@poll.Votes.Count() <label>/</label> @poll.Commitee.MemberCommitees.ToList().Count()</td>
                     <td>@Html.DisplayFor(modelItem => poll.TimeUntil)</td>
                     <td>@Html.DisplayFor(modelItem => poll.Commitee.CommiteeName)</td>
                     <td>
                         <a asp-action="Vote" class="btn btn-secondary" asp-route-id="@poll.Id">Vote</a>
                         <a asp-action="Results" class="btn btn-secondary" asp-route-id="@poll.Id">Status</a>
+                        @if ((User.IsInRole("Admin")) || (User.IsInRole("Supervisor")) || (User.IsInRole("Staff")))
+                        {
+                            <a asp-action="Archive" class="btn btn-secondary" asp-route-id="@poll.Id" style="text-decoration:none;">  &#10002;</a>
+
+                        }
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    
 }
+    </div>
+    <partial name="_PagingNavBar" />
+</form>
