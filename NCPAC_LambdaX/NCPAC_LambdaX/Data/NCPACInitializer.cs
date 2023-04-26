@@ -563,6 +563,7 @@ namespace NCPAC_LambdaX.Data
                          MeetingTitle = "Initial Discussion",
                          Description = "Is a special meeting for everyone",
                          IsCancelled = false,
+                         TimeFrom = DateTime.Now,
                          CommiteeID= 1
                      },
                      new Meeting
@@ -570,6 +571,7 @@ namespace NCPAC_LambdaX.Data
                          MeetingTitle = "PAC Discussion",
                          Description = "Is a special meeting",
                          IsCancelled = true,
+                         TimeFrom = DateTime.Now,
                          CommiteeID = 3
                      },
                      new Meeting
@@ -577,6 +579,7 @@ namespace NCPAC_LambdaX.Data
                          MeetingTitle = "Commitee Discussion",
                          Description = "Everyone Must Join",
                          IsCancelled = false,
+                         TimeFrom = DateTime.Now,
                          CommiteeID = 2
                      });
 

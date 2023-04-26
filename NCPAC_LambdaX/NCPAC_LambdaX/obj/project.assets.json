@@ -11824,11 +11824,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
+      "projectUniqueName": "P:\\Niagara College\\Term 4\\Project\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
       "projectName": "NCPAC_LambdaX",
-      "projectPath": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
+      "projectPath": "P:\\Niagara College\\Term 4\\Project\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\NCPAC_LambdaX.csproj",
       "packagesPath": "C:\\Users\\Banuka Ambegoda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Banuka Ambegoda\\Desktop\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\obj\\",
+      "outputPath": "P:\\Niagara College\\Term 4\\Project\\NCPAC_New\\NCPAC\\NCPAC_LambdaX\\NCPAC_LambdaX\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
