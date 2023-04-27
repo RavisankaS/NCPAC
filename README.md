@@ -11,6 +11,11 @@ Group Members
 	-Amritpal Singh 
 	-Akashdeep Slatch 
 	
+Watch Application Walkthrough :
+https://www.youtube.com/watch?v=JFLyNoBjUic&t=439s 
+
+![ncpac](https://user-images.githubusercontent.com/89307136/234754082-0eec2d1a-a4cd-47b5-9170-3300826aba37.png)
+
 # .NET Core
 # SQLite
 # C#
