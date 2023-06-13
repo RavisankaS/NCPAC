@@ -1,28 +1,18 @@
 # NCPAC
-#Undergoing Project
 
-A meeting, members and an organization management software for Niagara College Program Advisory Commitee
-This is a project involved with the Niagara College Canada.
+- Developed the Niagara College Program Advisory Committee (NCPAC) Management Software as a final group project at Niagara College. This application is a comprehensive solution for managing meetings, members, employees, action items, committees and polls.
+- Utilized technologies such as .NET Core, SQLite, C#, HTML, JS, jQuery, CSS, Bootstrap, and .NET Core MVC.
+- Leveraged .NET Core MVC framework to create a robust and scalable software solution.
+- Implemented SQLite as the database management system for seamless data storage and retrieval.
+- Applied HTML, JS, jQuery, CSS, and Bootstrap for front-end development, ensuring a visually appealing and responsive user experience.
+- Developed the necessary database model, including tables, relationships, and constraints, to accurately represent program advisory committee data.
 
 Group Members
-	-Banuka Ambegoda (Lead)
-	-Adam Augier 
-	-Ravisanka Siriwardenage 
-	-Amritpal Singh 
-	-Akashdeep Slatch 
-	
-Watch Application Walkthrough :
-https://www.youtube.com/watch?v=JFLyNoBjUic&t=439s 
 
-![ncpac](https://user-images.githubusercontent.com/89307136/234754082-0eec2d1a-a4cd-47b5-9170-3300826aba37.png)
-
-# .NET Core
-# SQLite
-# C#
-# HTML
-# JS and Jquery
-# CSS and Bootstrap
-# .NET Core MVC
-# MVVM
+-Banuka Ambegoda
+-Adam AUgier
+-Ravisanka Siriwardenage
+-Amritpal Singh
+-Akashdeep Slatch
 
 Copyright 2023 LambdaX 
